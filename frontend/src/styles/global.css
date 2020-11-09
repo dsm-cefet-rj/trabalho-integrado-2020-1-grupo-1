@@ -11,8 +11,17 @@ html, body {
 
 button, select {
   cursor: pointer;
+  border: none;
+  outline: none;
 }
 
 button:focus {
   outline: none;
 }
+
+input {
+  border: none;
+  outline: none;
+}
+
+
