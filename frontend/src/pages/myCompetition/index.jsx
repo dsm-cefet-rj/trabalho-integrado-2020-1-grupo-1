@@ -1,9 +1,13 @@
 import React from 'react';
 
 import Title from '../../components/Title';
+import Menu from '../../components/Menu';
 
 export default function MyCompetition() {
   return (
-    <Title content="Minha competição" />
+    <div>
+      <Menu />
+      <Title content="Minha competição" />
+    </div>
   );
 }

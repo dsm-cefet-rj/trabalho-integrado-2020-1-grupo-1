@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { Text } from './styles';
+
 export default function Title(props) {
   return (
-    <h1>{props.content}</h1>
+    <Text>{props.content}</Text>
   );
 }
