@@ -20,6 +20,6 @@ Feature: Inscrever Equipe
     When selecionar os jogadores que irão participar da competição clicando nos respectivos checkbox (cb_player_username)
     And clicar no botão de finalizar inscrição (btn_finish)
     Then o sistema mostrará a tela de competições (competition)
-    And a equipe estará inscrita no campeonato selecionado
+    And a equipe estará inscrita no campeonato que foi selecionado
     
   
