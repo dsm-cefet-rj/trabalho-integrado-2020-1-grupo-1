@@ -11,7 +11,8 @@ Feature: Inscrever Equipe
     And selecionar uma competição em fase de inscrição (btn_id_competição)
     When clicar em "Se inscrever (btn_subscription)   
     Then o sistema mostrará a tela de seleção de membros da equipe
-    
+ 
+ @tag1 
   Scenario: Inscrever equipe em campeonato (2)
     Given usuário cadastrado no sistema
     And usuário é líder de uma equipe
