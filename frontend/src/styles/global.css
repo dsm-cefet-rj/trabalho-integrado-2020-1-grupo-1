@@ -1,0 +1,165 @@
+*  {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button, select {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.box {
+  background: #CECECE;
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  z-index: 2;
+  text-align: center;
+  padding: 10px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image {
+  width: 120px;
+  height: 120px;
+  background: red;
+  border-radius: 60px;
+  border: 5px solid #FFF;
+}
+
+.image2 {
+  width: 200px;
+  height: 200px;
+  background: red;
+  border-radius: 100px;
+  border: 5px solid #FFF;
+}
+
+
+/* TEAMS - INVITE */
+.list-invites {
+  background: red;
+  padding: 10px;
+}
+
+.list {
+  padding: 10px;
+  background: #E5E5E5;
+  overflow-y: scroll;
+}
+
+.invite {
+  background: #CECECE;
+  margin-bottom: 10px;
+}
+
+
+/*  VIEW TEAM */
+.area-logo {
+  /* border: 1px solid red; */
+}
+
+.button-add-delete {
+  /* border: 1px solid red; */
+  float: right;
+}
+
+.logo-team {
+  width: 140px;
+  height: 140px;
+  border-radius: 70px;
+  background: red;
+}
+
+.list-members {
+  display: flex;
+  justify-content: center;
+}
+
+.member-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: red;
+  margin-right: 10px;
+}
+
+.list-titles, .list-competitions {
+  padding: 10px;
+  background: #E5E5E5;
+  height: 85%;
+  overflow-y: scroll;
+}
+
+.competition, .title {
+  padding: 7px;
+  background: #CECECE;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+
+/* COMPETITIONS - MENU */
+.items-competitions {
+  padding: 10px;
+  background: #E5E5E5;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.item-competition {
+  padding: 7px;
+  background: #CECECE;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+
+/*  YOUR COMPETITION */
+.box-your-competition {
+  background: #CECECE;
+  height: 400px;
+  padding: 10px;
+}
+
+.list-matchs {
+  background: #E5E5E5;
+  padding: 10px;
+  height: 340px;
+  overflow-y: scroll;
+}
+
+.match {
+  background: #CECECE;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
