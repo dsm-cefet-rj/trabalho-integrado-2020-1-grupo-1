@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "db:start": "json-server --watch -p 3001 -r ./db/routes.json ./db/db.json"
   },
   "eslintConfig": {
     "extends": [
@@ -39,7 +40,8 @@
   "devDependencies": {
     "cucumber": "^7.0.0-rc.0",
     "cypress": "^5.6.0",
-    "cypress-cucumber-preprocessor": "^4.0.0"
+    "cypress-cucumber-preprocessor": "^4.0.0",
+    "json-server": "^0.16.3"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
