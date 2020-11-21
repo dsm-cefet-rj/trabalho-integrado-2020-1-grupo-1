@@ -118,10 +118,13 @@
   ],
   "invites": [
     {
-      "id_invite": "1",
+      "id": "1",
       "user_convidou": "Entonin",
-      "user_condidado": "UnoDeFirmaTunado",
-      "nome_equipe": "Jantuscara"
+      "user_convidado": "UnoDeFirmaTunado",
+      "nome_equipe": "Jantuscara",
+      "image": "link",
+      "sigla_equipe": "JTCRA",
+      "aceitado": true
     }
   ],
   "championships": [

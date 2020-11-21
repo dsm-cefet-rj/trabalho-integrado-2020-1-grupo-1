@@ -49,6 +49,7 @@ export default function Top_Left_Side_Menu() {
                 <Dropdown.Menu variant="dropdown-menu" className="dropdown-menu" id="dropdown-menu">
                   <Dropdown.Item variant="menu-dropdown-option" className="menu-dropdown-option" href="/competition" id="">Ver competições</Dropdown.Item>
                   <Dropdown.Item variant="menu-dropdown-option" className="menu-dropdown-option" href="/newcompetition" id="">Criar competição</Dropdown.Item>
+                  <Dropdown.Item variant="menu-dropdown-option" className="menu-dropdown-option" href="/mycompetition" id="">Minha competição</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>              
             </ul>
