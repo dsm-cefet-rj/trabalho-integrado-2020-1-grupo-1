@@ -13,16 +13,25 @@ export default function Signup(){
   function sendData() {
     const name = document.getElementById('signup_name').value;
     const username = document.getElementById('signup_username').value;
-    const profile_picture = document.getElementById('btn_select_image').value;
+    const profile_picture = "link";
     const email = document.getElementById('signup_email').value;
     const password = document.getElementById('signup_password').value;
 
-    api.post('/user', {
+    api.post('/api/users', {
+      id:username,
       name,
       username,
       profile_picture,
       email,
-      password
+      password,
+      role: "",
+      champion1:"",
+      champion:"",
+      champion3:"",
+      facebook:"",
+      instagram:"",
+      twitter:"",
+      other:"Nada"
     })
     .then(() => alert('Cadastro realizado com sucesso!'))
     .catch(() => alert('Não foi possível realizar o cadastro!'))
@@ -51,16 +60,15 @@ export default function Signup(){
           />
 
           <label htmlFor="url-img">Foto de perfil</label>
-                      <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
-                      <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
-                      <button className="btn_load_image" id="btn-load-image" onClick={() => {
-                        // setStateOfButton()
-                        // convertToBase64()
-                        console.log('carregar')
-                      }}>
-                        Carregar
-                      </button>
-        <button type="button" id="btn_select_image" onClick={() => console.log('enviar')}>Enviar</button>
+          <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
+          <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
+          <button className="btn_load_image" id="btn-load-image" onClick={() => {
+            // setStateOfButton()
+            // convertToBase64()
+            console.log('carregar')
+          }}>
+          </button>          
+          <button type="button" id="btn_select_image" onClick={() => console.log('enviar')}>Enviar</button>
 
           <input 
             type="email" 
@@ -87,6 +95,7 @@ export default function Signup(){
             <input 
               type="checkbox" 
               id="cb_policies"
+              required
             />
             Declaro que li e aceito os Termos de uso e as políticas de privacidade.
           </span>

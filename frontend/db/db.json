@@ -1,7 +1,143 @@
 {
-  "users": [],
-  "teams": [],
-  "users_teams": [],
-  "invites": [],
-  "championships": []
+  "users": [
+    {
+      "id": "Entonin",
+      "name": "Anthony",
+      "username": "Entonin",
+      "profile_picture": "link",
+      "email": "anthony.vii27@gmail.com",
+      "password": "123456",
+      "role":"Jungler",
+      "champion1": "Ekko",
+      "champion2": "Kayn",
+      "champion3": "Lee Sin",
+      "facebook": "https://facebook.com",
+      "instagram": "https://instagram.com",
+      "twitter": "https://twitter.com",
+      "others": "Nada"
+    },
+    {
+      "id": "UnoDeFirmaTunado",
+      "name": "Mateus",
+      "username": "UnoDeFirmaTunado",
+      "profile_picture": "link",
+      "email": "mateusrlopez@gmail.com",
+      "password": "123456",
+      "role": "",
+      "champion1": "",
+      "champion": "",
+      "champion3": "",
+      "facebook": "",
+      "instagram": "",
+      "twitter": "",
+      "other": "Nada"
+    }
+  ],
+  "teams": [
+    {
+      "name": "Jantuscara",
+      "initials": "JTCRA",
+      "image": "",
+      "members": [
+        {
+          "username": "Entonin",
+          "profile_picture": "",
+          "role": "Jungler",
+          "entryYear":"2019"
+        },
+        {
+          "username": "UnoDeFirmaTunado",
+          "profile_picture": "",
+          "role": "Support",
+          "entryYear":"2019"
+        }
+      ],
+      "competitions": [
+        {}
+      ],
+      "titles": []
+    },
+    {
+      "id": "BDM",
+      "name": "BondeDasMaravilhas",
+      "initials": "BDM",
+      "image": "",
+      "members": [],
+      "competitions": [],
+      "titles": []
+    }
+  ],
+  "users_teams": [
+    {
+      "id":"JTCRA",
+      "name":"Jantuscara",
+      "entryYear":"2019",
+      "username":"Entonin",
+      "image":"link"
+    }
+  ],
+  "invites": [
+    {
+      "id_invite": "1",
+      "user_convidou": "Entonin",
+      "user_condidado": "UnoDeFirmaTunado",
+      "nome_equipe": "Jantuscara"
+    }
+  ],
+  "championships": [
+    {
+      "id": 0.2110419941848125,
+      "competition_name": "Clash",
+      "competition_initials": "CLA",
+      "competition_picture": "",
+      "competition_level": "Ouro+",
+      "competition_initial_date": "2702",
+      "competition_final_date": "2702",
+      "competition_initial_subscription": "2702",
+      "competition_final_subscription": "2702",
+      "competition_awards": "1500RP",
+      "competition_rules": "Nenhuma",
+      "competition_qty_teams": 16,
+      "user_manage": "Entonin"
+    }
+  ],
+  "championships-prints": [
+    {
+      "id": 0.2110419941848125,
+      "competition_name": "Clash",
+      "competition_initials": "CLA",      
+      "competition_initial_date": "2702",
+      "competition_final_date": "2702",
+      "competition_initial_subscription": "2702",
+      "competition_final_subscription": "2702",
+      "user_manage": "Entonin",
+      "prints": [
+        {
+          "team1":"Jantuscara",
+          "team2":"BondeDasMaravilhas",
+          "image_team1": "",
+          "image_team2": "",
+          "url_print":""
+        },
+        {
+          "team1":"Jantuscara",
+          "team2":"BondeDasMaravilhas",
+          "url_print":""
+        }
+      ]
+    }
+  ],
+  "championships-matchs": [
+    {
+      "id":0.12344567982,
+      "competition_name": "Clash",
+      "matchs": [
+        {
+          "team1":"Jantuscara",
+          "team2":"BondeDasMaravilhas",
+          "match_code":"ABC123"
+        }
+      ]
+    }
+  ]
 }

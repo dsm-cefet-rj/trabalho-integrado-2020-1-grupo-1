@@ -10,17 +10,22 @@ export default function ViewMatch() {
   const [match, setMatch] = useState({});
 
   useEffect(() => {
-    api.get('/match')
+    api.get('/championships-matchs?competition_name=Clash')
     .then(response => setMatch(response.data))
     .catch(err => console.log(err.response))
-  })
+  }, [])
+
+  function sendPrint() {
+    api.post('/api/championships-prints')
+  }
   
   return (
     <div className="container">
       <Menu />
       <Header />
-      <Title content="Partida" />
+      <Title content="Partida" />{console.log(match)}
 
+      <h3>{match.competition_name}</h3>
       <div>
         <div>
           Equipe 1

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import Title from '../../components/Title';
 import Header from '../../components/Header';
@@ -10,10 +11,10 @@ export default function Competition() {
   const [competitions, setCompetitions] = useState([]);
 
   useEffect(() => {
-    api.get('/competitions')
+    api.get('/api/championships')
     .then(response => setCompetitions(response.data))
     .catch(err => console.log(err.response))
-  })
+  }, [])
 
   return (
     <div className="container">
@@ -48,39 +49,16 @@ export default function Competition() {
 
       <div classname="competition-list">
         <div className="items-competitions">
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
-          <div className="item-competition" id="btn_id_competição">
-            
-          </div>
+          {competitions?.map(competition => (
+            <Link to={`/viewcompetition/${competition.id}`}>
+              <div className="item-competition" id="btn_id_competição" key={competition.id}>
+                <img src={competition.competition_picture} alt={competition.competition_name} />
+                <h3>{competition.competition_name}</h3>
+                <p>Nível: {competition.competition_level}</p>
+                <p>Premiação: {competition.competition_awards}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

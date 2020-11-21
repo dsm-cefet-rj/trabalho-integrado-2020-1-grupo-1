@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Title from '../../components/Title';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
-import api from '../../services/api';
-
 export default function ViewTeam() {
-  const [myteam, setMyTeam] = useState({});
-
-  useEffect(() => {
-    api.get('/myteam')
-    .then(response => setMyTeam(response.data))
-    .catch(err => console.log(err.response))
-  })
-
   return (
     <div className="container">
       <Menu />

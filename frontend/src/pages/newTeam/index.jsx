@@ -8,14 +8,18 @@ import api from '../../services/api';
 
 export default function NewTeam() {
   function sendData() {
-    const team_name = document.getElementById('team_name').value;
-    const team_initials = document.getElementById('team_initials').value;
-    const image = document.getElementById('btn_select_image').value;
+    const name = document.getElementById('team_name').value;
+    const initials = document.getElementById('team_initials').value;
+    const image = "";
 
-    api.post('/team', {
-      team_name,
-      team_initials,
-      image
+    api.post('/api/teams', {
+      id: initials,
+      name,
+      initials,
+      image,
+      members: [],
+      competitions: [],
+      titles: []
     })
     .then(() => alert('Equipe criada com sucesso!'))
     .catch(() => alert('Ocorreu um erro inesperado!'))
@@ -45,15 +49,15 @@ export default function NewTeam() {
 
         <span>Faça upload da sua logo</span>
         <label htmlFor="url-img">Foto de perfil</label>
-                      <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
-                      <input type="file" name="url-img" id="btn_select_image" className="form-control-file" accept="image/png, image/jpeg" />
-                      <button className="btn-send-picture" id="btn-load-image" onClick={() => {
-                        // setStateOfButton()
-                        // convertToBase64()
-                        console.log('carregar')
-                      }}>
-                        Carregar
-                      </button>
+        <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
+        <input type="file" name="url-img" id="btn_select_image" className="form-control-file" accept="image/png, image/jpeg" />
+        <button className="btn-send-picture" id="btn-load-image" onClick={() => {
+          // setStateOfButton()
+          // convertToBase64()
+            console.log('carregar')
+        }}>
+          Carregar
+        </button>
 
         <p>Você será automáticamente alocado como administrador da equipe</p>
 

@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import api from '../../services/api';
+
+import * as UserActions from '../../store/actions/user';
 
 import { 
   Screen,
   LoginArea 
 } from './styles';
 
-export default function Home() {
+const Home = ({ user, signinUser }) => {
   document.title = "Battleside";
 
   function Login(e) {
@@ -16,9 +19,20 @@ export default function Home() {
     const login = document.getElementById('lgn_email').value;
     const password = document.getElementById('lgn_password').value;
 
-    api.post('/login', { login, password })
-    .then(() => window.location.href="/home")
-    .catch(() => alert('Ocorreu um erro durante o login!'))
+    api.get(`/api/users?email=${login}&password=${password}`)
+    .then(response => signinUser(response.data[0].name,
+      response.data[0].username,
+      response.data[0].profile_picture,
+      response.data[0].role,
+      response.data[0].champion1,
+      response.data[0].champion2,
+      response.data[0].champion3,
+      response.data[0].facebook,
+      response.data[0].instagram,
+      response.data[0].twitter,
+      response.data[0].others,
+      response.data[0].email), window.location.href="/home")
+    .catch(error => console.log(error))
   }
   
   return (
@@ -39,13 +53,13 @@ export default function Home() {
             placeholder="Senha" 
             required
             id="lgn_password"
-          />
+          />{console.log(user)}
 
           <div id="area-link-btn">
             <Link to="/forget">Esqueci minha senha</Link>
             <button type="submit" disabled={false}>Entrar</button>
           </div>    
-        </form>    
+        </form>  
 
         <Link to="/signup" id="signup">Novo por aqui? Clique aqui e realize seu cadastro agora mesmo!</Link>
       </LoginArea>
@@ -56,3 +70,13 @@ export default function Home() {
     </Screen>
   )
 }
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  signinUser: (name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email) => dispatch(UserActions.signinUser(name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

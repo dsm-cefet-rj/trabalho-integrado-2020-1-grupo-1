@@ -5,6 +5,9 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import store from './store';
 
 import Home from './pages/home';
 import Signup from './pages/signup';
@@ -48,23 +51,25 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 export default function Routes() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={ () => <Home /> } />
-        <Route path="/signup" component={ () => <Signup /> } />
-        <Route path="/forget" component={ () => <ForgetMyPassword /> } />
-        <Route path="/recover" component={ () => <RecoverPassword /> } />
-        <PrivateRoute path="/home" component={ () => <Index/> } />
-        <PrivateRoute path="/edit" component={ () => <EditProfile/> } />
-        <PrivateRoute path="/team" component={ () => <Team /> } />
-        <PrivateRoute path="/viewteam" component={ () => <ViewTeam /> } />
-        <PrivateRoute path="/newteam" component={ () => <NewTeam /> } />
-        <PrivateRoute path="/competition" component={ () => <Competition /> } />
-        <PrivateRoute path="/mycompetition" component={ () => <MyCompetition/> } />
-        <PrivateRoute path="/newcompetition" component={ () => <NewCompetition/> } />
-        <PrivateRoute path="/viewcompetition" component={ () => <ViewCompetition/> } />
-        <PrivateRoute path="/match" component={ () => <ViewMatch/> } />
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={ () => <Home /> } />
+          <Route path="/signup" component={ () => <Signup /> } />
+          <Route path="/forget" component={ () => <ForgetMyPassword /> } />
+          <Route path="/recover" component={ () => <RecoverPassword /> } />
+          <PrivateRoute path="/home" component={ () => <Index/> } />
+          <PrivateRoute path="/edit" component={ () => <EditProfile/> } />
+          <PrivateRoute path="/team" component={ () => <Team /> } />
+          <PrivateRoute path="/viewteam" component={ () => <ViewTeam /> } />
+          <PrivateRoute path="/newteam" component={ () => <NewTeam /> } />
+          <PrivateRoute path="/competition" component={ () => <Competition /> } />
+          <PrivateRoute path="/mycompetition" component={ () => <MyCompetition/> } />
+          <PrivateRoute path="/newcompetition" component={ () => <NewCompetition/> } />
+          <PrivateRoute path="/viewcompetition/:id" component={ () => <ViewCompetition/> } />
+          <PrivateRoute path="/match" component={ () => <ViewMatch/> } />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   )
 }

@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Title from '../../components/Title';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
-import api from '../../services/api';
-
 import {
   TeamName, 
   Since
 } from './styles';
 
-export default function Team() {
-  const [team, setTeam] = useState({});
-
-  useEffect(() => {
-    api.get('/team')
-    .then(response => setTeam(response.data))
-    .catch(err => console.log(err.response))
-  })
+export default function Team() {  
   return (
     <div className="container">
       <Menu />

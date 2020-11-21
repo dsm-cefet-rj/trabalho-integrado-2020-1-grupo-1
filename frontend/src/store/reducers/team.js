@@ -1,9 +1,8 @@
 const INITIAL_STATE = {
   name: "",
   initials: "",
-  members: [],
-  competitions: [],
-  titles: []
+  entryYear: "",
+  image:""
 }
 
 export default function team(state = INITIAL_STATE, action) {
@@ -12,9 +11,8 @@ export default function team(state = INITIAL_STATE, action) {
      ...state,
       name: action.payload.name,
       initials: action.payload.initials,
-      members: action.payload.members,
-      competitions: action.payload.competitions,
-      titles: action.payload.titles
+      entryYear: action.payload.entryYear,
+      image: action.payload.image
     }
   }
 

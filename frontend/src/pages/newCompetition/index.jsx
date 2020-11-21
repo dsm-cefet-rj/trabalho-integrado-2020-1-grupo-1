@@ -7,10 +7,12 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 
 export default function NewCompetition() {
-  function sendData() {
+  
+  function sendData(e) {
+    e.preventDefault();
     const competition_name = document.getElementById('competition_name').value;
     const competition_initials = document.getElementById('competition_initials').value;
-    const competition_picture = document.getElementById('competition_select_picture').value;
+    const competition_picture = "";
     const competition_level = document.getElementById('competition_level').value;
     const competition_initial_date = document.getElementById('competition_initial_date').value;
     const competition_final_date = document.getElementById('competition_final_date').value;
@@ -18,8 +20,10 @@ export default function NewCompetition() {
     const competition_final_subscription = document.getElementById('competition_final_subscription_date').value;
     const competition_awards = document.getElementById('competition_awards').value;
     const competition_rules = document.getElementById('competition_rules').value;
+    const competition_qty_teams = document.getElementById('competition_qty_teams').value;
 
-    api.post('/competition', {
+    api.post('/api/championships', {
+      id:Math.random(),
       competition_name,
       competition_initials,
       competition_picture,
@@ -29,9 +33,10 @@ export default function NewCompetition() {
       competition_initial_subscription,
       competition_final_subscription,
       competition_awards,
-      competition_rules
+      competition_rules,
+      competition_qty_teams
     })
-    .then(() => alert('Os dados foram alterados!'))
+    .then(() => alert('Campeonato criado com sucesso!'))
     .catch(() => alert('Ocorreu um erro inesperado!'))
   }
 
@@ -43,7 +48,7 @@ export default function NewCompetition() {
 
       <Title content="Nova competição" />
 
-      <form onSubmit={sendData}>
+      <form onSubmit={e => sendData(e)}>
         <input
           type="text"
           placeholder="Nome *"
@@ -115,6 +120,11 @@ export default function NewCompetition() {
           required="true"
           id="competition_rules"
         />
+        <select id="competition_qty_teams">
+          <option value="8">8 equipes</option>
+          <option value="16">16 equipes</option>
+          <option value="32">32 equipes</option>
+        </select>
         <button type="submit" id="btn_create_competition">Criar</button>
       </form>
     </div>
