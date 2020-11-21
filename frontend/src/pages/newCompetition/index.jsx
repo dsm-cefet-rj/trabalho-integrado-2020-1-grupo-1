@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux'; 
 
 import Title from '../../components/Title';
 import Menu from '../../components/Menu';
@@ -6,16 +7,23 @@ import Header from '../../components/Header';
 
 import api from '../../services/api';
 
-export default function NewCompetition() {
-  
+const NewCompetition = ({ user }) => {
+  const [level, setLevel] = useState('');
+
   function sendData(e) {
     e.preventDefault();
     const competition_name = document.getElementById('competition_name').value;
     const competition_initials = document.getElementById('competition_initials').value;
     const competition_picture = "";
-    const competition_level = document.getElementById('competition_level').value;
-    const competition_initial_date = document.getElementById('competition_initial_date').value;
-    const competition_final_date = document.getElementById('competition_final_date').value;
+    const competition_level = level;
+    const competition_initial_date = {
+      date: document.getElementById('competition_initial_date').value,
+      time: document.getElementById('competition_initial_time').value
+    };
+    const competition_final_date = {
+      date: document.getElementById('competition_final_date').value,
+      time: document.getElementById('competition_final_time').value
+    };
     const competition_initial_subscription = document.getElementById('competition_initial_subscription_date').value;
     const competition_final_subscription = document.getElementById('competition_final_subscription_date').value;
     const competition_awards = document.getElementById('competition_awards').value;
@@ -34,12 +42,12 @@ export default function NewCompetition() {
       competition_final_subscription,
       competition_awards,
       competition_rules,
-      competition_qty_teams
+      competition_qty_teams,
+      competition_manager: user.username
     })
     .then(() => alert('Campeonato criado com sucesso!'))
     .catch(() => alert('Ocorreu um erro inesperado!'))
   }
-
 
   return (
     <div className="container">
@@ -52,13 +60,13 @@ export default function NewCompetition() {
         <input
           type="text"
           placeholder="Nome *"
-          required=""
+          required
           id="competition_name"
         />
         <input
           type="text"
           placeholder="Sigla *"
-          required=""
+          required
           id="competition_initials"
         />
                 <label htmlFor="url-img">Foto de perfil</label>
@@ -73,51 +81,63 @@ export default function NewCompetition() {
                         </button>
           <button type="button" id="competition_select_picture" onClick={() => console.log('enviar')}>Enviar</button>
         <label htmlFor="competition_level">Nível *</label>
-        <select id="competition_level">
-          <option value="">Livre</option>
-          <option value="">Ferro+</option>
-          <option value="">Prata+</option>
-          <option value="">Ouro+</option>
-          <option value="">Platina+</option>
-          <option value="">Diamante+</option>
-          <option value="">Mestre+</option>
-          <option value="">Grão Mestre+</option>
-          <option value="">Challenger</option>
+        <select id="competition_level" onChange={e => setLevel(e.target.value)}>
+          <option value="Livre">Livre</option>
+          <option value="Ferro+">Ferro+</option>
+          <option value="Prata+">Prata+</option>
+          <option value="Ouro+">Ouro+</option>
+          <option value="Platina+">Platina+</option>
+          <option value="Diamante+">Diamante+</option>
+          <option value="Mestre+">Mestre+</option>
+          <option value="Grão Mestre+">Grão Mestre+</option>
+          <option value="Challenger">Challenger</option>
         </select>
         <input
-          type="datetime"
-          placeholder="Data/horário do início da competição *"
-          required="true"
+          type="date"
+          placeholder="Data do início da competição *"
+          required
           id="competition_initial_date"
         />
         <input
-          type="datetime"
-          placeholder="Data/horário do fim da competição *"
-          required="true"
+          type="time"
+          placeholder="Horário do início da competição *"
+          required
+          id="competition_initial_time"
+        />
+        <input
+          type="date"
+          placeholder="Data do fim da competição *"
+          required
           id="competition_final_date"
         />
         <input
-          type="datetime"
-          placeholder="Data/horário do início da inscrição *"
-          required="true"
+          type="time"
+          placeholder="Horário do fim da competição *"
+          required
+          id="competition_final_time"
+        />
+        <input
+          type="date"
+          placeholder="Data do início da inscrição *"
+          required
           id="competition_initial_subscription_date"
         />
         <input
-          type="datetime"
-          placeholder="Data/horário do fim da inscrição *"
-          required="true"
+          type="date"
+          placeholder="Data do fim da inscrição *"
+          required
           id="competition_final_subscription_date"
         />
         <input
           type="text"
           placeholder="Premiação *"
-          required="true"
+          required
           id="competition_awards"
         />
         <input
           type="text"
           placeholder="Regras *"
-          required="true"
+          required
           id="competition_rules"
         />
         <select id="competition_qty_teams">
@@ -130,3 +150,9 @@ export default function NewCompetition() {
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(NewCompetition);

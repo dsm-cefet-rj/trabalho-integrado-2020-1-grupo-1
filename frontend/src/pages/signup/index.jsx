@@ -10,7 +10,9 @@ import {
 export default function Signup(){
   document.title = "Battleside - Signup";
 
-  function sendData() {
+  function sendData(e) {
+    e.preventDefault();
+
     const name = document.getElementById('signup_name').value;
     const username = document.getElementById('signup_username').value;
     const profile_picture = "link";
@@ -33,7 +35,10 @@ export default function Signup(){
       twitter:"",
       other:"Nada"
     })
-    .then(() => alert('Cadastro realizado com sucesso!'))
+    .then(() => {
+      alert('Cadastro realizado com sucesso!')
+      window.location.href="/"
+    })
     .catch(() => alert('Não foi possível realizar o cadastro!'))
   }
 
@@ -44,7 +49,7 @@ export default function Signup(){
         <p>Campos com * são obrigatórios</p>
         <br /><br />
 
-        <form onSubmit={sendData}>
+        <form onSubmit={e => sendData(e)}>
           <input 
             type="text" 
             placeholder="Nome" 

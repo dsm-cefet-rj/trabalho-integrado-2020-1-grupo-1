@@ -14,23 +14,41 @@ const INITIAL_STATE = {
 }
 
 export default function user(state = INITIAL_STATE, action) {
-  if(action.type === "USER_LOGIN") {
-    return {
-     ...state,
-      name: action.payload.name,
-      username: action.payload.username,
-      profile_picture: action.payload.profile_picture,
-      role: action.payload.role,
-      champion1: action.payload.champion1,
-      champion2: action.payload.champion2,
-      champion3: action.payload.champion3,
-      facebook: action.payload.facebook,
-      instagram: action.payload.instagram,
-      twitter: action.payload.twitter,
-      other: action.payload.other,
-      email: action.payload.email,
-    }
+  switch(action.type) {
+    case "USER_LOGIN":
+      return {
+        ...state,
+         name: action.payload.name,
+         username: action.payload.username,
+         profile_picture: action.payload.profile_picture,
+         role: action.payload.role,
+         champion1: action.payload.champion1,
+         champion2: action.payload.champion2,
+         champion3: action.payload.champion3,
+         facebook: action.payload.facebook,
+         instagram: action.payload.instagram,
+         twitter: action.payload.twitter,
+         other: action.payload.other,
+         email: action.payload.email,
+      }
+    case "EDIT_USER":
+      console.log('estou aqui agr')
+      return {
+        ...state,
+         name: action.payload.name,
+         username: action.payload.username,
+         profile_picture: action.payload.profile_picture,
+         role: action.payload.role,
+         champion1: action.payload.champion1,
+         champion2: action.payload.champion2,
+         champion3: action.payload.champion3,
+         facebook: action.payload.facebook,
+         instagram: action.payload.instagram,
+         twitter: action.payload.twitter,
+         other: action.payload.other,
+         email: action.payload.email,
+      }
+    default:
+      return state
   }
-
-  return state;
 }

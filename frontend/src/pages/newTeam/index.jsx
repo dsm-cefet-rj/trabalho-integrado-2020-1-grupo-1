@@ -7,7 +7,9 @@ import Menu from '../../components/Menu';
 import api from '../../services/api';
 
 export default function NewTeam() {
-  function sendData() {
+  function sendData(e) {
+    e.preventDefault();
+
     const name = document.getElementById('team_name').value;
     const initials = document.getElementById('team_initials').value;
     const image = "";
@@ -32,7 +34,7 @@ export default function NewTeam() {
       
       <Title content="Nova equipe" />
 
-      <form onSubmit={sendData}>
+      <form onSubmit={e => sendData(e)}>
         <input 
           type="text" 
           placeholder="Nome da equipe *" 

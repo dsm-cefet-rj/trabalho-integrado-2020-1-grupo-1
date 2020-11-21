@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -13,26 +13,38 @@ import {
 
 const Home = ({ user, signinUser }) => {
   document.title = "Battleside";
+  const [isLogged, setIsLogged] = useState(false);
 
   function Login(e) {
     e.preventDefault();
     const login = document.getElementById('lgn_email').value;
     const password = document.getElementById('lgn_password').value;
 
+    if(isLogged) {
+      window.location.href='/home'
+    }
+    
     api.get(`/api/users?email=${login}&password=${password}`)
-    .then(response => signinUser(response.data[0].name,
-      response.data[0].username,
-      response.data[0].profile_picture,
-      response.data[0].role,
-      response.data[0].champion1,
-      response.data[0].champion2,
-      response.data[0].champion3,
-      response.data[0].facebook,
-      response.data[0].instagram,
-      response.data[0].twitter,
-      response.data[0].others,
-      response.data[0].email), window.location.href="/home")
-    .catch(error => console.log(error))
+    .then(response => {
+      setIsLogged(true)
+      signinUser(response.data[0].name,
+        response.data[0].username,
+        response.data[0].profile_picture,
+        response.data[0].role,
+        response.data[0].champion1,
+        response.data[0].champion2,
+        response.data[0].champion3,
+        response.data[0].facebook,
+        response.data[0].instagram,
+        response.data[0].twitter,
+        response.data[0].others,
+        response.data[0].email)
+      })
+    .catch(() => {
+      setIsLogged(false)
+      alert('E-mail e/ou senha incorretos.')
+      return
+    })
   }
   
   return (
@@ -46,7 +58,7 @@ const Home = ({ user, signinUser }) => {
             placeholder="E-mail" 
             required
             id="lgn_email"
-          />
+          />{console.log(isLogged)}
 
           <input 
             type="password" 

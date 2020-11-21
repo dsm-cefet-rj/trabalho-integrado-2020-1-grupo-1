@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Title from '../../components/Title';
 import Header from '../../components/Header';
@@ -7,7 +8,7 @@ import Menu from '../../components/Menu';
 
 import api from '../../services/api';
 
-export default function CompetitionDetails() {
+const CompetitionDetails = ({ team }) => {
   const [competition, setCompetition] = useState({});
   let { id } = useParams()
 
@@ -17,10 +18,18 @@ export default function CompetitionDetails() {
     .catch(err => console.log(err.response))
   }, [])
 
+  function registerCompetition() {
+    if(!team.name) {
+      alert('Seja de uma equipe para participar dessa competição!')
+    }
+
+    api.get()
+  }
+
   return (
     <div className="container">
       <Menu />
-      <Header />
+      <Header />{console.log(team)}
 
       {(competition) ? 
         <div>
@@ -41,9 +50,15 @@ export default function CompetitionDetails() {
             <h4>{competition.competition_awards}</h4>
           </div>
 
-          <button type="button" id="btn_subscription" onClick={() => console.log('se inscrever')}>Se inscrever</button>
+          <button type="button" id="btn_subscription" onClick={registerCompetition}>Se inscrever</button>
         </div>
       : ''}
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  team: state.team
+});
+
+export default connect(mapStateToProps)(CompetitionDetails);
