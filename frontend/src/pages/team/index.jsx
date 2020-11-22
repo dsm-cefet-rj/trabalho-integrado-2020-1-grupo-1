@@ -8,12 +8,14 @@ import Title from '../../components/Title';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
+import * as teamActions from '../../store/actions/team';
+
 import {
   TeamName, 
   Since
 } from './styles';
 
-const Team = ({ team, user }) => {  
+const Team = ({ team, user, teamData }) => {  
   const [invites, setInvites] = useState([]);
 
   useEffect(() => {
@@ -23,12 +25,13 @@ const Team = ({ team, user }) => {
   }, [])
 
   function exitTeam() {
-    api.delete(`/api/users_teams?username=${user.username}`)
+    api.delete(`/api/userteam/${user.username}`)
     .then(() => {
+      teamData(null, null, null)
       alert('Saída de equipe realizada com sucesso!')
       window.location.href='/home'
     })
-    .catch(error => console.log(error.response))
+    .catch(error => console.log(error))
   }
 
   function acceptInvite(invite) {
@@ -74,13 +77,13 @@ const Team = ({ team, user }) => {
       <Header />
       <Title content="Equipe" />
       
-      {(!team) ? 
+      {(team) ? 
         <div className="center">
           <div className="image2"></div>
           <TeamName>{team.name}</TeamName>
           <Since>Desde {team.entryYear}</Since>
 
-          <Link to={`/viewteam/${team.name}`} id="btn_viewTeam">Visualizar equipe</Link>
+          <Link to={`/viewteam`} id="btn_viewTeam">Visualizar equipe</Link>
           <button type="button" id="btn_leave" onClick={exitTeam}>Sair da equipe</button>
         </div> 
       : 
@@ -119,4 +122,8 @@ const mapStateToProps = state => ({
   team: state.team
 })
 
-export default connect(mapStateToProps)(Team)
+const mapDispatchToProps = dispatch => ({
+  teamData: (name, initials, entryYear) => dispatch(teamActions.teamData(name, initials, entryYear))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Team)

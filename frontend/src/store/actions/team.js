@@ -1,10 +1,11 @@
-export function teamData(name, initials, entryYear) {
+export function teamData(name, initials, entryYear, image) {
   return {
     type: 'SET_TEAM',
     payload: {
       name,
       initials,
-      entryYear
+      entryYear,
+      image
     }
   }
 }

@@ -66,6 +66,7 @@
   ],
   "teams": [
     {
+      "id":"JTCRA",
       "name": "Jantuscara",
       "initials": "JTCRA",
       "image": "",
@@ -85,8 +86,28 @@
           "elo": "Platina"
         }
       ],
-      "competitions": [],
-      "titles": []
+      "competitions": [
+        {
+          "id": 0.3476298798,
+          "id_competicao": 0.2176497234,
+          "nome_competicao": "Clash 1.0",
+          "data_participacao": "2020-12-22"
+        },
+        {
+          "id": 0.3476298968798,
+          "id_competicao": 0.218776497234,
+          "nome_competicao": "CBLOL 2016",
+          "data_participacao": "2016-05-08"
+        }
+      ],
+      "titles": [
+        {
+          "id": 0.347623784234759,
+          "id_competicao": 0.2176497234,
+          "nome_competicao": "Clash 1.0",
+          "posicao": "Primeiro lugar"
+        }
+      ]
     },
     {
       "id": "BDM",
@@ -107,9 +128,9 @@
       "titles": []
     }
   ],
-  "users_teams": [
+  "userteam": [
     {
-      "id": "JTCRA",
+      "id": "Entonin",
       "name": "Jantuscara",
       "entryYear": "2019",
       "username": "Entonin",

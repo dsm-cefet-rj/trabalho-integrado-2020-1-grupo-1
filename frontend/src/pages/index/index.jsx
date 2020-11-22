@@ -19,8 +19,8 @@ import { useEffect } from 'react';
 
 const Index = ({ user, team, teamData }) => {
   useEffect(() => { 
-    api.get(`/api/users_teams?username:${user?.username}`)
-    .then(response => teamData(response.data[0].name, response.data[0].initials, response.data[0].entryYear))
+    api.get(`/api/userteam/${user?.username}`)
+    .then(response => teamData(response.data.name, response.data.image, response.data.initials, response.data.entryYear))
     .catch(error => console.log(error.response))
   }, [])
 
