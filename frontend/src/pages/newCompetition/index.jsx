@@ -57,95 +57,182 @@ const NewCompetition = ({ user }) => {
       <Title content="Nova competição" />
 
       <form onSubmit={e => sendData(e)}>
-        <input
-          type="text"
-          placeholder="Nome *"
-          required
-          id="competition_name"
-        />
-        <input
-          type="text"
-          placeholder="Sigla *"
-          required
-          id="competition_initials"
-        />
-                <label htmlFor="url-img">Foto de perfil</label>
-                        <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
-                        <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
-                        <button className="btn_load_image" id="competition_load_image" onClick={() => {
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_name">Nome *</label>
+              <input
+                type="text"
+                required
+                id="competition_name"
+                className="form-control"
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_initials">Sigla *</label>
+              <input
+                type="text"
+                required
+                id="competition_initials"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="url-img">Foto de perfil</label>
+              <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
+              <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
+                        {/* <button className="btn_load_image" id="competition_load_image" onClick={() => {
                           // setStateOfButton()
                           // convertToBase64()
                           console.log('carregar')
                         }}>
-                          Carregar
-                        </button>
-          <button type="button" id="competition_select_picture" onClick={() => console.log('enviar')}>Enviar</button>
-        <label htmlFor="competition_level">Nível *</label>
-        <select id="competition_level" onChange={e => setLevel(e.target.value)}>
-          <option value="Livre">Livre</option>
-          <option value="Ferro+">Ferro+</option>
-          <option value="Prata+">Prata+</option>
-          <option value="Ouro+">Ouro+</option>
-          <option value="Platina+">Platina+</option>
-          <option value="Diamante+">Diamante+</option>
-          <option value="Mestre+">Mestre+</option>
-          <option value="Grão Mestre+">Grão Mestre+</option>
-          <option value="Challenger">Challenger</option>
-        </select>
-        <input
-          type="date"
-          placeholder="Data do início da competição *"
-          required
-          id="competition_initial_date"
-        />
-        <input
-          type="time"
-          placeholder="Horário do início da competição *"
-          required
-          id="competition_initial_time"
-        />
-        <input
-          type="date"
-          placeholder="Data do fim da competição *"
-          required
-          id="competition_final_date"
-        />
-        <input
-          type="time"
-          placeholder="Horário do fim da competição *"
-          required
-          id="competition_final_time"
-        />
-        <input
-          type="date"
-          placeholder="Data do início da inscrição *"
-          required
-          id="competition_initial_subscription_date"
-        />
-        <input
-          type="date"
-          placeholder="Data do fim da inscrição *"
-          required
-          id="competition_final_subscription_date"
-        />
-        <input
-          type="text"
-          placeholder="Premiação *"
-          required
-          id="competition_awards"
-        />
-        <input
-          type="text"
-          placeholder="Regras *"
-          required
-          id="competition_rules"
-        />
-        <select id="competition_qty_teams">
-          <option value="8">8 equipes</option>
-          <option value="16">16 equipes</option>
-          <option value="32">32 equipes</option>
-        </select>
-        <button type="submit" id="btn_create_competition">Criar</button>
+                   Carregar
+              </button> */}
+              {/* <button type="button" id="competition_select_picture" onClick={() => console.log('enviar')}>Enviar</button> */}
+            </div>
+          </div>
+          
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_level">Nível *</label>
+              <select id="competition_level" onChange={e => setLevel(e.target.value)} className="form-control">
+                <option value="Livre">Livre</option>
+                <option value="Ferro+">Ferro+</option>
+                <option value="Prata+">Prata+</option>
+                <option value="Ouro+">Ouro+</option>
+                <option value="Platina+">Platina+</option>
+                <option value="Diamante+">Diamante+</option>
+                <option value="Mestre+">Mestre+</option>
+                <option value="Grão Mestre+">Grão Mestre+</option>
+                <option value="Challenger">Challenger</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_initial_date">Data do início da competição *</label>
+              <input
+                type="date"
+                required
+                id="competition_initial_date"
+                className="form-control"
+              />
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_initial_time">Horário do início da competição *</label>
+              <input
+                type="time"
+                required
+                id="competition_initial_time"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_final_date">Data do fim da competição *</label>
+              <input
+                type="date"
+                required
+                id="competition_final_date"
+                className="form-control"
+              />
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_final_time">Horário do fim da competição *</label>
+              <input
+                type="time"
+                required
+                id="competition_final_time"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_initial_subscription_date">Data do início da inscrição *</label>
+              <input
+                type="date"
+                required
+                id="competition_initial_subscription_date"
+                className="form-control"
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_final_subscription_date">Data do fim da inscrição *</label>
+              <input
+                type="date"
+                required
+                id="competition_final_subscription_date"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_qty_teams">Quantidade de equipes</label>
+              <select id="competition_qty_teams" className="form-control">
+                <option value="8">8 equipes</option>
+                <option value="16">16 equipes</option>
+                <option value="32">32 equipes</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="competition_awards">Premiação *</label>
+              <input
+                type="text"
+                required
+                id="competition_awards"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="competition_rules">Regras *</label>
+          <input
+            type="text"
+            required
+            id="competition_rules"
+            className="form-control"
+          />
+        </div>
+        
+        <div className="center">
+          <button type="submit" id="btn_create_competition" className="btn_save btn-primary">Criar</button>
+        </div>
+        <br /><br /><br />
       </form>
     </div>
   );

@@ -55,11 +55,15 @@ export default function Competition() {
         <div className="items-competitions">
           {competitions?.map(competition => (
             <Link to={`/viewcompetition/${competition.id}`} key={competition.id}>
-              <div className="item-competition" id="btn_id_competição">
-                <img src={competition.competition_picture} alt={competition.competition_name} />
-                <h3>{competition.competition_name}</h3>
-                <p>Nível: {competition.competition_level}</p>
-                <p>Premiação: {competition.competition_awards}</p>
+              <div className="item-competition row" id="btn_id_competição">
+                <div className="col-md-2 box-image">
+                  <img src="https://upload.wikimedia.org/wikipedia/pt/7/74/CBLOL_2017.png" className="items-competitions-image" alt={competition.competition_name} />
+                </div>
+                <div className="col-md-10">
+                  <h3 className="items-competitions-name">{competition.competition_name}</h3>
+                  <p className="items-competitions-level">Nível: {competition.competition_level}</p>
+                  <p className="items-competitions-awards">Premiação: {competition.competition_awards}</p>
+                </div>
               </div>
             </Link>
           ))}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Title from '../../components/Title';
 import Header from '../../components/Header';
@@ -9,11 +10,34 @@ import api from '../../services/api';
 export default function ViewMatch() {
   const [match, setMatch] = useState({});
 
+  let { id, phase, team } = useParams();
+
   useEffect(() => {
-    api.get('/championships-matchs?competition_name=Clash')
+    api.get(`/api/championships-phases?competition_id=${id}`)
     .then(response => setMatch(response.data))
     .catch(err => console.log(err.response))
   }, [])
+
+  function getAdversary() {
+    switch(phase){
+      case 'eliminatorias':
+        for(let i = 0; i < (match[0]?.phases?.eliminatorias)?.length; i++) {
+          if(team === match[0]?.phases?.eliminatorias[i]) {
+            if(i % 2 === 1) {
+              return match[0]?.phases?.eliminatorias[i-1];
+            } else {
+              return match[0]?.phases?.eliminatorias[i+1];
+            }
+          }
+        }
+      default:
+        return '';
+    }
+  }
+
+  function generateCode() {
+    return Math.floor(Math.random() * 1000000);
+  }
 
   function sendPrint() {
     api.post('/api/championships-prints')
@@ -23,20 +47,21 @@ export default function ViewMatch() {
     <div className="container">
       <Menu />
       <Header />
-      <Title content="Partida" />{console.log(match)}
+      <Title content="Partida" />
 
-      <h3>{match.competition_name}</h3>
+      <h3>{match[0]?.competition_name}</h3>
+      <span>{match[0]?.phase}</span>
       <div>
         <div>
-          Equipe 1
+          {team}
         </div>
         <div>
-          Equipe 2
+          {getAdversary()}
         </div>
       </div>
 
       <h4>Código da partida</h4>
-      <h5>AAA123</h5>
+      <h5>{generateCode()}</h5>
 
       <h6>Print do término da partida</h6>
       <label htmlFor="url-img">Foto de perfil</label>

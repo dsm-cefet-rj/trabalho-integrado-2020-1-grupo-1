@@ -32,7 +32,6 @@ export default function user(state = INITIAL_STATE, action) {
          email: action.payload.email,
       }
     case "EDIT_USER":
-      console.log('estou aqui agr')
       return {
         ...state,
          name: action.payload.name,
@@ -47,6 +46,22 @@ export default function user(state = INITIAL_STATE, action) {
          twitter: action.payload.twitter,
          other: action.payload.other,
          email: action.payload.email,
+      }
+    case "LOGOUT_USER":
+      return {
+        ...state,
+         name: '',
+         username: '',
+         profile_picture: '',
+         role: '',
+         champion1: '',
+         champion2: '',
+         champion3: '',
+         facebook: '',
+         instagram: '',
+         twitter: '',
+         other: '',
+         email: '',
       }
     default:
       return state

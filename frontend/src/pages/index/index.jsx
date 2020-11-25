@@ -31,19 +31,54 @@ const Index = ({ user, team, teamData }) => {
 
       <div className="row">
         <div className="col-md-6">
-          <div className="box">
+          <div className="box about-me">
             <BoxTitle content="Sobre mim" />              
             <Roles>
               <div className="row">
-                {user?.name}
-                {user?.role}
-                <a href={user?.facebook}>Facebook</a>
-                <a href={user?.instagram}>Instagram</a>
-                <a href={user?.twitter}>Twitter</a>
-                <a href={user?.other}>Outro</a>
-                {user?.champion1}
-                {user?.champion2}
-                {user?.champion3}
+                <div className="col-md-6 name-role">
+                  <strong>Nome:</strong> {(user?.name).split(' ')[0]}
+                </div>
+
+                <div className="col-md-6 name-role">
+                  <strong>Role: </strong> {(user?.role)}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-3 social-media-link">
+                  <a href={user?.facebook}>Facebook</a>
+                </div>
+
+                <div className="col-md-3 social-media-link">
+                  <a href={user?.instagram}>Instagram</a>
+                </div>
+
+                <div className="col-md-3 social-media-link">
+                  <a href={user?.twitter}>Twitter</a>
+                </div>
+
+                <div className="col-md-3 social-media-link">
+                  <a href={user?.other}>Outro</a>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-4 card-champion-area">
+                  <div className="card-champion-item">
+                    {user?.champion1}
+                  </div>
+                </div>
+
+                <div className="col-md-4 card-champion-area">
+                  <div className="card-champion-item">
+                    {user?.champion2}
+                  </div>
+                </div>
+
+                <div className="col-md-4 card-champion-area">
+                  <div className="card-champion-item">
+                    {user?.champion3}
+                  </div>
+                </div>
               </div>
             </Roles>
           </div>

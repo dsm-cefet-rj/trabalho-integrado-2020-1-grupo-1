@@ -9,6 +9,9 @@ export const Banner = styled.div`
   justify-content: center;  
 
   margin-bottom: 50px;
+
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 `
 
 export const ProfilePicture = styled.img`

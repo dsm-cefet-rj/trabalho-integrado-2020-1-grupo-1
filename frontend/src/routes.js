@@ -67,7 +67,7 @@ export default function Routes() {
           <PrivateRoute path="/mycompetition" component={ () => <MyCompetition/> } />
           <PrivateRoute path="/newcompetition" component={ () => <NewCompetition/> } />
           <PrivateRoute path="/viewcompetition/:id" component={ () => <ViewCompetition/> } />
-          <PrivateRoute path="/match" component={ () => <ViewMatch/> } />
+          <PrivateRoute path="/match/:id/:phase/:team" component={ () => <ViewMatch/> } />
         </Switch>
       </BrowserRouter>
     </Provider>

@@ -20,6 +20,7 @@ const ViewTeam = ({ user, team, teamData }) => {
 
   function invitePlayer(e) {
     e.preventDefault();
+
     const invitedUser = document.getElementById("input_username").value;
     api.post('/api/invites', {
       id: Math.random(),
@@ -53,14 +54,16 @@ const ViewTeam = ({ user, team, teamData }) => {
     <div className="container">
       <Menu />
       <Header />
-      <Title content={teamDataState[0]?.name} />
+      <Title content={'Equipe ' + teamDataState[0]?.name} />
 
       <div className="area-logo center">
         <div className="logo-team">
 
         </div>
-        <button type="button" id="btn_add_member" className="button-add-delete">+</button>
-        <button type="button" id="btn_delete_team" className="button-add-delete" onClick={() => deleteTeam()}>x</button>
+        <div className="list-buttons">
+          <button type="button" id="btn_add_member" className="button-add-delete" title="Adicionar membro">+</button>
+          <button type="button" id="btn_delete_team" className="button-add-delete" title="Deletar equipe" onClick={() => deleteTeam()}>x</button>
+        </div>
       </div>
 
       <h4 className="center">Membros</h4>
@@ -75,7 +78,7 @@ const ViewTeam = ({ user, team, teamData }) => {
       </div>
 
       <div className="box">
-        <h4>Histórico de competições</h4>
+        <h4 className="bold">Histórico de competições</h4>
         <div className="list-competitions">
           {(teamDataState[0]?.competitions) ? 
             (teamDataState[0]?.competitions).map(competition => (
@@ -89,7 +92,7 @@ const ViewTeam = ({ user, team, teamData }) => {
       </div>
 
       <div className="box">
-        <h4>Títulos</h4>
+        <h4 className="bold">Títulos</h4>
         <div className="list-titles">
           {(teamDataState[0]?.titles) ? 
             (teamDataState[0]?.titles).map(title => (

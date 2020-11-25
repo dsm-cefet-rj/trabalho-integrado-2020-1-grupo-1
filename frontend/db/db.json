@@ -1,19 +1,20 @@
 {
   "users": [
     {
+      "id": "Entonin",
       "name": "Anthony Silva",
       "username": "Entonin",
+      "profile_picture": "link",
+      "email": "anthony.vii27@gmail.com",
+      "password": "123456",
       "role": "",
       "champion1": "Ekko",
       "champion2": "Kayn",
       "champion3": "Lee Sin",
-      "password": "123456",
       "facebook": "https://facebook.com",
       "instagram": "https://instagram.com",
       "twitter": "https://twitter.com",
-      "others": "Nada",
-      "email": "anthony.vii27@gmail.com",
-      "id": "Entonin"
+      "others": "Nada"
     },
     {
       "id": "UnoDeFirmaTunado",
@@ -66,7 +67,7 @@
   ],
   "teams": [
     {
-      "id":"JTCRA",
+      "id": "JTCRA",
       "name": "Jantuscara",
       "initials": "JTCRA",
       "image": "",
@@ -219,8 +220,24 @@
       "id_partida": 0.12344567982,
       "competition_name": "Clash",
       "competition_initials": "CLA",
-      "user_manage": "UnoDeFirmaTunado",
+      "user_manage": "Entonin",
       "prints": [
+        {
+          "id": 0.12344543524332,
+          "team1": "Jantuscara",
+          "team2": "BondeDasMaravilhas",
+          "image_team1": "",
+          "image_team2": "",
+          "url_print": ""
+        },
+        {
+          "id": 0.12344543524332,
+          "team1": "Jantuscara",
+          "team2": "BondeDasMaravilhas",
+          "image_team1": "",
+          "image_team2": "",
+          "url_print": ""
+        },
         {
           "id": 0.12344543524332,
           "team1": "Jantuscara",
@@ -252,6 +269,27 @@
       "competition_name": "Clash",
       "competition_initials": "CLA",
       "team": "Jantuscara"
+    }
+  ],
+  "championships-phases": [
+    {
+      "id": 0.324323245432,
+      "competition_id": 0.2110419941848125,
+      "phase": "eliminatorias",
+      "competition_name": "Clash",
+      "competition_initials": "CLA",
+      "phases": {
+        "eliminatorias": [
+          "Jantuscara",
+          "Marco",
+          "Sarei",
+          "Miko"
+        ],
+        "oitavas": [],
+        "quartas": [],
+        "semi": [],
+        "final": []
+      }
     }
   ]
 }

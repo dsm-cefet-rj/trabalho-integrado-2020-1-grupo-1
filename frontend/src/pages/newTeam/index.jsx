@@ -35,35 +35,39 @@ export default function NewTeam() {
       <Title content="Nova equipe" />
 
       <form onSubmit={e => sendData(e)}>
-        <input 
-          type="text" 
-          placeholder="Nome da equipe *" 
-          required={true} 
-          id="team_name"
-        />
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="team_name">Nome da equipe *</label>
+              <input 
+                type="text"
+                className="form-control"
+                id="team_name"
+                required
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="team_initials">Sigla da equipe *</label>
+              <input 
+                type="text" 
+                className="form-control"
+                id="team_initials"
+                required
+              />
+            </div>
+          </div>
+        </div>
 
-        <input 
-          type="text" 
-          placeholder="Sigla da equipe *" 
-          required={true} 
-          id="team_initials"
-        />
-
-        <span>Faça upload da sua logo</span>
-        <label htmlFor="url-img">Foto de perfil</label>
-        <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
-        <input type="file" name="url-img" id="btn_select_image" className="form-control-file" accept="image/png, image/jpeg" />
-        <button className="btn-send-picture" id="btn-load-image" onClick={() => {
-          // setStateOfButton()
-          // convertToBase64()
-            console.log('carregar')
-        }}>
-          Carregar
-        </button>
-
-        <p>Você será automáticamente alocado como administrador da equipe</p>
-
-        <button type="submit" id="btn_create_team">Criar</button>
+        <div className="form-group">
+          <label htmlFor="url-img">Logo da equipe</label>
+          <input type="file" name="url-img" id="btn_select_image" className="form-control-file" accept="image/png, image/jpeg" />
+        </div>
+        
+        <div className="center">
+          <button type="submit" id="btn_create_team" className="default-button">Criar</button>
+        </div>
       </form>
     </div>
   );

@@ -7,6 +7,8 @@ import Menu from '../../components/Menu';
 import api from '../../services/api';
 import { connect } from 'react-redux';
 
+import { CardMatch, AdminArea } from './styles';
+
 const MyCompetition = ({ user }) =>{
   const [competition, setCompetition] = useState({});
   const [competitionPrints, setCompetitionPrints] = useState({});
@@ -97,38 +99,60 @@ const MyCompetition = ({ user }) =>{
       <Menu />
       <Header />
 
-      <Title content="Sua competição" />{console.log(competitionPrints)}
+      <Title content="Sua competição" />
 
       {(competition[0]) ? 
         <div>
           <h1>{competition[0].name}</h1>
           <div className="box-your-competition">
-            <h4>Prints recebidos</h4>
+            <h4 className="box-your-competition-title">Prints recebidos</h4>
             <div className="list-matchs">
-              {(competitionPrints.prints) ? (competitionPrints.prints).map(print => (
-                <div className="match" key={print.id}>
-                  <div className="icon-team">
-                    <img src={print.image_team1} alt={print.team1} />
+              {(competitionPrints[0]?.prints) ? (competitionPrints[0]?.prints).map(print => (
+                <CardMatch key={print.id}>
+                  <div className="row">
+                    <div className="col-md-2 img-team">
+                      <div className="icon-team">
+                        <img src={print.image_team1} alt={print.team1} className="img-left"/>
+                      </div>
+                    </div>
+                    <div className="col-md-3 name-team">
+                      {print.team1}
+                    </div>
+                    
+                    <div className="col-md-2 versus">
+                      X
+                    </div>
+
+                    <div className="col-md-3 name-team">
+                      {print.team2}
+                    </div>
+                    <div className="col-md-2 img-team">
+                      <div className="icon-team">
+                        <img src={print.image_team2} alt={print.team2} className="img-right" />
+                      </div>
+                    </div>
                   </div>
-                  {print.team1}
-                  X
-                  {print.team2}
-                  <div className="icon-team">
-                    <img src={print.image_team2} alt={print.team2} />
+                  <div className="row buttons-winner">
+                    <div className="col-md-6">
+                      <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.team1)}>Vencedor</button>
+                    </div>
+                    <div className="col-md-6">
+                      <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.team2)}>Vencedor</button>
+                    </div>
                   </div>
-                  <button type="button" id="" onClick={() => setWinner(print.team1)}>Vencedor</button>
-                  <button type="button" id="" onClick={() => setWinner(print.team2)}>Vencedor</button>
-                  <button type="button" id="" onClick={() => console.log('ver print')}>Ver print</button>
-                </div>
-              )) : ''}
+                  <div className="row btn-print">
+                    <button type="button" id="" className="btn-primary" onClick={() => console.log('ver print')}>Ver print</button>
+                  </div>
+                </CardMatch>
+              )) : 'KOE'}
             </div>
           </div>
 
-          <div>
+          <AdminArea>
             <h4>Ações do administrador</h4>
-            <button type="button" id="btn_edit_datehour" onClick={() => console.log('edit date')}>Editar data e horário</button>
-            <button type="button" id="btn_delete_comp" onClick={() => deleteCompetition()}>Deletar competição</button>
-          </div>
+            <button type="button" id="btn_edit_datehour" className="btn-primary" onClick={() => console.log('edit date')}>Editar data e horário</button>
+            <button type="button" id="btn_delete_comp" className="btn-primary" onClick={() => deleteCompetition()}>Deletar competição</button>
+          </AdminArea>
 
           <div>
             <form onSubmit={e => setDatetime(e)}>

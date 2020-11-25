@@ -8,7 +8,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: #111;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 button, select {
@@ -26,6 +26,12 @@ input {
   outline: none;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .box {
   background: #CECECE;
   width: 100%;
@@ -35,6 +41,10 @@ input {
   z-index: 2;
   text-align: center;
   padding: 10px;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .center {
@@ -60,22 +70,57 @@ input {
   border: 5px solid #FFF;
 }
 
+.about-me {
+  
+}
+
+.name-role {
+  font-size: 15px;
+}
+
+.card-champion-area {
+  height: 100px;
+  width: 100px;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.card-champion-item {
+  height: 100px;
+  width: 100px;
+  background: green;
+  margin-top: 20px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.social-media-link {
+  margin-top: 20px;
+}
+
 
 /* TEAMS - INVITE */
 .list-invites {
-  background: red;
+  background: #AA0000;
   padding: 10px;
+  border-radius: 10px;
+  height: 400px;
 }
 
 .list {
   padding: 10px;
   background: #E5E5E5;
   overflow-y: scroll;
+  border-radius: 10px;
+  height: 380px;
 }
 
 .invite {
   background: #CECECE;
   margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 
@@ -94,11 +139,37 @@ input {
   height: 140px;
   border-radius: 70px;
   background: red;
+  border: 5px solid #E5E5E5;
+}
+
+.list-buttons {
+  display: flex;
+  padding: 20px;
+}
+
+.button-add-delete {
+  background: #AA0000;
+  width: 40px;
+  height: 40px;
+  font-weight: bold;
+  color: #FFF;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 10px;
+  font-size: 20px;
+}
+
+.button-add-delete:hover {
+  background: #FF0000;
+  transition: .5s ease;
 }
 
 .list-members {
   display: flex;
   justify-content: center;
+  padding-bottom: 30px;
 }
 
 .member-icon {
@@ -107,13 +178,15 @@ input {
   border-radius: 20px;
   background: red;
   margin-right: 10px;
+  border: 2px solid #E5E5E5;
 }
 
 .list-titles, .list-competitions {
   padding: 10px;
   background: #E5E5E5;
-  height: 85%;
+  height: 86%;
   overflow-y: scroll;
+  border-radius: 10px;
 }
 
 .competition, .title {
@@ -122,38 +195,77 @@ input {
   width: 100%;
   height: 80px;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 
 /* COMPETITIONS - MENU */
 .items-competitions {
-  padding: 10px;
+  padding: 10px 0 10px 25px;
   background: #E5E5E5;
   height: 500px;
+  border-radius: 10px;
   overflow-y: scroll;
 }
 
 .item-competition {
-  padding: 7px;
+  padding: 10px;
   background: #CECECE;
   width: 100%;
-  height: 100px;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
+.item-competition:hover {
+  background: #C0C0C0;
+  transition: .4s ease;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.items-competitions-name {
+  color: #000;
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.box-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.items-competitions-image {
+  width: 100px;
+}
+
+.items-competitions-level, .items-competitions-awards {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+}
 
 /*  YOUR COMPETITION */
 .box-your-competition {
   background: #CECECE;
   height: 400px;
   padding: 10px;
+  border-radius: 10px;
+}
+
+.box-your-competition-title {
+  font-weight: bold;
 }
 
 .list-matchs {
   background: #E5E5E5;
   padding: 10px;
-  height: 340px;
+  height: 343px;
   overflow-y: scroll;
+  border-radius: 10px;
 }
 
 .match {
@@ -162,4 +274,102 @@ input {
   height: 50px;
   cursor: pointer;
   margin-bottom: 10px;
+}
+
+
+/* COMPETITION VIEW */
+.card-team {
+  background: red;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+
+/* BUTTONS */
+.default-button {
+  width: 200px;
+  padding: 7px;
+  background: #444;
+  text-align: center;
+  border-radius: 3px;
+  margin: 7px;
+  color: #FFF;
+}
+
+.default-button:hover {
+  text-decoration: none;
+  color: #FFF;
+  background: #555;
+  transition: .4s ease;
+}
+
+.default-primary {
+  width: 200px;
+  padding: 7px;
+  text-align: center;
+  border-radius: 3px;
+  margin: 7px;
+}
+
+.button-yes-no {
+  width: 100px;
+  padding: 7px;
+  background: #444;
+  text-align: center;
+  border-radius: 3px;
+  margin: 7px;
+  color: #FFF;
+}
+
+label {
+  color: #FFF;
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+.btn_save {
+  width: 150px;
+  padding: 7px;
+  border-radius: 3px;
+  color: #FFF;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.p-select-image {
+  color: #FFF;
+  font-size: 13px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+
+/* SIGNUP */
+.title-signup {
+  color: #FFF;
+  margin-top: 30px;
+}
+
+.tip-signup {
+  color: #FFF;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
+.text-checkbox {
+  color: #FFF;
+  font-size: 13px;
+}
+
+.text-checkbox  input[type="checkbox"] {
+  margin-right: 10px;
 }

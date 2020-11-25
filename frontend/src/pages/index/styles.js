@@ -15,7 +15,7 @@ export const Screen = styled.div`
 export const Roles = styled.div`
   width: 100%;
   height: 200px;
-  background: green;
+  padding: 0 40px;
   
   div {
     display: flex;

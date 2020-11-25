@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import { Menu } from './styles';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 
+import * as UserActions from '../../store/actions/user';
+import * as TeamActions from '../../store/actions/team';
+
 import icon from './icon.png';
 import logout from './logout.png';
 
-export default function Top_Left_Side_Menu() {
+const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
   const [width, setWidth] = useState(window.innerWidth);
 
   window.addEventListener('resize', function(){
     setWidth(window.innerWidth)
   });
+
+  function handleLogout() {
+    logoutUser()
+    logoutTeam()
+    window.location.href='/'
+  }
 
   return (
     <Menu>
@@ -23,7 +33,7 @@ export default function Top_Left_Side_Menu() {
             <ul>
               <Dropdown drop={(width < 767.98) ? 'down' : 'right'}>
                 <Dropdown.Toggle variant="menu-option" id="menu-option" className="menu-option">
-                  Nome_usuario
+                  {(user.name).split(' ')[0]}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu variant="dropdown-menu" className="dropdown-menu" id="dropdown-menu" >
@@ -54,10 +64,21 @@ export default function Top_Left_Side_Menu() {
               </Dropdown>              
             </ul>
             <div>
-              <img src={logout} alt="Sair" id="btn_exit" title="Sair" />
+              <img src={logout} alt="Sair" id="btn_exit" title="Sair" onClick={handleLogout}/>
             </div>
           </nav>
         </div>
     </Menu>
   )
 }
+
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+const mapDispatchToProps = dispatch => ({
+  logoutUser: () => dispatch(UserActions.logoutUser()),
+  logoutTeam: () => dispatch(TeamActions.logoutTeam())
+})  
+
+export default connect(mapStateToProps, mapDispatchToProps)(Top_Left_Side_Menu);

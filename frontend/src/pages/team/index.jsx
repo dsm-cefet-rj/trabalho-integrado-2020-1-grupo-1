@@ -19,7 +19,7 @@ const Team = ({ team, user, teamData }) => {
   const [invites, setInvites] = useState([]);
 
   useEffect(() => {
-    api.get('/api/invites')
+    api.get(`/api/invites?user_convidado=${user.username}`)
     .then(response => setInvites(response.data))
     .catch(err => console.log(err.response))
   }, [])
@@ -75,20 +75,23 @@ const Team = ({ team, user, teamData }) => {
     <div className="container">
       <Menu />
       <Header />
-      <Title content="Equipe" />
+      <Title content="Equipe" />{console.log(invites)}
       
-      {(team) ? 
+      {(team.name) ? 
         <div className="center">
           <div className="image2"></div>
           <TeamName>{team.name}</TeamName>
           <Since>Desde {team.entryYear}</Since>
-
-          <Link to={`/viewteam`} id="btn_viewTeam">Visualizar equipe</Link>
-          <button type="button" id="btn_leave" onClick={exitTeam}>Sair da equipe</button>
+          
+          <div className="row">
+            <Link to={`/viewteam`} id="btn_viewTeam" className="default-button">Visualizar equipe</Link>
+            <button type="button" id="btn_leave" className="default-button" onClick={exitTeam}>Sair da equipe</button>
+          </div>
         </div> 
       : 
         <div className="list-invites">
           <div className="list">
+            <h3>Seus convites</h3>
             {(invites) ? 
               invites.map(invite => (
                 <div className="center">
@@ -96,8 +99,8 @@ const Team = ({ team, user, teamData }) => {
                     <h2>{invite.nome_equipe}</h2>
                     <span>{invite.sigla_equipe}</span>
                     <div className="invite-buttons">
-                      <button type="button" id="btn_accept" onClick={() => acceptInvite(invite)}>Yes</button>
-                      <button type="button" id="btn_reject" onClick={() => rejectInvite(invite)}>No</button>
+                      <button type="button" id="btn_accept" className="button-yes-no btn-primary" onClick={() => acceptInvite(invite)}>Yes</button>
+                      <button type="button" id="btn_reject" className="button-yes-no btn-primary" onClick={() => rejectInvite(invite)}>No</button>
                     </div>
                   </div>
                   <Link to="/newteam" id="btn_create_team">Criar nova equipe</Link>

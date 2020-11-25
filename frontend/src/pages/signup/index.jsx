@@ -17,7 +17,13 @@ export default function Signup(){
     const username = document.getElementById('signup_username').value;
     const profile_picture = "link";
     const email = document.getElementById('signup_email').value;
+
     const password = document.getElementById('signup_password').value;
+    const confirm_password = document.getElementById('signup_confirm_password').value;
+
+    if(password !== confirm_password) {
+      return alert('As senhas são diferentes! Por favor, verifique-as e tente novamente!')
+    }
 
     api.post('/api/users', {
       id:username,
@@ -45,58 +51,56 @@ export default function Signup(){
   return (
     <Screen>
       <SignupArea>
-        <h1>Cadastre-se</h1>
-        <p>Campos com * são obrigatórios</p>
+        <h1 className="title-signup">Cadastre-se</h1>
+        <p className="tip-signup">Campos com * são obrigatórios</p>
         <br /><br />
 
         <form onSubmit={e => sendData(e)}>
+          <label htmlFor="signup_name">Nome *</label>
           <input 
             type="text" 
-            placeholder="Nome" 
-            required
+            className="form-control"
             id="signup_name"
+            required
           />
 
+          <label htmlFor="signup_username">Username League of Legends *</label>
           <input 
-            type="text" 
-            placeholder="Username" 
-            required
+            type="text"
+            className="form-control"
             id="signup_username"
+            required
           />
 
           <label htmlFor="url-img">Foto de perfil</label>
-          <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
           <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
-          <button className="btn_load_image" id="btn-load-image" onClick={() => {
-            // setStateOfButton()
-            // convertToBase64()
-            console.log('carregar')
-          }}>
-          </button>          
-          <button type="button" id="btn_select_image" onClick={() => console.log('enviar')}>Enviar</button>
 
+          <label htmlFor="signup_email">E-mail *</label>
           <input 
-            type="email" 
-            placeholder="E-mail" 
-            required
+            type="email"
+            className="form-control"
             id="signup_email"
+            required
           />
 
+          <label htmlFor="signup_password">Senha *</label>
           <input 
-            type="password" 
-            placeholder="Senha" 
-            required
+            type="password"
+            className="form-control" 
             id="signup_password"
+            required
           />
 
+          <label htmlFor="signup_confirm_password">Confirmar senha *</label>
           <input 
             type="password" 
-            placeholder="Confirmar senha" 
-            required
+            className="form-control"
             id="signup_confirm_password"
+            required
           />
 
-          <span>
+          <br/>
+          <span className="text-checkbox">
             <input 
               type="checkbox" 
               id="cb_policies"
@@ -105,7 +109,10 @@ export default function Signup(){
             Declaro que li e aceito os Termos de uso e as políticas de privacidade.
           </span>
 
-          <button type="submit">Cadastrar</button>
+          <br/><br/>
+          <div className="center">
+            <button type="submit" className="btn-primary default-primary">Cadastrar</button>
+          </div>
         </form>
       </SignupArea>
     </Screen>
