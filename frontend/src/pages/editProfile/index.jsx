@@ -25,7 +25,7 @@ const EditProfile = ({ user, editUser }) => {
     const twitter = document.getElementById('edit_twitter').value;
     const other = document.getElementById('edit_others').value;
 
-    api.put('/api/users/Entonin', {
+    api.put(`/api/users/${user.username}`, {
       name,
       username,
       role:selectedRole,

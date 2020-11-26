@@ -1,20 +1,18 @@
 {
   "users": [
     {
-      "id": "Entonin",
       "name": "Anthony Silva",
       "username": "Entonin",
-      "profile_picture": "https://www.epamesterdao.com/wp-content/uploads/2018/09/user.png",
-      "email": "anthony.vii27@gmail.com",
-      "password": "123456",
-      "role": "Suporte",
+      "role": "",
       "champion1": "Ekko",
       "champion2": "Kayn",
       "champion3": "Lee Sin",
       "facebook": "https://facebook.com",
       "instagram": "https://instagram.com",
       "twitter": "https://twitter.com",
-      "others": "Nada"
+      "others": "Nada",
+      "email": "anthony.vii27@gmail.com",
+      "id": "Entonin"
     },
     {
       "id": "UnoDeFirmaTunado",
@@ -178,7 +176,7 @@
       "competition_awards": "1500RP",
       "competition_rules": "Nenhuma",
       "competition_qty_teams": 16,
-      "competition_manager": "UnoDeFirmaTunado"
+      "competition_manager": "Entonin"
     },
     {
       "id": 0.14547646565030403,
@@ -199,7 +197,7 @@
       "competition_awards": "1600RP",
       "competition_rules": "Nenhuma",
       "competition_qty_teams": "32",
-      "competition_manager": "Entonin"
+      "competition_manager": "UnoDeFirmaTunado"
     },
     {
       "id": 0.8825132211737683,
@@ -235,25 +233,28 @@
           "id": 0.12344543524332,
           "team1": "Jantuscara",
           "team2": "BondeDasMaravilhas",
-          "image_team1": "",
-          "image_team2": "",
-          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
+          "image_team1": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+          "image_team2": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png",
+          "isViewed": false
         },
         {
-          "id": 0.12344543524332,
+          "id": 0.6136751348173859,
           "team1": "Jantuscara",
-          "team2": "BondeDasMaravilhas",
-          "image_team1": "",
-          "image_team2": "",
-          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
+          "team2": "Marco",
+          "image_team1": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+          "image_team2": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png",
+          "isViewed": false
         },
         {
-          "id": 0.12344543524332,
+          "id": 0.554828856645194,
           "team1": "Jantuscara",
-          "team2": "BondeDasMaravilhas",
-          "image_team1": "",
-          "image_team2": "",
-          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
+          "team2": "Marco",
+          "image_team1": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+          "image_team2": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png",
+          "isViewed": true
         }
       ]
     }
@@ -263,12 +264,14 @@
       "id": 0.12344567982,
       "matchs": [
         {
+          "id": 0.12344543524332,
           "team1": "Jantuscara",
           "team2": "BondeDasMaravilhas",
-          "match_code": "ABC123"
+          "match_code": "ABC123",
+          "winner": "Jantuscara"
         }
       ],
-      "winner": "BondeDasMaravilhas"
+      "winner": "Marco"
     }
   ],
   "register-championship": [
@@ -299,20 +302,43 @@
         "semi": [],
         "final": []
       }
+    },
+    {
+      "id": 0.3254323245432,
+      "competition_id": "0.14547646565030403",
+      "phase": "eliminatorias",
+      "competition_name": "CBLoiro",
+      "competition_initials": "CBLOL",
+      "phases": {
+        "eliminatorias": [],
+        "oitavas": [],
+        "quartas": [
+          "Jantuscara",
+          "Jantuscara",
+          "Jantuscara",
+          "Jantuscara",
+          "Jantuscara",
+          "Jantuscara",
+          "Jantuscara",
+          "Jantuscara"
+        ],
+        "semi": [],
+        "final": []
+      }
     }
   ],
   "user-titles": [
     {
-      "id": 0.26435432498123743,
+      "id": 0.26435432498123745,
       "user_id": "Entonin",
       "titles": [
         {
-          "id":"1",
+          "id": "1",
           "comp_name": "CBLOL 1° Edição",
           "position": "1° Lugar"
         },
         {
-          "id":"2",
+          "id": "2",
           "comp_name": "SBG LOL",
           "position": "3° Lugar"
         }
