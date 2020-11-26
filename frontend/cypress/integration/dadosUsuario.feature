@@ -33,16 +33,14 @@ Feature: Dados do usuario
 				     | confirm_password | String   | conter valor identico a signup_password									 |
 				     | cb_policies      | Checkbox |																													 |
 				    
-    And clicar no botão "confirmacao de cadastro" (btn_signup)
-    Then o sistema cadastra o usuário
-    And redireciona o usuário para a tela de login
+    And clicar no botï¿½o "confirmacao de cadastro" (btn_signup)
+    Then o sistema cadastra o usuï¿½rio
+    And redireciona o usuï¿½rio para a tela de login
 
    Scenario: Editar Usuario
-    Given que o usuario esta cadastrado no sistema 
-    And deseja alterar seus dados
-    When o usuario entra na tela de editar perfil(editProfile), 
-    acessada atraves do menu principal
+    Given que o usuario esta cadastrado no sistema e deseja alterar seus dados
+    When o usuario entra na tela de editar perfil(editProfile), acessada atraves do menu principal
     And alterar os dados desejados e clicar em "Salvar"(btn_save)
-    Then o sistema ira retificar as informacoes 
-    And o usuario sera redirecionado para o Index
+    Then o sistema ira retificar as informacoes e o usuario sera redirecionado para o Index
+
    
