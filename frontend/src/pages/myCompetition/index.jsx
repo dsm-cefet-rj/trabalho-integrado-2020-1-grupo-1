@@ -8,11 +8,56 @@ import api from '../../services/api';
 import { connect } from 'react-redux';
 
 import { CardMatch, AdminArea } from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: '300px',
+    borderRadius: '10px',
+    textAlign: 'center'
+  },
+  btn: {
+    width: '80px',
+    background: '#AA0000',
+    color: '#FFF',
+    borderRadius: '10px',
+    margin: '10px 5px 0px 5px'
+  }
+}));
 
 const MyCompetition = ({ user }) =>{
   const [competition, setCompetition] = useState({});
   const [competitionPrints, setCompetitionPrints] = useState({});
   const [championshipMatchData, setChampionshipMatchData] = useState({});
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const classes = useStyles();
+
+  const handleOpen = type => {
+    if(type === 'edit') {
+      setOpenEdit(true);
+    } else {
+      setOpenDelete(true);
+    }
+  };
+
+  const handleClose = type => {
+    if(type === 'edit') {
+      setOpenEdit(false);
+    } else {
+      setOpenDelete(false);
+    }
+  };
 
   useEffect(() => {
     api.get(`/championships?competition_manager=${user.username}`)
@@ -67,7 +112,10 @@ const MyCompetition = ({ user }) =>{
       competition_qty_teams: competition[0].competition_qty_teams,
       competition_manager: competition[0].competition_manager
     })
-    .then(() => alert('Data alterada com sucesso!'))
+    .then(() => {
+      alert('Data alterada com sucesso!')
+      window.location.href="/mycompetition"
+    })
     .catch(() => alert('Ocorreu um erro na alteração das datas!'))
   }
 
@@ -141,28 +189,70 @@ const MyCompetition = ({ user }) =>{
                     </div>
                   </div>
                   <div className="row btn-print">
-                    <button type="button" id="" className="btn-primary" onClick={() => console.log('ver print')}>Ver print</button>
+                    <button type="button" id="" className="btn-primary" onClick={() => window.location.href = print.url_print}>Ver print</button>
                   </div>
                 </CardMatch>
-              )) : 'KOE'}
+              )) : ''}
             </div>
           </div>
 
           <AdminArea>
             <h4>Ações do administrador</h4>
-            <button type="button" id="btn_edit_datehour" className="btn-primary" onClick={() => console.log('edit date')}>Editar data e horário</button>
-            <button type="button" id="btn_delete_comp" className="btn-primary" onClick={() => deleteCompetition()}>Deletar competição</button>
+            <button type="button" id="btn_edit_datehour" className="btn-primary" onClick={() => handleOpen('edit')}>Editar data e horário</button>
+            <button type="button" id="btn_delete_comp" className="btn-primary" onClick={() => handleOpen('delete')}>Deletar competição</button>
           </AdminArea>
 
-          <div>
-            <form onSubmit={e => setDatetime(e)}>
-              <input type="date" id="edit_date" defaultValue={competition[0].competition_initial_date?.date} required />
-              <input type="time" id="edit_time" defaultValue={competition[0].competition_initial_date?.time} required />
-              <input type="date" id="edit_date_final" defaultValue={competition[0].competition_final_date?.date} required />
-              <input type="time" id="edit_time_final" defaultValue={competition[0].competition_final_date?.time} required />
-              <button type="submit" id="btn_save_edit" >Salvar</button>
-            </form>
-          </div>
+          
+
+          <Modal
+            open={openEdit}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            className={classes.modal}
+          >
+            <div className={classes.paper}>
+              <h4>Editar competição</h4>
+              <div>
+                <form onSubmit={e => setDatetime(e)}>
+                  <div className="form-group">
+                    <label className="black" htmlFor="edit_date">Data inicial da competição *</label>
+                    <input type="date" className="form-group" id="edit_date" defaultValue={competition[0].competition_initial_date?.date} required />
+                  </div>
+                  <div className="form-group">
+                    <label className="black" htmlFor="edit_time">Hora inicial da competição *</label>
+                    <input type="time" className="form-group" id="edit_time" defaultValue={competition[0].competition_initial_date?.time} required />
+                  </div>
+                  <div className="form-group">
+                    <label className="black" htmlFor="edit_date_final">Data final da competição *</label>
+                    <input type="date" className="form-group" id="edit_date_final" defaultValue={competition[0].competition_final_date?.date} required />
+                  </div>
+                  <div className="form-group">
+                    <label className="black" htmlFor="edit_time_final">Hora inicial da competição *</label>
+                    <input type="time" className="form-group" id="edit_time_final" defaultValue={competition[0].competition_final_date?.time} required />
+                  </div>
+                  <div className="center-row">
+                    <button type="submit" id="btn_save_edit" className="btn-primary">Salvar</button>
+                    <button type="button" id="btn_cancel_edit" className="btn-primary" onClick={() => handleClose('edit')}>Cancelar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </Modal>
+
+          <Modal
+            open={openDelete}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            className={classes.modal}
+          >
+            <div className={classes.paper}>
+              <h4>Deseja realmente deletar a competição?</h4>
+              <button id="btn_confirm_leave" className={classes.btn} onClick={() => deleteCompetition()}>Sim</button>
+              <button id="btn_cancel_leave" className={classes.btn} onClick={() => handleClose()}>Não</button>
+            </div>
+          </Modal>
         </div>
       : ''}
     </div>

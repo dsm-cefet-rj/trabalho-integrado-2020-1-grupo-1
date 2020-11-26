@@ -4,10 +4,10 @@
       "id": "Entonin",
       "name": "Anthony Silva",
       "username": "Entonin",
-      "profile_picture": "link",
+      "profile_picture": "https://www.epamesterdao.com/wp-content/uploads/2018/09/user.png",
       "email": "anthony.vii27@gmail.com",
       "password": "123456",
-      "role": "",
+      "role": "Suporte",
       "champion1": "Ekko",
       "champion2": "Kayn",
       "champion3": "Lee Sin",
@@ -20,10 +20,10 @@
       "id": "UnoDeFirmaTunado",
       "name": "Mateus",
       "username": "UnoDeFirmaTunado",
-      "profile_picture": "link",
+      "profile_picture": "https://www.epamesterdao.com/wp-content/uploads/2018/09/user.png",
       "email": "mateusrlopez@gmail.com",
       "password": "123456",
-      "role": "",
+      "role": "Suporte",
       "champion1": "",
       "champion": "",
       "champion3": "",
@@ -36,10 +36,10 @@
       "id": "Lolzero",
       "name": "Vinicius",
       "username": "Lolzero",
-      "profile_picture": "link",
+      "profile_picture": "https://www.epamesterdao.com/wp-content/uploads/2018/09/user.png",
       "email": "vinicius@gmail.com",
       "password": "123456",
-      "role": "",
+      "role": "Mid Laner",
       "champion1": "",
       "champion": "",
       "champion3": "",
@@ -52,10 +52,10 @@
       "id": "Lolzero2",
       "name": "Lucas",
       "username": "Lolzero2",
-      "profile_picture": "link",
+      "profile_picture": "https://www.epamesterdao.com/wp-content/uploads/2018/09/user.png",
       "email": "lucas@gmail.com",
       "password": "123456",
-      "role": "",
+      "role": "Jungler",
       "champion1": "",
       "champion": "",
       "champion3": "",
@@ -70,7 +70,7 @@
       "id": "JTCRA",
       "name": "Jantuscara",
       "initials": "JTCRA",
-      "image": "",
+      "image": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
       "members": [
         {
           "username": "Entonin",
@@ -114,7 +114,7 @@
       "id": "BDM",
       "name": "BondeDasMaravilhas",
       "initials": "BDM",
-      "image": "",
+      "image": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
       "members": [],
       "competitions": [],
       "titles": []
@@ -123,7 +123,7 @@
       "id": "BDM2",
       "name": "BondeDasMaravilhas2",
       "initials": "BDM2",
-      "image": "",
+      "image": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
       "members": [],
       "competitions": [],
       "titles": []
@@ -135,7 +135,7 @@
       "name": "Jantuscara",
       "entryYear": "2019",
       "username": "Entonin",
-      "image": "link"
+      "image": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png"
     }
   ],
   "invites": [
@@ -144,9 +144,18 @@
       "user_convidou": "Entonin",
       "user_convidado": "UnoDeFirmaTunado",
       "nome_equipe": "Jantuscara",
-      "image": "link",
+      "image": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
       "sigla_equipe": "JTCRA",
       "aceitado": true
+    },
+    {
+      "id": 0.3380095109590542,
+      "user_convidou": "Entonin",
+      "user_convidado": "Lolzero",
+      "nome_equipe": "Jantuscara",
+      "image": "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+      "sigla_equipe": "JTCRA",
+      "aceitado": false
     }
   ],
   "championships": [
@@ -154,7 +163,7 @@
       "id": 0.2110419941848125,
       "competition_name": "Clash",
       "competition_initials": "CLA",
-      "competition_picture": "",
+      "competition_picture": "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/worlds-2017-meet-the-teams/en_US/8c1a3a7982b1eb353147db5e8a05c5e8be72a083/assets/img/logos/nalcs.png",
       "competition_level": "Ouro+",
       "competition_initial_date": {
         "date": "2020-12-22",
@@ -175,10 +184,10 @@
       "id": 0.14547646565030403,
       "competition_name": "CBLoiro",
       "competition_initials": "CBLOL",
-      "competition_picture": "",
+      "competition_picture": "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/worlds-2017-meet-the-teams/en_US/8c1a3a7982b1eb353147db5e8a05c5e8be72a083/assets/img/logos/nalcs.png",
       "competition_level": "Ouro+",
       "competition_initial_date": {
-        "date": "2020-02-27",
+        "date": "2020-02-26",
         "time": "18:00"
       },
       "competition_final_date": {
@@ -196,7 +205,7 @@
       "id": 0.8825132211737683,
       "competition_name": "Blabla",
       "competition_initials": "BLA",
-      "competition_picture": "",
+      "competition_picture": "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/worlds-2017-meet-the-teams/en_US/8c1a3a7982b1eb353147db5e8a05c5e8be72a083/assets/img/logos/nalcs.png",
       "competition_level": "Diamante+",
       "competition_initial_date": {
         "date": "1210-12-18",
@@ -228,7 +237,7 @@
           "team2": "BondeDasMaravilhas",
           "image_team1": "",
           "image_team2": "",
-          "url_print": ""
+          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
         },
         {
           "id": 0.12344543524332,
@@ -236,7 +245,7 @@
           "team2": "BondeDasMaravilhas",
           "image_team1": "",
           "image_team2": "",
-          "url_print": ""
+          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
         },
         {
           "id": 0.12344543524332,
@@ -244,7 +253,7 @@
           "team2": "BondeDasMaravilhas",
           "image_team1": "",
           "image_team2": "",
-          "url_print": ""
+          "url_print": "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
         }
       ]
     }
@@ -290,6 +299,24 @@
         "semi": [],
         "final": []
       }
+    }
+  ],
+  "user-titles": [
+    {
+      "id": 0.26435432498123743,
+      "user_id": "Entonin",
+      "titles": [
+        {
+          "id":"1",
+          "comp_name": "CBLOL 1° Edição",
+          "position": "1° Lugar"
+        },
+        {
+          "id":"2",
+          "comp_name": "SBG LOL",
+          "position": "3° Lugar"
+        }
+      ]
     }
   ]
 }

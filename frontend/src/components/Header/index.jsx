@@ -1,16 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { 
   Banner, 
   ProfilePicture 
 } from './styles';
 
-import foto from '../../foto.png';
-
-export default function Header(props) {
+function Header({ user }) {
   return (
     <Banner>
-      <ProfilePicture src={foto} alt="Foto perfil" />
+      <ProfilePicture src={user.profile_picture} alt="Foto perfil" />
     </Banner>
   );
 }
+
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(Header);
