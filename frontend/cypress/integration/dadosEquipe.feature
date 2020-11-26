@@ -21,13 +21,22 @@ Feature: Dados Equipe
  Manipula as funcoes de um usuario comum em uma equipe
 
   @tag1
-  Scenario: Atraves de link
+  Scenario: Atraves de Convite
     Given que o usuario esta logado 
     And o usuario esteja sem equipe
     When recebe um link com convite para entrar em uma equipe
     And clica no link
     Then o sistema cadastra o usuario em uma equipe
     And adiciona os dados da equipe e data de entrada na tela principal do usuario
+
+  Scenario: Rejeitar Convite
+    Given que o usuario esta logado 
+    And o usuario esteja sem equipe
+    When recebe um link com convite para entrar em uma equipe
+    And clica no link, rejeitando
+    Then o sistema redireciona o jogador para a pagina das equipes(team)
+    
+  
     
   Scenario: Sair da equipe 1/2 
     Given que o usuario esta logado 
@@ -40,7 +49,7 @@ Feature: Dados Equipe
     Given que o usuario esta logado 
     And esteja em uma equipe
     When clica no botao "Sair da Equipe"(btn_leave)
-    And não confirma a saida
+    And nao confirma a saida
     Then o sistema redireciona o usuario para a tela da equipe(team)
     
     
