@@ -48,36 +48,8 @@ const CompetitionDetails = ({ team }) => {
     .then(() => {
       alert('Inscrição realizada com sucesso!')
       getPhases()
-      // window.location.href = '/competition'
     })
     .catch(err => console.log(err.response))
-
-    // let phase = phases[0].phase;
-    // let arrayAux = phases[0].phases.phase;
-
-    
-    // console.log(phase)
-    // console.log(arrayAux)
-
-    // api.put(`/api/championships-phases?competition_id=${id}`, {
-    //   id: phases[0].id,
-    //   competition_id: id,
-    //   phase: phases[0].phase,
-    //   competition_name: competition.competition_name,
-    //   competition_initials: competition.competition_initials,
-    //   phases: {
-    //     eliminatorias: [
-    //       "Jantuscara",
-    //       "Marco",
-    //       "Sarei",
-    //       "Miko"
-    //     ],
-    //     oitavas: [],
-    //     quartas: [],
-    //     semi: [],
-    //     final: []
-    //   }
-    // })
   }
 
   function getPhases() {
@@ -95,7 +67,6 @@ const CompetitionDetails = ({ team }) => {
     switch(phases[0].phase) {
       case 'eliminatorias':
         arrayAux = phases[0].phases.eliminatorias
-        console.log(team?.name)
         arrayAux.push(team?.name)
         api.put(`/api/championships-phases/${phases[0].id}`, {
           id: phases[0].id,
@@ -181,9 +152,7 @@ const CompetitionDetails = ({ team }) => {
         })
       default:
         return
-    }
-
-    
+    }    
   }
   
 
@@ -197,7 +166,7 @@ const CompetitionDetails = ({ team }) => {
           <Title content="Detalhes da Competição" />{console.log(phases)}
           
           {isSubscribed[0]?.competition_id === parseFloat(id) ? 
-            <React.Fragment>
+            <div className="box-competition-details">
               <div>
                 <h3>Eliminatórias</h3>
                 {(phases[0]?.phases?.eliminatorias)?.map(team => ((
@@ -208,7 +177,7 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Oitavas de Final</h3>
+                <h3 className="box-competition-details-phase">Oitavas de Final</h3>
                 {(phases[0]?.phases?.oitavas)?.map(team => ((
                   <div className="card-team">
                     {team.team}
@@ -217,7 +186,7 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Quartas de Final</h3>
+                <h3 className="box-competition-details-phase">Quartas de Final</h3>
                 {(phases[0]?.phases?.quartas)?.map(team => ((
                   <div className="card-team">
                     {team.team}
@@ -226,7 +195,7 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Semifinal</h3>
+                <h3 className="box-competition-details-phase">Semifinal</h3>
                 {(phases[0]?.phases?.semi)?.map(team => ((
                   <div className="card-team">
                     {team.team}
@@ -235,14 +204,14 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Final</h3>
+                <h3 className="box-competition-details-phase">Final</h3>
                 {(phases[0]?.phases?.final)?.map(team => ((
                   <div className="card-team">
                     {team.team}
                   </div>
                 )))}
               </div>
-            </React.Fragment>
+            </div>
           : 
             <div className="box-details">
               <h1 className="title-box-details">{competition.competition_name}</h1>

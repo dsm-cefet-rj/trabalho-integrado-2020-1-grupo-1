@@ -26,8 +26,12 @@ const EditProfile = ({ user, editUser }) => {
     const other = document.getElementById('edit_others').value;
 
     api.put(`/api/users/${user.username}`, {
+      id: user.username,
       name,
       username,
+      profile_picture: user.profile_picture,
+      email:user.email,
+      password: '123456',
       role:selectedRole,
       champion1,
       champion2,
@@ -35,8 +39,7 @@ const EditProfile = ({ user, editUser }) => {
       facebook,
       instagram,
       twitter,
-      others:other,
-      email:user.email
+      others:other
     })
     .then(() => {
       editUser(name, username, user.profile_picture, selectedRole, champion1, champion2, champion3, facebook, instagram, twitter, other, user.email)

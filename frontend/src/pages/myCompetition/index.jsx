@@ -35,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MyCompetition = ({ user }) =>{
+const MyCompetition = ({ user, team }) =>{
   const [competition, setCompetition] = useState({});
   const [competitionPrints, setCompetitionPrints] = useState({});
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [teste, setTeste] = useState({});
+  const [competitionPhases, setCompetitionPhases] = useState({});
   const classes = useStyles();
 
   const handleOpen = type => {
@@ -72,10 +73,18 @@ const MyCompetition = ({ user }) =>{
   }, [])
 
   async function getData() {
-    console.log('netrei')
     await api.get(`/api/championships-matchs/${competitionPrints[0]?.id_partida}`)
     .then(response => {
       setTeste(response.data)
+      return
+    })
+    .catch(err => console.log(err.response))
+  }
+
+  async function getDataPhases() {
+    api.get(`/api/championships-phases?competition_id=${competition[0].id}`)
+    .then(response => {
+      setCompetitionPhases(response.data)
       return
     })
     .catch(err => console.log(err.response))
@@ -86,7 +95,6 @@ const MyCompetition = ({ user }) =>{
 
     getData()
 
-    console.log(teste.matchs)
     if(teste.matchs !== undefined) {
       for(let i=0; i < (teste.matchs).length; i++) {
         if(teste.matchs[i].id === id) {
@@ -139,11 +147,136 @@ const MyCompetition = ({ user }) =>{
       user_manage: competitionPrints[0].user_manage,
       prints
     })
-    .then(() => {
-      alert('Vencedor selecionado com sucesso!')
-      window.location.href="/mycompetition"
-    })
-    .catch(err => console.log(err.response))
+    .then(() => movePhase())
+    .catch(err => console.log(err))
+  }
+
+  function movePhase() {
+    let arrayAux = [];
+
+    getDataPhases()
+    console.log(competitionPhases[0].phase)
+    if(competitionPhases !== undefined) {
+      switch(competitionPhases[0].phase) {
+        case 'eliminatorias':
+          console.log('entrei elimi')
+          arrayAux = competitionPhases[0].phases.eliminatorias
+          arrayAux.push(team?.name)
+          api.put(`/api/championships-phases/${competitionPhases[0].id}`, {
+            id: competitionPhases[0].id,
+            competition_id: competition[0].id,
+            phase: competitionPhases[0].phase,
+            competition_name: competition[0].competition_name,
+            competition_initials: competition[0].competition_initials,
+            phases: {
+              eliminatorias: [],
+              oitavas: arrayAux,
+              quartas: [],
+              semi: [],
+              final: []
+              }
+          })
+          .then(() => { 
+            alert('Vencedor selecionado com sucesso!')
+            return
+          })
+          break
+        case 'oitavas':
+          console.log('entrei oitava')
+          arrayAux = competitionPhases[0].phases.oitavas
+          arrayAux.push(team?.name)
+          api.put(`/api/championships-phases/${competitionPhases[0].id}`, {
+            id: competitionPhases[0].id,
+            competition_id: competition[0].id,
+            phase: competitionPhases[0].phase,
+            competition_name: competition[0].competition_name,
+            competition_initials: competition[0].competition_initials,
+            phases: {
+              eliminatorias: [],
+              oitavas: [],
+              quartas: arrayAux,
+              semi: [],
+              final: []
+              }
+          })
+          .then(() => { 
+            alert('Vencedor selecionado com sucesso!')
+            return
+          })
+          break
+        case 'quartas':
+          console.log('entrei quarta')
+          arrayAux = competitionPhases[0].phases.quartas
+          arrayAux.push(team?.name)
+          api.put(`/api/championships-phases/${competitionPhases[0].id}`, {
+            id: competitionPhases[0].id,
+            competition_id: competition[0].id,
+            phase: competitionPhases[0].phase,
+            competition_name: competition[0].competition_name,
+            competition_initials: competition[0].competition_initials,
+            phases: {
+              eliminatorias: [],
+              oitavas: [],
+              quartas: [],
+              semi: arrayAux,
+              final: []
+              }
+          })
+          .then(() => { 
+            alert('Vencedor selecionado com sucesso!')
+            return
+          })
+          break
+        case 'semis':
+          console.log('entrei semi')
+          arrayAux = competitionPhases[0].phases.semis
+          arrayAux.push(team?.name)
+          api.put(`/api/championships-phases/${competitionPhases[0].id}`, {
+            id: competitionPhases[0].id,
+            competition_id: competition[0].id,
+            phase: competitionPhases[0].phase,
+            competition_name: competition[0].competition_name,
+            competition_initials: competition[0].competition_initials,
+            phases: {
+              eliminatorias: [],
+              oitavas: [],
+              quartas: [],
+              semi: [],
+              final: arrayAux
+              }
+          })
+          .then(() => { 
+            alert('Vencedor selecionado com sucesso!')
+            return
+          })
+          break
+        case 'final':
+          console.log('entrei final')
+          arrayAux = competitionPhases[0].phases.final
+          arrayAux.push(team?.name)
+          api.put(`/api/championships-phases/${competitionPhases[0].id}`, {
+            id: competitionPhases[0].id,
+            competition_id: competition[0].id,
+            phase: competitionPhases[0].phase,
+            competition_name: competition[0].competition_name,
+            competition_initials: competition[0].competition_initials,
+            phases: {
+              eliminatorias: [],
+              oitavas: [],
+              quartas: [],
+              semi: [],
+              final: arrayAux
+              }
+          })
+          .then(() => { 
+            alert('Vencedor selecionado com sucesso!')
+            return
+          })
+          break
+        default:
+          return
+      }
+    }
   }
 
   function setDatetime(e) {
@@ -313,7 +446,8 @@ const MyCompetition = ({ user }) =>{
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  team: state.team
 })
 
 export default connect(mapStateToProps)(MyCompetition)
