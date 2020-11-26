@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const CardMatch = styled.div`
   background: #CECECE;
   border-radius: 10px;
-  height: 190px;
   margin-bottom: 10px;
+  padding: 10px;
 
   .img-right {
     float: right;
@@ -12,7 +12,7 @@ export const CardMatch = styled.div`
 
   .img-team {
     width: 100%;
-    height: 80px;
+    height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,12 +63,16 @@ export const CardMatch = styled.div`
       border-radius: 3px;
     }
   }
+
+  img {
+    width: 100px;
+    border-radius: 50px;
+  }
 `
 
 export const AdminArea = styled.div`
   background: #CECECE;
   border-radius: 10px;
-  height: 110px;
   margin-top: 30px;
   padding: 10px;
 

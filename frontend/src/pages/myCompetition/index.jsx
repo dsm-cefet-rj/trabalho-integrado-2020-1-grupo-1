@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 const MyCompetition = ({ user }) =>{
   const [competition, setCompetition] = useState({});
   const [competitionPrints, setCompetitionPrints] = useState({});
-  const [championshipMatchData, setChampionshipMatchData] = useState({});
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [teste, setTeste] = useState({});
   const classes = useStyles();
 
   const handleOpen = type => {
@@ -71,18 +71,79 @@ const MyCompetition = ({ user }) =>{
     .catch(err => console.log(err.response))
   }, [])
 
-  function setWinner(winner) {
-    api.get(`/api/championships-matchs/${competition[0].id_partida}`)
-    .then(response => setChampionshipMatchData(response.data))
-
-    api.put(`/api/championships-matchs/${competition[0].id_partida}`, {
-      id: championshipMatchData.id,
-      competition_name: championshipMatchData.name,
-      matchs: championshipMatchData.matchs,
-      winner
+  async function getData() {
+    console.log('netrei')
+    await api.get(`/api/championships-matchs/${competitionPrints[0]?.id_partida}`)
+    .then(response => {
+      setTeste(response.data)
+      return
     })
-    .then(() => alert('Vencedor selecionado com sucesso!'))
-    .catch(() => alert('Ocorreu um erro inexperado!'))
+    .catch(err => console.log(err.response))
+  }
+
+  function setWinner(id, winner) {
+    let matchs = [];
+
+    getData()
+
+    console.log(teste.matchs)
+    if(teste.matchs !== undefined) {
+      for(let i=0; i < (teste.matchs).length; i++) {
+        if(teste.matchs[i].id === id) {
+          matchs.push({
+            id: teste.matchs[i].id,
+            team1: teste.matchs[i].team1,
+            team2: teste.matchs[i].team2,
+            match_code: teste.matchs[i].match_code,
+            winner: winner
+          })
+        } else {
+          matchs.push(teste.matchs[i])
+        }
+      }
+
+      api.put(`/api/championships-matchs/${competitionPrints[0]?.id_partida}`, {
+        id: teste.id,
+        competition_name: teste.name,
+        matchs,
+        winner
+      })
+      .then(() => setToViewed(id))      
+    }
+  }
+
+  function setToViewed(id) {
+    let prints = [];
+
+    for(let i=0; i < (competitionPrints[0]?.prints).length; i++) {
+      if(competitionPrints[0].prints[i].id === id) {
+        prints.push({
+          id: competitionPrints[0].prints[i].id,
+          team1: competitionPrints[0].prints[i].team1,
+          team2: competitionPrints[0].prints[i].team2,
+          image_team1: competitionPrints[0].prints[i].image_team1,
+          image_team2: competitionPrints[0].prints[i].image_team2,
+          url_print: competitionPrints[0].prints[i].url_print,
+          isViewed: true
+        })
+      } else {
+        prints.push(competitionPrints[0].prints[i])
+      }
+    }
+
+    api.put(`/championships-prints/${competition[0].id}`, {
+      id: competitionPrints[0].id,
+      id_partida: competitionPrints[0].id_partida,
+      competition_name: competitionPrints[0].competition_name,
+      competition_initials: competitionPrints[0].competition_initials,
+      user_manage: competitionPrints[0].user_manage,
+      prints
+    })
+    .then(() => {
+      alert('Vencedor selecionado com sucesso!')
+      window.location.href="/mycompetition"
+    })
+    .catch(err => console.log(err.response))
   }
 
   function setDatetime(e) {
@@ -119,20 +180,6 @@ const MyCompetition = ({ user }) =>{
     .catch(() => alert('Ocorreu um erro na alteração das datas!'))
   }
 
-  // function attPrintsTable(datetime_initial, datetime_final){
-  //   api.put(`/api/championships-prints/${competition[0].id}`, {
-  //     id: competition[0].id,
-  //     id_partida: competition[0].id_partida,
-  //     competition_name: competition[0].competition_name,
-  //     competition_initials: competition[0].competition_initials,
-  //     user_manage: competition[0].user_manage,
-  //     competition_initial_date: datetime_initial,
-  //     competition_final_date: datetime_final,
-  //     prints: competition[0].prints
-  //   })
-  //   .then(() => alert('Data alterada com sucesso!'))
-  // }
-
   function deleteCompetition() {
     api.delete(`/api/championships/${competition[0].id}`)
     .then(() => {
@@ -142,6 +189,47 @@ const MyCompetition = ({ user }) =>{
     api.delete(`/api/championships-prints/${competition[0].id}`)
   }
 
+  function generatePrintList(print) {
+    if(!print.isViewed) {
+      return <CardMatch key={print.id}>
+      <div className="row">
+        <div className="col-md-2 img-team">
+          <div className="icon-team">
+            <img src={print.image_team1} alt={print.team1} className="img-left"/>
+          </div>
+        </div>
+        <div className="col-md-3 name-team">
+          {print.team1}
+        </div>
+        
+        <div className="col-md-2 versus">
+          X
+        </div>
+
+        <div className="col-md-3 name-team">
+          {print.team2}
+        </div>
+        <div className="col-md-2 img-team">
+          <div className="icon-team">
+            <img src={print.image_team2} alt={print.team2} className="img-right" />
+          </div>
+        </div>
+      </div>
+      <div className="row buttons-winner">
+        <div className="col-md-6">
+          <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.id, print.team1)} disabled={!teste ? true : false}>Vencedor</button>
+        </div>
+        <div className="col-md-6">
+          <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.id, print.team2)} disabled={!teste ? true : false}>Vencedor</button>
+        </div>
+      </div>
+      <div className="row btn-print">
+        <button type="button" id="" className="btn-primary" onClick={() => window.location.href = print.url_print}>Ver print</button>
+      </div>
+    </CardMatch>
+    }
+    
+  }
   return (
     <div className="container">
       <Menu />
@@ -156,42 +244,7 @@ const MyCompetition = ({ user }) =>{
             <h4 className="box-your-competition-title">Prints recebidos</h4>
             <div className="list-matchs">
               {(competitionPrints[0]?.prints) ? (competitionPrints[0]?.prints).map(print => (
-                <CardMatch key={print.id}>
-                  <div className="row">
-                    <div className="col-md-2 img-team">
-                      <div className="icon-team">
-                        <img src={print.image_team1} alt={print.team1} className="img-left"/>
-                      </div>
-                    </div>
-                    <div className="col-md-3 name-team">
-                      {print.team1}
-                    </div>
-                    
-                    <div className="col-md-2 versus">
-                      X
-                    </div>
-
-                    <div className="col-md-3 name-team">
-                      {print.team2}
-                    </div>
-                    <div className="col-md-2 img-team">
-                      <div className="icon-team">
-                        <img src={print.image_team2} alt={print.team2} className="img-right" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row buttons-winner">
-                    <div className="col-md-6">
-                      <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.team1)}>Vencedor</button>
-                    </div>
-                    <div className="col-md-6">
-                      <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.team2)}>Vencedor</button>
-                    </div>
-                  </div>
-                  <div className="row btn-print">
-                    <button type="button" id="" className="btn-primary" onClick={() => window.location.href = print.url_print}>Ver print</button>
-                  </div>
-                </CardMatch>
+                generatePrintList(print)
               )) : ''}
             </div>
           </div>
