@@ -21,19 +21,20 @@ Feature: Login
 Realiza o login de um usuario no sistema
 
   @tag1
-  Scenario: Usuário cadastrado quer logar no app
-    Given usuário cadastrado no sistema
+  Scenario: Usuario cadastrado quer logar no app
+    Given usuario cadastrado no sistema
     When estiver na tela de login(signin)
-    And digitar: | nome             | dominio  |        restricoes          |
+    And digitar: 
+                 | nome             | dominio  |        restricoes          |
  						     | lgn_username     | String   |							              |
 						     | lgn_password     | String   |tamanho minimo 8 caracteres	|
 		    
     And clicar em "Entrar" btn_login
-    Then o usuário será redirecionado para o Index
+    Then o usuario sera redirecionado para o Index
 
-	Scenario: Usuário não cadastrado quer logar no app
-    Given usuário não cadastrado no sistema
+	Scenario: Usuario nao cadastrado quer logar no app
+    Given usuario nao cadastrado no sistema
     When estiver na tela de login(signin) 
     And clicar no link para o cadastro
-    Then o usuário será redirecionado para a página de cadastro(signup)
+    Then o usuario sera redirecionado para a pagina de cadastro(signup)
  
