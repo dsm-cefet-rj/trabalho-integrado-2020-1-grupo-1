@@ -8,7 +8,7 @@ Feature: Enviar print da partida
     And usuário é líder de uma equipe
     And a equipe está participando de um campeonato
     And estiver na tela da partida (viewMatch)
-    And clicar no botão de enviar print (btn_send_print)      
+    When clicar no botão de enviar print (btn_send_print)      
     Then o sistema mostrará a tela de submissão do print
 
  @tag1
@@ -17,7 +17,7 @@ Feature: Enviar print da partida
     And usuário é líder de uma equipe
     And a equipe está participando de um campeonato
     And estiver na tela de submissão de print
-    And selecionar o print da partida
+    When selecionar o print da partida
     And submeter o print da partida
     Then o sistema registrará a submissão do print 
     And o sistema mostrará a tela da partida (viewMatch)
