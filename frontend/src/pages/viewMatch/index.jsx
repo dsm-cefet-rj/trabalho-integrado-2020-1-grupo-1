@@ -9,12 +9,19 @@ import api from '../../services/api';
 
 export default function ViewMatch() {
   const [match, setMatch] = useState({});
+  const [prints, setPrints] = useState({});
 
   let { id, phase, team } = useParams();
 
   useEffect(() => {
     api.get(`/api/championships-phases?competition_id=${id}`)
     .then(response => setMatch(response.data))
+    .catch(err => console.log(err.response))
+  }, [])
+
+  useEffect(() => {
+    api.get(`/api/championships-prints/${id}`)
+    .then(response => setPrints(response.data))
     .catch(err => console.log(err.response))
   }, [])
 
@@ -40,7 +47,27 @@ export default function ViewMatch() {
   }
 
   function sendPrint() {
-    api.post('/api/championships-prints')
+    let aux = prints.prints;
+
+    aux.push({
+      id: Math.random(),
+      team1: team,
+      team2: getAdversary(),
+      image_team1: "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+      image_team2: "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
+      url_print: "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
+    })
+
+    api.put(`/api/championships-prints/${id}`, {
+      id: id,
+      id_partida: prints.id_partida,
+      competition_name: prints.competition_name,
+      competition_initials: prints.competition_initials,
+      user_manage: prints.user_manage,
+      prints: aux
+    })
+    .then(() => alert('Print enviado com sucesso!'))
+    .catch(err => console.log(err))
   }
   
   return (
@@ -49,35 +76,25 @@ export default function ViewMatch() {
       <Header />
       <Title content="Partida" />
 
-      <h3>{match[0]?.competition_name}</h3>
-      <span>{match[0]?.phase}</span>
-      <div>
+      <div className="box-no-height">
+        <h3 className="box-match-name">{match[0]?.competition_name}</h3>
+        <p className="box-match-phase">{(match[0]?.phase)}</p>
         <div>
-          {team}
+          <div>
+            <h1>{team} X {getAdversary()}</h1>
+          </div>  
         </div>
-        <div>
-          {getAdversary()}
-        </div>
+
+        <h5>Código da partida</h5>
+        <h6>{generateCode()}</h6>
+
+        <label htmlFor="url-img" className="label-match">Print do término da partida</label>
+        <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
+
+        <button type="button" id="btn_send_print" className="btn-primary space-top-20" onClick={() => sendPrint()}>Enviar</button>
       </div>
 
-      <h4>Código da partida</h4>
-      <h5>{generateCode()}</h5>
-
-      <h6>Print do término da partida</h6>
-      <label htmlFor="url-img">Foto de perfil</label>
-                    <p>Após selecionar a foto clique em <strong>CARREGAR</strong></p>
-                    <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
-                    <button className="btn-send-picture" id="btn-load-image" onClick={() => {
-                      // setStateOfButton()
-                      // convertToBase64()
-                      console.log('carregar')
-                    }}>
-                      Carregar
-                    </button>
-      <button type="button" id="btn_send_print" onClick={() => console.log('enviar')}>Enviar</button>
-
-      <button type="button" onClick={() => console.log('report')}>Report</button>
-
+      {/* <button type="button" onClick={() => console.log('report')}>Report</button> */}
     </div>
   );
 }

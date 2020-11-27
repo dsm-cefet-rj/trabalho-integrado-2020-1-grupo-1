@@ -1,0 +1,1 @@
+test('Equipe do usuário não está em nenhuma competição', () => {throw 'Not implemented yet'});

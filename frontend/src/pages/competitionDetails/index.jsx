@@ -38,8 +38,123 @@ const CompetitionDetails = ({ team }) => {
       return alert('Seja de uma equipe para participar dessa competição!')
     }
 
-    // api.get('/api/championships-phases')
+    api.post('/api/register-championship', {
+      id: Math.random(),
+      competition_id: id,
+      competition_name: competition.competition_name,
+      competition_initials: competition.competition_initials,
+      team: team.name
+    })
+    .then(() => {
+      alert('Inscrição realizada com sucesso!')
+      getPhases()
+    })
+    .catch(err => console.log(err.response))
   }
+
+  function getPhases() {
+    api.get(`/api/championships-phases?competition_id=${id}`)
+    .then(response => {
+      setPhases(response.data)
+      setInTablePhases()
+    })
+    .catch(err => console.log(err))
+  }
+
+  function setInTablePhases() {
+    let arrayAux = [];
+    
+    switch(phases[0].phase) {
+      case 'eliminatorias':
+        arrayAux = phases[0].phases.eliminatorias
+        arrayAux.push(team?.name)
+        api.put(`/api/championships-phases/${phases[0].id}`, {
+          id: phases[0].id,
+          competition_id: id,
+          phase: phases[0].phase,
+          competition_name: competition.competition_name,
+          competition_initials: competition.competition_initials,
+          phases: {
+            eliminatorias: arrayAux,
+            oitavas: [],
+            quartas: [],
+            semi: [],
+            final: []
+            }
+        })
+      case 'oitavas':
+        arrayAux = phases[0].phases.oitavas
+        arrayAux.unshift(team?.name)
+        api.put(`/api/championships-phases/${phases[0].id}`, {
+          id: phases[0].id,
+          competition_id: id,
+          phase: phases[0].phase,
+          competition_name: competition.competition_name,
+          competition_initials: competition.competition_initials,
+          phases: {
+            eliminatorias: [],
+            oitavas: arrayAux,
+            quartas: [],
+            semi: [],
+            final: []
+            }
+        })
+      case 'quartas':
+        arrayAux = phases[0].phases.quartas
+        arrayAux.unshift(team?.name)
+        api.put(`/api/championships-phases/${phases[0].id}`, {
+          id: phases[0].id,
+          competition_id: id,
+          phase: phases[0].phase,
+          competition_name: competition.competition_name,
+          competition_initials: competition.competition_initials,
+          phases: {
+            eliminatorias: [],
+            oitavas: [],
+            quartas: arrayAux,
+            semi: [],
+            final: []
+            }
+        })
+      case 'semis':
+        arrayAux = phases[0].phases.semis
+        arrayAux.unshift(team?.name)
+        api.put(`/api/championships-phases/${phases[0].id}`, {
+          id: phases[0].id,
+          competition_id: id,
+          phase: phases[0].phase,
+          competition_name: competition.competition_name,
+          competition_initials: competition.competition_initials,
+          phases: {
+            eliminatorias: [],
+            oitavas: [],
+            quartas: [],
+            semi: arrayAux,
+            final: []
+            }
+        })
+      case 'final':
+        arrayAux = phases[0].phases.final
+        arrayAux.unshift(team?.name)
+        api.put(`/api/championships-phases/${phases[0].id}`, {
+          id: phases[0].id,
+          competition_id: id,
+          phase: phases[0].phase,
+          competition_name: competition.competition_name,
+          competition_initials: competition.competition_initials,
+          phases: {
+            eliminatorias: [],
+            oitavas: [],
+            quartas: [],
+            semi: [],
+            final: arrayAux
+            }
+        })
+      default:
+        return
+    }    
+  }
+  
 
   return (
     <div className="container">
@@ -48,10 +163,10 @@ const CompetitionDetails = ({ team }) => {
 
       {(competition) ? 
         <div>
-          <Title content={competition.competition_name} />
+          <Title content="Detalhes da Competição" />{console.log(phases)}
           
           {isSubscribed[0]?.competition_id === parseFloat(id) ? 
-            <React.Fragment>
+            <div className="box-competition-details">
               <div>
                 <h3>Eliminatórias</h3>
                 {(phases[0]?.phases?.eliminatorias)?.map(team => ((
@@ -62,7 +177,7 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Oitavas de Final</h3>
+                <h3 className="box-competition-details-phase">Oitavas de Final</h3>
                 {(phases[0]?.phases?.oitavas)?.map(team => ((
                   <div className="card-team">
                     {team.team}
@@ -71,7 +186,7 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Quartas de Final</h3>
+                <h3 className="box-competition-details-phase">Quartas de Final</h3>
                 {(phases[0]?.phases?.quartas)?.map(team => ((
                   <div className="card-team">
                     {team.team}
@@ -80,7 +195,7 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Semifinal</h3>
+                <h3 className="box-competition-details-phase">Semifinal</h3>
                 {(phases[0]?.phases?.semi)?.map(team => ((
                   <div className="card-team">
                     {team.team}
@@ -89,32 +204,36 @@ const CompetitionDetails = ({ team }) => {
               </div>
 
               <div>
-                <h3>Final</h3>
+                <h3 className="box-competition-details-phase">Final</h3>
                 {(phases[0]?.phases?.final)?.map(team => ((
                   <div className="card-team">
                     {team.team}
                   </div>
                 )))}
               </div>
-            </React.Fragment>
+            </div>
           : 
-            <React.Fragment>
-              <div>
-                <h3>Quantidade de equipes: {competition.competition_qty_teams}</h3>
-                <h3>Nível: {competition.competition_level}</h3>
+            <div className="box-details">
+              <h1 className="title-box-details">{competition.competition_name}</h1>
+              <div className="row">
+                <div className="col-md-6 justify-left">
+                  <h3><strong>Quantidade de equipes:</strong> {competition.competition_qty_teams}</h3>
+                  <h3><strong>Nível:</strong> {competition.competition_level}</h3>
+                </div>
+                <div className="col-md-6">
+                  <div className="row rules">
+                    <h3><strong>Regras</strong></h3>
+                    <p>{competition.competition_rules}</p>
+                  </div>
+                  <div className="row awards">
+                    <h3><strong>Premiação:</strong> {competition.competition_awards}</h3>
+                  </div>
+                </div>                
               </div>
-
-              <div>
-                <h3>Regras</h3>
-                <p>{competition.competition_rules}</p>
+              <div className="row area-button-details">
+                <button type="button" id="btn_subscription" className="btn-primary" onClick={registerCompetition}>Se inscrever</button>
               </div>
-
-              <div>
-                <h3>Premiação</h3>
-                <h4>{competition.competition_awards}</h4>
-              </div>
-              <button type="button" id="btn_subscription" onClick={registerCompetition}>Se inscrever</button>
-            </React.Fragment>
+            </div>
           }          
         </div>
       : ''}

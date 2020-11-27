@@ -8,6 +8,9 @@ import Title from '../../components/Title';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
 import * as teamActions from '../../store/actions/team';
 
 import {
@@ -15,14 +18,48 @@ import {
   Since
 } from './styles';
 
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: '300px',
+    borderRadius: '10px',
+    textAlign: 'center'
+  },
+  btn: {
+    width: '80px',
+    background: '#AA0000',
+    color: '#FFF',
+    borderRadius: '10px',
+    margin: '10px 5px 0px 5px'
+  }
+}));
+
 const Team = ({ team, user, teamData }) => {  
   const [invites, setInvites] = useState([]);
+  const [open, setOpen] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     api.get(`/api/invites?user_convidado=${user.username}`)
     .then(response => setInvites(response.data))
     .catch(err => console.log(err.response))
   }, [])
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   function exitTeam() {
     api.delete(`/api/userteam/${user.username}`)
@@ -72,20 +109,21 @@ const Team = ({ team, user, teamData }) => {
   }
 
   return (
+    <div>
     <div className="container">
       <Menu />
       <Header />
-      <Title content="Equipe" />{console.log(invites)}
+      <Title content="Equipe" />{console.log(open)}
       
       {(team.name) ? 
         <div className="center">
-          <div className="image2"></div>
+          <img className="image2" src={team.image}></img>
           <TeamName>{team.name}</TeamName>
           <Since>Desde {team.entryYear}</Since>
           
           <div className="row">
-            <Link to={`/viewteam`} id="btn_viewTeam" className="default-button">Visualizar equipe</Link>
-            <button type="button" id="btn_leave" className="default-button" onClick={exitTeam}>Sair da equipe</button>
+            <Link to={`/viewteam`} id="btn_viewTeam" className="default-button">Visualizar equipe</Link>{console.log(team)}
+            <button type="button" id="btn_leave" className="default-button" onClick={handleOpen}>Sair da equipe</button>
           </div>
         </div> 
       : 
@@ -110,13 +148,21 @@ const Team = ({ team, user, teamData }) => {
           </div>
         </div>  
       }
-
-      <div className="modal-box">
-        <h4>Deseja realmente sair?</h4>
-        <button id="btn_confirm_leave" onClick={() => console.log('sim')}>Sim</button>
-        <button id="btn_cancel_leave" onClick={() => console.log('nao')}>Não</button>
-      </div>
     </div>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+      className={classes.modal}
+    >
+      <div className={classes.paper}>
+        <h4>Deseja realmente sair?</h4>
+        <button id="btn_confirm_leave" className={classes.btn} onClick={() => exitTeam()}>Sim</button>
+        <button id="btn_cancel_leave" className={classes.btn} onClick={() => handleClose()}>Não</button>
+      </div>
+    </Modal>
+  </div>
   );
 }
 

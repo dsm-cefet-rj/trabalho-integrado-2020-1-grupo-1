@@ -17,7 +17,7 @@ const Home = ({ signinUser }) => {
   function Login(e) {
     e.preventDefault();
     const login = document.getElementById('lgn_email').value;
-    const password = document.getElementById('lgn_password').value;
+    // const password = document.getElementById('lgn_password').value;
     
     api.get(`/api/users?email=${login}`)
     .then(response => {
@@ -35,7 +35,7 @@ const Home = ({ signinUser }) => {
         response.data[0].email)
       window.location.href='/home'
       })
-    .catch(() => console.log('Usuário não encontrado!'))
+    .catch(() => alert('Não foi possível realizar o login! Verifique os dados informados e tente novamente!'))
   }
   
   return (

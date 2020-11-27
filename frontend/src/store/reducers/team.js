@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   name: "",
   initials: "",
   entryYear: "",
-  image:""
+  image: ""
 }
 
 export default function team(state = INITIAL_STATE, action) {

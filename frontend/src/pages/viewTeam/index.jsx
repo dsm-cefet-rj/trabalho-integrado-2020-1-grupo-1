@@ -9,8 +9,54 @@ import Menu from '../../components/Menu';
 
 import * as teamActions from '../../store/actions/team';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: '300px',
+    borderRadius: '10px',
+    textAlign: 'center'
+  },
+  btn: {
+    width: '80px',
+    background: '#AA0000',
+    color: '#FFF',
+    borderRadius: '10px',
+    margin: '10px 5px 0px 5px'
+  }
+}));
+
 const ViewTeam = ({ user, team, teamData }) => {
   const [teamDataState, setTeamDataState] = useState({});
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const classes = useStyles();
+
+  const handleOpen = type => {
+    if(type === 'delete') {
+      setOpenDelete(true);
+    } else {
+      setOpenAdd(true)
+    }
+  };
+
+  const handleClose = type => {
+    if(type === 'delete') {
+      setOpenDelete(false);
+    } else {
+      setOpenAdd(false)
+    }
+  };
 
   useEffect(() => {
     api.get(`/api/teams?name=${team.name}`)
@@ -46,7 +92,10 @@ const ViewTeam = ({ user, team, teamData }) => {
 
   function deleteInUserTeamTable() {
     api.delete(`/api/userteam/${user.username}`)
-    .then(() => alert('Equipe excluida com sucesso!'))
+    .then(() => {
+      alert('Equipe excluida com sucesso!')
+      window.location.href = '/home'
+    })
     .catch(() => alert('Não foi possível excluir a equipe!'))
   }
 
@@ -61,8 +110,8 @@ const ViewTeam = ({ user, team, teamData }) => {
 
         </div>
         <div className="list-buttons">
-          <button type="button" id="btn_add_member" className="button-add-delete" title="Adicionar membro">+</button>
-          <button type="button" id="btn_delete_team" className="button-add-delete" title="Deletar equipe" onClick={() => deleteTeam()}>x</button>
+          <button type="button" id="btn_add_member" className="button-add-delete" title="Adicionar membro" onClick={() => handleOpen('add')}>+</button>
+          <button type="button" id="btn_delete_team" className="button-add-delete" title="Deletar equipe" onClick={() => handleOpen('delete')}>x</button>
         </div>
       </div>
 
@@ -107,11 +156,38 @@ const ViewTeam = ({ user, team, teamData }) => {
 
       <div className="modal-box">
         <h4>Adicionar jogador</h4>
-        <form onSubmit={e => invitePlayer(e)}>
-          <input type="text" id="input_username" placeholder="Username" required />
-          <button id="btn_invite" type="submit">Convidar</button>
-        </form>
+        
       </div>
+
+      <Modal
+        open={openDelete}
+        onClose={() => handleClose('delete')}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        className={classes.modal}
+      >
+        <div className={classes.paper}>
+          <h4>Deseja realmente deletar a equipe?</h4>
+          <button id="btn_confirm_leave" className={classes.btn} onClick={() => deleteTeam()}>Sim</button>
+          <button id="btn_cancel_leave" className={classes.btn} onClick={() => handleClose('delete')}>Não</button>
+        </div>
+      </Modal>
+
+      <Modal
+        open={openAdd}
+        onClose={() => handleClose('add')}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        className={classes.modal}
+      >
+        <div className={classes.paper}>
+          <h4>Membro?</h4>
+          <form onSubmit={e => invitePlayer(e)}>
+            <input type="text" id="input_username" className="input_invite" placeholder="Username" required />
+            <button id="btn_invite" type="submit">Convidar</button>
+          </form>
+        </div>
+      </Modal>
     </div>
   );
 }
