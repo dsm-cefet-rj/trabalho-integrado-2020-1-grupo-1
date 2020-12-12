@@ -1,3 +1,4 @@
 module.exports = {
-    mailTransporter: require('./mailTransporter')
+    mailTransporter: require('./mailTransporter'),
+    riotAPIClient: require('./riotAPIClient');
 };

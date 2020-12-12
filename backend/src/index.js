@@ -8,7 +8,9 @@ const { appConfig, databaseConfig } = require('./config');
 const { errorHandler, notFoundHandler } = require('./middlewares');
 const routes = require('./routes');
 
-mongoose.connect(databaseConfig.url, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(databaseConfig.url, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    console.log('Connected to database');
+});
 const app = express();
 
 app.use(cors({ origin: appConfig.corsOrigin }));
