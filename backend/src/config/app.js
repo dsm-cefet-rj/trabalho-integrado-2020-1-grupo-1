@@ -1,5 +1,6 @@
 module.exports = {
+    corsOrigin: process.env.CORS_ORIGIN,
     enviroment: process.env.NODE_ENV,
-    port: process.env.PORT,
-    key: process.env.APP_KEY
+    key: process.env.APP_KEY,
+    port: process.env.PORT
 };
