@@ -1,7 +1,7 @@
 module.exports = {
     champions: require('./championRoutes'),
     competitions: require('./competitionRoutes'),
-    matches: require('./matchController'),
+    matches: require('./matchRoutes'),
     teams: require('./teamRoutes'),
     teamsSubscriptions: require('./teamsSubscriptionsRoutes'),
     users: require('./userRoutes'),
