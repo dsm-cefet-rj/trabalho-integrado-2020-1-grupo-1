@@ -23,6 +23,7 @@ Object.entries(routes).forEach(([key, value]) => { app.use(`/api/${key}`, value)
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(appConfig.port || 3001, () => {
-    console.log(`Server listening on port ${appConfig.port}`); 
+const port = appConfig.port || 3001;
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`); 
 });

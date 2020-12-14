@@ -18,6 +18,15 @@ module.exports = {
             next(err);
         }
     },
+    findByEmail: async (req, res, next) => {
+        try {
+            const { email } = req.query;
+            const user = await User.findOne({ email });
+            res.json(user);
+        } catch(err) {
+            next(err);
+        }
+    },
     findByTeam: async (req, res, next) => {
         try {
             const { team } = req.query;
