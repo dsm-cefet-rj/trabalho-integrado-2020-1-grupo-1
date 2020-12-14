@@ -21,8 +21,8 @@ module.exports = {
     findByEmail: async (req, res, next) => {
         try {
             const { email } = req.query;
-            const users = await User.find({ email });
-            res.json(users);
+            const user = await User.findOne({ email });
+            res.json(user);
         } catch(err) {
             next(err);
         }
