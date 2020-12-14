@@ -1,6 +1,7 @@
+const _ = require('lodash');
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
-const _ = require('lodash');
+const { utcDateFormatter } = require('../services');
 
 const competitionSchema = mongoose.Schema({
     name: {
@@ -22,28 +23,33 @@ const competitionSchema = mongoose.Schema({
     award: {
         amount: {
             type: Number,
-            required: () => this.award.type != 'None'
+            required: true
         },
         type: {
             type: String,
-            enum: ['RP', 'Money', 'None']
+            enum: ['RP', 'Money', 'None'],
+            required: true
         }
     },
     subscriptionInitialDate: {
         type: Date,
-        required: true
+        required: true,
+        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
     },
     subscriptionFinalDate: {
         type: Date,
-        required: true
+        required: true,
+        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
     },
     initialDate: {
         type: Date,
-        required: true
+        required: true,
+        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
     },
     finalDate: {
         type: Date,
-        required: true
+        required: true,
+        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
     },
     slots: {
         type: Number,
@@ -70,7 +76,8 @@ const competitionSchema = mongoose.Schema({
     },
     creator: {
         type: mongoose.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     paused: {
         type: Boolean,

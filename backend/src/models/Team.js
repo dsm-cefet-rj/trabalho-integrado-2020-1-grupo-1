@@ -23,7 +23,10 @@ const teamSchema = mongoose.Schema({
     administrator: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        populate: {
+            select: 'name'
+        }
     }
 });
 
