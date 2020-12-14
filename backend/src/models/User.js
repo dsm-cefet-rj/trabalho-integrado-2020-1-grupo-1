@@ -79,6 +79,10 @@ userSchema.statics.findByName = function(name) {
     return this.find({ name: new RegExp(name, 'i') });
 };
 
+userSchema.statics.findByTeam = function(team) {
+    return this.find({ team });
+};
+
 userSchema.plugin(normalize);
 
 module.exports = mongoose.model('User', userSchema);

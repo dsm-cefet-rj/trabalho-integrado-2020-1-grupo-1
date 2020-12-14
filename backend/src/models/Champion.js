@@ -2,12 +2,8 @@ const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
 
 const championSchema = mongoose.Schema({
-    name: {
-        type: String
-    },
-    imageURL: {
-        type: String
-    }
+    name: String,
+    imageURL: String
 });
 
 championSchema.plugin(normalize);

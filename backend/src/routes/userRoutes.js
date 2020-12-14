@@ -6,6 +6,8 @@ router.route('/')
     .post(userController.create);
 router.route('/findByName')
     .get(userController.findByName);
+router.route('/findByTeam')
+    .get(userController.findByTeam)
 router.route('/:id')
     .get(userController.show)
     .put(userController.update)

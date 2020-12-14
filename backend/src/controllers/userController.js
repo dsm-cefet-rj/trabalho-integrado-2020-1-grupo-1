@@ -1,56 +1,65 @@
 const { User } = require('../models');
 
 module.exports = {
-    index: async (req, res) => {
+    index: async (req, res, next) => {
         try {
             const users = await User.find();
             res.json(users);
         } catch(err) {
-            throw err;
+            next(err);
         }
     },
-    show: async (req, res) => {
-        try {
-            const { id: userId } = req.params;
-            const user = await User.findById(userId).populate('team');
-            res.json(user); 
-        } catch(err) {
-            throw err;
-        }
-    },
-    findByName: async (req, res) => {
+    findByName: async (req, res, next) => {
         try {
             const { name } = req.query;
             const users = await User.findByName(name);
             res.json(users);
         } catch(err) {
-            throw err;
+            next(err);
         }
     },
-    create: async (req, res) => {
+    findByTeam: async (req, res, next) => {
+        try {
+            const { team } = req.query;
+            const users = await User.findByTeam(team);
+            res.json(users);
+        } catch(err) {
+            next(err);
+        }
+    },
+    show: async (req, res, next) => {
+        try {
+            const { id: userId } = req.params;
+            const user = await User.findById(userId).populate('team');
+            res.json(user); 
+        } catch(err) {
+            next(err);
+        }
+    },
+    create: async (req, res, next) => {
         try {
             const user = await User.create(req.body);
             res.json(user);
         } catch(err) {
-            throw err;
+            next(err);
         }
     },
-    update: async (req, res) => {
+    update: async (req, res, next) => {
         try {
             const { id: userId } = req.params;
             const user = await User.findByIdAndUpdate(userId, req.body);
             res.json(user);
         } catch(err) {
-            throw err;
+            next(err);
         }
     },
-    destroy: async (req, res) => {
+    destroy: async (req, res, next) => {
         try {
             const { id: userId } = req.params;
             await User.findByIdAndRemove(userId);
             res.json();
         } catch(err) {
-            throw err;
+            next(err);
         }
     }
 };

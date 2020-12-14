@@ -1,15 +1,10 @@
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
 
-const inviteSchema = mongoose.Schema({
-    sender: {
+const teamsMatchesSchema = mongoose.Schema({
+    match: {
         type: mongoose.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    receiver: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User',
+        ref: 'Match',
         required: true
     },
     team: {
@@ -19,6 +14,6 @@ const inviteSchema = mongoose.Schema({
     }
 });
 
-inviteSchema.plugin(normalize);
+teamsMatchesSchema.plugin(normalize);
 
-module.exports = mongoose.model('Invite', inviteSchema);
+module.exports = mongoose.model('TeamMatches', teamsMatchesSchema);
