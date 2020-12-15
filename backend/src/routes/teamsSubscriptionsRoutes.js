@@ -1,5 +1,5 @@
-const router = require('express').Router();
 const { teamsSubscriptionsController } = require('../controllers');
+const router = require('express').Router();
 
 router.route('/')
     .post(teamsSubscriptionsController.create)

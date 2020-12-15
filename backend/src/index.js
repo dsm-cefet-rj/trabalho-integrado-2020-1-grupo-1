@@ -1,8 +1,8 @@
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
-const morgan = require('morgan');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 const { appConfig, databaseConfig } = require('./config');
 const { errorHandler, notFoundHandler } = require('./middlewares');

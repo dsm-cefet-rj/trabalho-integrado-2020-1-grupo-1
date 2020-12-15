@@ -12,7 +12,8 @@ module.exports = {
     findByCompetition: async (req, res, next) => {
         try {
             const { competition } = req.query;
-            const teams = await TeamsSubscriptions.find({ competition }).populate('team').map(subscription => subscription.team);
+            const teamsSubscriptions = await TeamsSubscriptions.find({ competition }).populate('team');
+            const teams = teamsSubscriptions.map(teamSubscription => teamSubscription.team);
             res.json(teams);
         } catch(err) {
             next(err);
@@ -21,7 +22,8 @@ module.exports = {
     findByMatch: async (req, res, next) => {
         try {
             const { match } = req.query;
-            const teams = await TeamsMatches.find({ match }).populate('team').map(subscription => subscription.team);
+            const teamsMatches = await TeamsMatches.find({ match }).populate('team');
+            const teams = teamsMatches.map(teamMatch => teamMatch.team);
             res.json(teams);
         } catch(err) {
             next(err);
@@ -47,7 +49,7 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const { id: teamId } = req.params;
-            const team = await Team.findByIdAndUpdate(teamId, req.body);
+            const team = await Team.findByIdAndUpdate(teamId, req.body, { new: true });
             res.json(team);
         } catch(err) {
             next(err);

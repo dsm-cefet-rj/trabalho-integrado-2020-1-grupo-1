@@ -16,4 +16,4 @@ const teamsMatchesSchema = mongoose.Schema({
 
 teamsMatchesSchema.plugin(normalize);
 
-module.exports = mongoose.model('TeamMatches', teamsMatchesSchema);
+module.exports = mongoose.model('TeamsMatches', teamsMatchesSchema);

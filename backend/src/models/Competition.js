@@ -91,29 +91,35 @@ competitionSchema.methods.createMatches = async function() {
     const amountMatches = Math.pow(2, Math.ceil(Math.log2(amountTeams))) - 1;
     const matchesArray = Array(amountMatches);
 
-    matchesArray.forEach(async (value, index, array) => {
-        const sucessor = Match.floor(index/2) - 1;
+    for(let index = 0; index < amountMatches; index++) {
+        const sucessorIndex = Math.floor(index / 2) - 1;
         const match = await mongoose.model('Match').create({
             competition: this.id,
-            sucessor: sucessor != -1 ? array(sucessor).id : null
+            sucessor: sucessorIndex != -1 ? matchesArray[sucessorIndex].id : null
         });
-        array[index] = match;
-    });
+        matchesArray[index] = match;
+    }
 
-    _.chunk(_.shuffle(teams), 2).forEach(async (value, index, array) => {
-        const match = array[array.length - (1 + index)];
+    const confrontationsArray = _.chunk(_.shuffle(teams), 2);
+
+    for(let index = 0; index < confrontationsArray.length; index++) {
+        const value = confrontationsArray[index];
+        const match = matchesArray[matchesArray.length - (1 + index)];
 
         if(value.length = 2) {
-            await mongoose.model('TeamsMatches').createMany({ match: match.id, team: value[0] }, { match: match.id, team: value[1] });
+            await mongoose.model('TeamsMatches').insertMany([{ match: match.id, team: value[0] }, { match: match.id, team: value[1] }]);
         } else {
             const sucessorMatch = matchesArray.find(element => element.id == match.sucessor);
             await mongoose.model('TeamsMatches').create({ match: sucessorMatch.id, team: value[0] });
         }
-    });
+    }
+
+    return matchesArray;
 };
 
 competitionSchema.methods.getSubscribedTeams = async function() {
-    const teams = await mongoose.model('TeamsSubscriptions').find({ competition: this.id }).populate('team').map(subscription => subscription.team);
+    const subscriptions = await mongoose.model('TeamsSubscriptions').find({ competition: this.id }).populate('team');
+    const teams = subscriptions.map(value => value.team);
     return teams;
 };
 

@@ -19,6 +19,11 @@ const inviteSchema = mongoose.Schema({
     }
 });
 
+inviteSchema.methods.accept = async function() {
+   await mongoose.model('User').findByIdAndUpdate(this.receiver, { team: this.team });
+   this.remove(); 
+};
+
 inviteSchema.plugin(normalize);
 
 module.exports = mongoose.model('Invite', inviteSchema);

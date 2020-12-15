@@ -30,8 +30,8 @@ module.exports = {
         try {
             const { id: competitionId } = req.params;
             const competition = await Competition.findById(competitionId);
-            await competition.createMatches();
-            res.json(competition);
+            const matches = await competition.createMatches();
+            res.json(matches);
         } catch(err) {
             next(err);
         }
@@ -39,7 +39,7 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const { id: competitionId } = req.params;
-            const competition = await Competition.findByIdAndUpdate(competitionId, req.body);
+            const competition = await Competition.findByIdAndUpdate(competitionId, req.body, { new: true });
             res.json(competition);
         } catch(err) {
             next(err);

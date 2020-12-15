@@ -13,7 +13,7 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const { id: matchId } = req.params;
-            const match = await Match.findByIdAndUpdate(matchId, req.body);
+            const match = await Match.findByIdAndUpdate(matchId, req.body, { new: true });
             res.json(match);
         } catch(err) {
             next(err);

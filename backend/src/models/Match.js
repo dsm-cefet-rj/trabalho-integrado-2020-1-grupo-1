@@ -4,8 +4,7 @@ const normalize = require('normalize-mongoose');
 
 const matchSchema = mongoose.Schema({
     matchCode: {
-        type: String,
-        required: true
+        type: String
     },
     competition: {
         type: mongoose.Types.ObjectId,

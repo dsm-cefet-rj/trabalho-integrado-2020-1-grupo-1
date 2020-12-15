@@ -1,5 +1,5 @@
-const router = require('express').Router();
 const { competitionController } = require('../controllers');
+const router = require('express').Router();
 
 router.route('/')
     .get(competitionController.index)
