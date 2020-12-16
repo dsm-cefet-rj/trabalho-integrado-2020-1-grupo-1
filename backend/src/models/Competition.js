@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { chunk, shuffle } = require('lodash');
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
 const { utcDateFormatter } = require('../services');
@@ -100,7 +100,7 @@ competitionSchema.methods.createMatches = async function() {
         matchesArray[index] = match;
     }
 
-    const confrontationsArray = _.chunk(_.shuffle(teams), 2);
+    const confrontationsArray = chunk(shuffle(teams), 2);
 
     for(let index = 0; index < confrontationsArray.length; index++) {
         const value = confrontationsArray[index];
