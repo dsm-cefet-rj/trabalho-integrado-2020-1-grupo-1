@@ -6,7 +6,7 @@ exports.bodySchema = {
     password: yup.string().required().min(8).max(100).trim(),
     birthdate: yup.date().required(),
     profilePictureURL: yup.string().nullable().url(),
-    leagueOfLegendsUsername: yup.string().required().min(3).max(16).lowercase().trim(),
+    leagueOfLegendsUsername: yup.string().required().min(3).max(16).trim(),
     preferredRole: yup.string().required().equals(['Top', 'Jungler', 'Mid', 'AD Carry', 'Support', 'Fill']),
     team: yup.string().nullable().matches(new RegExp('^[a-f0-9]{24}$', 'i')),
     computerSettings: yup.object().shape({
@@ -25,7 +25,7 @@ exports.bodySchema = {
     favoriteChampions: yup.array().of(yup.string().matches(new RegExp('^[a-f0-9]{24}$', 'i'))),
 };
 
-exports.queryBaseSchema = {
+exports.querySchema = {
     name: yup.string().max(200).matches(new RegExp('^[a-z\\s]+$', 'i'), 'name must include only letters').trim(),
     team: yup.string().matches(new RegExp('^[a-f0-9]{24}', 'i'))
 };

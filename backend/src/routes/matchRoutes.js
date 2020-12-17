@@ -1,10 +1,13 @@
 const { matchController } = require('../controllers');
+const { matchFilterSchema } = require('../filters');
+const { requestValidator, filterGenerator } = require('../middlewares');
+const { validateMatch } = require('../validations');
 const router = require('express').Router();
 
 router.route('/')
-    .get(matchController.index);
+    .get(requestValidator(validateMatch.querySchema), filterGenerator(matchFilterSchema), matchController.index);
 router.route('/:id')
-    .put(matchController.update)
+    .put(requestValidator(validateMatch.updateSchema), matchController.update)
     .delete(matchController.destroy);
 
 module.exports = router;

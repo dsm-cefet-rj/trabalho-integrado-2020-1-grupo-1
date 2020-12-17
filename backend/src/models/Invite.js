@@ -5,17 +5,26 @@ const inviteSchema = mongoose.Schema({
     sender: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        populate: {
+            select: 'name'
+        }
     },
     receiver: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        populate: {
+            select: 'name'
+        }
     },
     team: {
         type: mongoose.Types.ObjectId,
         ref: 'Team',
-        required: true
+        required: true,
+        populate: {
+            select: 'name initials'
+        }
     }
 });
 

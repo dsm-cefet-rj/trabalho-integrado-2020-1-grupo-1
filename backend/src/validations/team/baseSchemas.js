@@ -7,4 +7,4 @@ exports.bodySchema = {
     administrator: yup.string().required().matches(new RegExp('^[a-f0-9]{24}$', 'i'))
 };
 
-exports.queryBaseSchema = {};
+exports.querySchema = {};

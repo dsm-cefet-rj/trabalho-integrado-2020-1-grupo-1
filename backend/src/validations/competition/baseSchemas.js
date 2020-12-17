@@ -25,4 +25,4 @@ exports.bodySchema = {
     paused: yup.boolean()
 };
 
-exports.queryBaseSchema = {};
+exports.querySchema = {};

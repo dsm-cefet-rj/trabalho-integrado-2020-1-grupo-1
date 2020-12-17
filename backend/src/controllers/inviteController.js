@@ -3,7 +3,7 @@ const { Invite } = require('../models');
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const invites = await Invite.find();
+            const invites = await Invite.find(req.filter).populate('team').populate('sender').populate('receiver');
             res.json(invites);
         } catch(err) {
             next(err);
