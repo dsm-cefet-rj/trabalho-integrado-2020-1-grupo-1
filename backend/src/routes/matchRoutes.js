@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 router.route('/findByCompetition')
     .get(matchController.findByCompetition);
-router.route('/:id(^[a-f0-9]{24}$)')
+router.route('/:id')
     .put(matchController.update)
     .delete(matchController.destroy);
 

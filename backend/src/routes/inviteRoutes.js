@@ -4,9 +4,9 @@ const router = require('express').Router();
 router.route('/')
     .get(inviteController.index)
     .post(inviteController.create);
-router.route('/:id(^[a-f0-9]{24}$)')
+router.route('/:id')
     .delete(inviteController.destroy);
-router.route('/:id(^[a-f0-9]{24}$)/accept')
+router.route('/:id/accept')
     .put(inviteController.accept);
 
 module.exports = router;
