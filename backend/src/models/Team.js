@@ -5,15 +5,12 @@ const teamSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true,
         minLength: 3,
         maxLength: 25
     },
     initials: {
         type: String,
         required: true,
-        trim: true,
-        uppercase: true,
         minLength: 3,
         maxLength: 5
     },
@@ -28,6 +25,11 @@ const teamSchema = mongoose.Schema({
             select: 'name'
         }
     }
+});
+
+teamSchema.post('save', async function(doc) {
+    await mongoose.model('User').findByIdAndUpdate(doc.administrator, { team: doc.id });
+    next();
 });
 
 teamSchema.plugin(normalize);

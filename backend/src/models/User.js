@@ -9,25 +9,18 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         index: true,
-        trim: true,
         maxLength: 200
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        trim: true,
-        lowercase: true,
-        validate: {
-            validator: value => emailValidator(value),
-            message: ({ value }) => `${value} is not a valid email`
-        }
+        lowercase: true
     },
     password: {
         type: String,
         required: true,
         private: true,
-        trim: true,
         minLength: 8,
         maxLength: 100,
         set: value => bcrypt.hashSync(value, 10)
@@ -44,13 +37,13 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true,
         minLength: 3,
         maxLength: 16
     },
     preferredRole: {
         type: String,
-        enum: ['Top', 'Jungler', 'Mid', 'AD Carry', 'Support', 'Fill']
+        enum: ['Top', 'Jungler', 'Mid', 'AD Carry', 'Support', 'Fill'],
+        default: 'Fill'
     },
     team: {
         type: mongoose.Types.ObjectId,
@@ -60,12 +53,17 @@ const userSchema = mongoose.Schema({
         }
     },
     computerSettings: {
-        type: Map,
-        of: String
+        processor: String,
+        videoCard: String,
+        keyboard: String,
+        mouse: String,
+        headset: String
     },
     socialMedia: {
-        type: Map,
-        of: String
+        facebook: String,
+        twitter: String,
+        instagram: String,
+        other: String
     },
     favoriteChampions: {
         type: [{

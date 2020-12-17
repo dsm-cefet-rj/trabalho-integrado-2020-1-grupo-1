@@ -1,18 +1,14 @@
 const { userController } = require('../controllers');
+const { validator } = require('../middlewares');
+const { validateUser } = require('../validations');
 const router = require('express').Router();
 
 router.route('/')
-    .get(userController.index)
-    .post(userController.create);
-router.route('/findByName')
-    .get(userController.findByName);
-router.route('/findByEmail')
-    .get(userController.findByEmail);
-router.route('/findByTeam')
-    .get(userController.findByTeam)
-router.route('/:id')
+    .get(validator(validateUser.querySchema, true), userController.index)
+    .post(validator(validateUser.create), userController.create);
+router.route('/:id(^[a-f0-9]{24}$)')
     .get(userController.show)
-    .put(userController.update)
+    .put(validator(validateUser.update), userController.update)
     .delete(userController.destroy);
 
 module.exports = router;

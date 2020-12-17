@@ -4,7 +4,7 @@ const router = require('express').Router();
 router.route('/')
     .get(competitionController.index)
     .post(competitionController.create);
-router.route('/:id')
+router.route('/:id(^[a-f0-9]{24}$)')
     .get(competitionController.show)
     .put(competitionController.update)
     .delete(competitionController.destroy);

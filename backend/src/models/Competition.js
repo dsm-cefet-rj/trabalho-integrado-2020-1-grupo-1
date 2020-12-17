@@ -7,7 +7,6 @@ const competitionSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true,
         unique: true,
         minLength: 2,
         maxLength: 60
@@ -15,8 +14,6 @@ const competitionSchema = mongoose.Schema({
     initials: {
         type: String,
         required: true,
-        trim: true,
-        uppercase: true,
         minLength: 2,
         maxLength: 5
     },

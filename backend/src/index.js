@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
+const { forOwn } = require('lodash');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan(appConfig.enviroment == 'development' ? 'dev' : 'short'));
 
-Object.entries(routes).forEach(([key, value]) => { app.use(`/api/${key}`, value); });
+forOwn(routes, (value, key) => { app.use(`/api/${key}`, value) });
 
 app.use(notFoundHandler);
 app.use(errorHandler);
