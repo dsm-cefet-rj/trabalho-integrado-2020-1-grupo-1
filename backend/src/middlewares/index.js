@@ -1,5 +1,6 @@
 module.exports = {
     errorHandler: require('./errorHandler'),
+    filterGenerator: require('./filterGenerator'),
     notFoundHandler: require('./notFoundHandler'),
-    validator: require('./validator')
+    requestValidator: require('./requestValidator')
 };

@@ -3,34 +3,7 @@ const { User } = require('../models');
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const users = await User.find();
-            res.json(users);
-        } catch(err) {
-            next(err);
-        }
-    },
-    findByName: async (req, res, next) => {
-        try {
-            const { name } = req.query;
-            const users = await User.findByName(name);
-            res.json(users);
-        } catch(err) {
-            next(err);
-        }
-    },
-    findByEmail: async (req, res, next) => {
-        try {
-            const { email } = req.query;
-            const user = await User.findOne({ email }).populate('team');
-            res.json(user);
-        } catch(err) {
-            next(err);
-        }
-    },
-    findByTeam: async (req, res, next) => {
-        try {
-            const { team } = req.query;
-            const users = await User.findByTeam(team);
+            const users = await User.find(req.filter);
             res.json(users);
         } catch(err) {
             next(err);

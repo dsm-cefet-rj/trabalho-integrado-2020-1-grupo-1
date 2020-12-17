@@ -1,10 +1,9 @@
 const { Match } = require('../models');
 
 module.exports = {
-    findByCompetition: async (req, res, next) => {
+    index: async (req, res, next) => {
         try {
-            const { competition } = req.query;
-            const matches = await Match.find({ competition });
+            const matches = await Match.find(req.filter);
             res.json(matches);
         } catch(err) {
             next(err);

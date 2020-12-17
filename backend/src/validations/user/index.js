@@ -1,5 +1,5 @@
 module.exports = {
-    create: require('./createUserSchema'),
+    createSchema: require('./createUserSchema'),
     querySchema: require('./querySchema'),
-    update: require('./updateUserSchema')
+    updateSchema: require('./updateUserSchema')
 };

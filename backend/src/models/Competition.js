@@ -60,8 +60,10 @@ const competitionSchema = mongoose.Schema({
         enum: ['Free', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster', 'Challenger']
     },
     socialMedia: {
-        type: Map,
-        of: String
+        facebook: String,
+        twitter: String,
+        instagram: String,
+        other: String
     },
     competitionRules: {
         type: String,

@@ -1,14 +1,15 @@
 const { userController } = require('../controllers');
-const { validator } = require('../middlewares');
+const { userFilterSchema } = require('../filters');
+const { requestValidator, filterGenerator } = require('../middlewares');
 const { validateUser } = require('../validations');
 const router = require('express').Router();
 
 router.route('/')
-    .get(validator(validateUser.querySchema, true), userController.index)
-    .post(validator(validateUser.create), userController.create);
+    .get(requestValidator(validateUser.querySchema, true), filterGenerator(userFilterSchema), userController.index)
+    .post(requestValidator(validateUser.createSchema), userController.create);
 router.route('/:id')
     .get(userController.show)
-    .put(validator(validateUser.update), userController.update)
+    .put(requestValidator(validateUser.updateSchema), userController.update)
     .delete(userController.destroy);
 
 module.exports = router;

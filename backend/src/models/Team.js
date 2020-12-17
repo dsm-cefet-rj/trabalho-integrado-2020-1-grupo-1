@@ -29,7 +29,6 @@ const teamSchema = mongoose.Schema({
 
 teamSchema.post('save', async function(doc) {
     await mongoose.model('User').findByIdAndUpdate(doc.administrator, { team: doc.id });
-    next();
 });
 
 teamSchema.plugin(normalize);
