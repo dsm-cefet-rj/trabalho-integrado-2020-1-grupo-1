@@ -1,10 +1,11 @@
 const { competitionController } = require('../controllers');
-const { requestValidator } = require('../middlewares');
+const { competitionFilterSchema } = require('../filters')
+const { requestValidator, filterGenerator } = require('../middlewares');
 const { validateCompetition } = require('../validations');
 const router = require('express').Router();
 
 router.route('/')
-    .get(competitionController.index)
+    .get(requestValidator(validateCompetition.querySchema), filterGenerator(competitionFilterSchema), competitionController.index)
     .post(requestValidator(validateCompetition.createSchema), competitionController.create);
 router.route('/:id')
     .get(competitionController.show)

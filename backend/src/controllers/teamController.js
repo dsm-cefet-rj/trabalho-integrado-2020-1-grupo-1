@@ -9,26 +9,6 @@ module.exports = {
             next(err);
         }
     },
-    findByCompetition: async (req, res, next) => {
-        try {
-            const { competition } = req.query;
-            const teamsSubscriptions = await TeamsSubscriptions.find({ competition }).populate('team');
-            const teams = teamsSubscriptions.map(teamSubscription => teamSubscription.team);
-            res.json(teams);
-        } catch(err) {
-            next(err);
-        }
-    },
-    findByMatch: async (req, res, next) => {
-        try {
-            const { match } = req.query;
-            const teamsMatches = await TeamsMatches.find({ match }).populate('team');
-            const teams = teamsMatches.map(teamMatch => teamMatch.team);
-            res.json(teams);
-        } catch(err) {
-            next(err);
-        }
-    },
     show: async (req, res, next) => {
         try {
             const { id: teamId } = req.params;

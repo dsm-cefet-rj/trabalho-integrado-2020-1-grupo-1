@@ -67,7 +67,6 @@ const competitionSchema = mongoose.Schema({
     },
     competitionRules: {
         type: String,
-        trim: true
     },
     winnerTeam: {
         type: mongoose.Types.ObjectId,

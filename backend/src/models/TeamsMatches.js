@@ -11,7 +11,8 @@ const teamsMatchesSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Team',
         required: true
-    }
+    },
+    printURL: String
 });
 
 teamsMatchesSchema.plugin(normalize);

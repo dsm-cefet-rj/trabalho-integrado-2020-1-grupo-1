@@ -1,6 +1,14 @@
 const { TeamsSubscriptions } = require('../models');
 
 module.exports = {
+    index: async (req, res, next) => {
+        try {
+            const subscriptions = await TeamsSubscriptions.find(req.filter).populate('team').populate('competition');
+            res.json(subscriptions);
+        } catch(err) {
+            next(err);
+        }
+    },
     create: async(req, res, next) => {
         try {
             const subscription = await TeamsSubscriptions.create(req.body);

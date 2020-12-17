@@ -25,4 +25,6 @@ exports.bodySchema = {
     paused: yup.boolean()
 };
 
-exports.querySchema = {};
+exports.querySchema = {
+    winnerTeam: yup.string().matches(new RegExp('^[a-f0-9]{24}$', 'i'))
+};

@@ -1,4 +1,4 @@
-const { bodySchema } = require('./baseSchema');
+const { bodySchema } = require('./baseSchemas');
 const yup = require('yup');
 
 const createInviteSchema = yup.object().noUnknown().shape(bodySchema);
