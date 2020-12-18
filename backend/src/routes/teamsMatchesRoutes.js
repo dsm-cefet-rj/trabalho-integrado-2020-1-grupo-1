@@ -7,6 +7,6 @@ const router = require('express').Router();
 router.route('/')
     .get(requestValidator(validateTeamsMatches.querySchema), filterGenerator(teamsMatchesFilterSchema), teamsMatchesController.index);
 router.route('/:id')
-    .update(requestValidator(validateTeamsMatches.updateSchema), teamsMatchesController.update);
+    .put(requestValidator(validateTeamsMatches.updateSchema), teamsMatchesController.update);
 
 module.exports = router;
