@@ -1,23 +1,23 @@
-export function teamData(name, initials, entryYear, image) {
+export function signinTeam(name, initials, logoPictureURL, id) {
   return {
     type: 'SET_TEAM',
     payload: {
       name,
       initials,
-      entryYear,
-      image
+      logoPictureURL,
+      id
     }
   }
 }
 
-export function logoutTeam(name, initials, entryYear, image) {
+export function logoutTeam(name, initials, logoPictureURL, id) {
   return {
     type: 'LOGOUT_TEAM',
     payload: {
       name,
       initials,
-      entryYear,
-      image
+      logoPictureURL,
+      id
     }
   }
 }

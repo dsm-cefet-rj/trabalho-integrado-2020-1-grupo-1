@@ -1,11 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import {
   BrowserRouter,
   Switch,
   Route,
   Redirect
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
 import store from './store';
 
@@ -23,7 +23,6 @@ import MyCompetition from './pages/myCompetition';
 import NewCompetition from './pages/newCompetition';
 import ViewCompetition from './pages/competitionDetails';
 import ViewMatch from './pages/viewMatch';
-
 
 function isAuthenticated() {
   const access_token = sessionStorage.getItem("access_token");
@@ -48,26 +47,25 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-
 export default function Routes() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={ () => <Home /> } />
+          <Route path="/" exact component={ () => <Index /> } />
           <Route path="/signup" component={ () => <Signup /> } />
           <Route path="/forget" component={ () => <ForgetMyPassword /> } />
           <Route path="/recover" component={ () => <RecoverPassword /> } />
-          <PrivateRoute path="/home" component={ () => <Index/> } />
-          <PrivateRoute path="/edit" component={ () => <EditProfile/> } />
+          <PrivateRoute path="/home" component={ () => <Home /> } />
+          <PrivateRoute path="/edit" component={ () => <EditProfile /> } />
           <PrivateRoute path="/team" component={ () => <Team /> } />
           <PrivateRoute path="/viewteam" component={ () => <ViewTeam /> } />
           <PrivateRoute path="/newteam" component={ () => <NewTeam /> } />
           <PrivateRoute path="/competition" component={ () => <Competition /> } />
-          <PrivateRoute path="/mycompetition" component={ () => <MyCompetition/> } />
-          <PrivateRoute path="/newcompetition" component={ () => <NewCompetition/> } />
-          <PrivateRoute path="/viewcompetition/:id" component={ () => <ViewCompetition/> } />
-          <PrivateRoute path="/match/:id/:phase/:team" component={ () => <ViewMatch/> } />
+          <PrivateRoute path="/mycompetition" component={ () => <MyCompetition /> } />
+          <PrivateRoute path="/newcompetition" component={ () => <NewCompetition /> } />
+          <PrivateRoute path="/viewcompetition/:id" component={ () => <ViewCompetition /> } />
+          <PrivateRoute path="/match/:id/:phase/:team" component={ () => <ViewMatch /> } />
         </Switch>
       </BrowserRouter>
     </Provider>

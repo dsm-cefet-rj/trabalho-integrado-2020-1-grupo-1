@@ -1,8 +1,8 @@
 const INITIAL_STATE = {
   name: "",
   initials: "",
-  entryYear: "",
-  image: ""
+  logoPictureURL: "",
+  id: ""
 }
 
 export default function team(state = INITIAL_STATE, action) {
@@ -12,16 +12,16 @@ export default function team(state = INITIAL_STATE, action) {
         ...state,
          name: action.payload.name,
          initials: action.payload.initials,
-         entryYear: action.payload.entryYear,
-         image: action.payload.image
+         logoPictureURL: action.payload.logoPictureURL,
+         id: action.payload.id
        }
     case 'LOGOUT_TEAM':
       return {
         ...state,
          name: '',
          initials: '',
-         entryYear: '',
-         image: ''
+         logoPictureURL: '',
+         id: ''
        }
     default:
       return state     

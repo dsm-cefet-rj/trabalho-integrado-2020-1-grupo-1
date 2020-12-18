@@ -1,60 +1,57 @@
-export function signinUser(name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email) {
+export function signinUser(name, email, birthdate, profilePictureURL, leagueOfLegendsUsername, preferredRole, computerSettings, socialMedia, team, favoriteChampions, id) {
   return {
     type: 'USER_LOGIN',
     payload: {
       name,
-      username,
-      profile_picture,
-      role,
-      champion1,
-      champion2,
-      champion3,
-      facebook,
-      instagram,
-      twitter,
-      other,
-      email
+      email,
+      birthdate,
+      profilePictureURL,
+      leagueOfLegendsUsername,
+      preferredRole,
+      computerSettings,
+      socialMedia,
+      team,
+      favoriteChampions,
+      id
     }
   }
 }
 
-export function editUser(name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email) {
+export function editUser(name, email, birthdate, profilePictureURL, leagueOfLegendsUsername, preferredRole, computerSettings, socialMedia, team, favoriteChampions, id) {
   return {
     type: 'EDIT_USER',
     payload: {
       name,
-      username,
-      profile_picture,
-      role,
-      champion1,
-      champion2,
-      champion3,
-      facebook,
-      instagram,
-      twitter,
-      other,
-      email
+      email,
+      birthdate,
+      profilePictureURL,
+      leagueOfLegendsUsername,
+      preferredRole,
+      computerSettings,
+      socialMedia,
+      team,
+      favoriteChampions,
+      id
     }
   }
 }
 
 
-export function logoutUser(name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email) {
+export function logoutUser(name, email, birthdate, profilePictureURL, leagueOfLegendsUsername, preferredRole, computerSettings, socialMedia, team, favoriteChampions, id) {
   return {
     type: 'LOGOUT_USER',
     payload: {
       name,
-      username,
-      profile_picture,
-      role,
-      champion1,
-      champion2,
-      champion3,
-      facebook,
-      instagram,
-      twitter,
-      other,
-      email
+      email,
+      birthdate,
+      profilePictureURL,
+      leagueOfLegendsUsername,
+      preferredRole,
+      computerSettings,
+      socialMedia,
+      team,
+      favoriteChampions,
+      id
     }
   }
 }

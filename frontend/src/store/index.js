@@ -29,4 +29,3 @@ const store = createStore(rootReducers, persistedState);
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
 export default store;
-

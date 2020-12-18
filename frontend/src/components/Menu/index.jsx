@@ -8,8 +8,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import * as UserActions from '../../store/actions/user';
 import * as TeamActions from '../../store/actions/team';
 
-import icon from './icon.png';
-import logout from './logout.png';
+import icon from './images/icon.png';
+import logout from './images/logout.png';
 
 const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
   const [width, setWidth] = useState(window.innerWidth);
