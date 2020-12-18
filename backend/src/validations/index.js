@@ -1,3 +1,5 @@
+require('../services').addRulesYup();
+
 module.exports = {
     validateCompetition: require('./competition'),
     validateInvite: require('./invite'),
