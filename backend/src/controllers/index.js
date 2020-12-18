@@ -4,6 +4,7 @@ module.exports = {
     inviteController: require('./inviteController'),
     matchController: require('./matchController'),
     teamController: require('./teamController'),
+    teamsMatchesController: require('./teamsMatchesController'),
     teamsSubscriptionsController: require('./teamsSubscriptionsController'),
     userController: require('./userController'),
     usersSubscriptionsController: require('./usersSubscriptionsController')

@@ -3,7 +3,7 @@ const { Competition } = require('../models');
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const competitions = await Competition.find();
+            const competitions = await Competition.find(req.filter);
             res.json(competitions);
         } catch(err) {
             next(err);

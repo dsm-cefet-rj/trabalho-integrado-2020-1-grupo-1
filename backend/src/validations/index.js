@@ -3,5 +3,7 @@ module.exports = {
     validateInvite: require('./invite'),
     validateMatch: require('./match'),
     validateUser: require('./user'),
-    validateTeam: require('./team')
+    validateTeam: require('./team'),
+    validateTeamsMatches: require('./teamsMatches'),
+    validateTeamsSubscriptions: require('./teamsSubscriptions')
 };
