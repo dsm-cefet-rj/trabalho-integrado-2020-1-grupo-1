@@ -8,9 +8,9 @@ exports.bodySchema = {
         type: yup.string().required().equals(['RP', 'Money', 'None'])
     }),
     subscriptionInitialDate: yup.date().required(),
-    subscriptionFinalDate: yup.date().required().min(yup.ref('subscriptionInitialDate')),
-    initialDate: yup.date().required().min(yup.ref('subscriptionFinalDate')),
-    finalDate: yup.date().required().min(yup.ref('initialDate')),
+    subscriptionFinalDate: yup.date().required().when('subscriptionInitialDate', (subscriptionInitialDate, schema) => schema.min(subscriptionInitialDate)),
+    initialDate: yup.date().required().when('subscriptionFinalDate', (subscriptionFinalDate, schema) => schema.min(subscriptionFinalDate)),
+    finalDate: yup.date().required().when('initialDate', (initialDate, schema) => schema.min(initialDate)),
     slots: yup.number().required().min(4).max(64).powerOfTwo(),
     level: yup.string().required().equals(['Free', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster', 'Challenger']),
     socialMedia: yup.object().shape({
