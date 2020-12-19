@@ -18,7 +18,18 @@ export const Button = styled.button`
   }
 `
 
-export default function BTNSendData(props) {
+/**
+ * @module components/BTNSendData 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de detalhes da equipe.
+ * @param {String} props.type - Tipo do botão.
+ * @param {Boolean} props.disabled - Booleano que representa se o botão está ou não desativado.
+ * @param {String} props.content - Conteúdo a ser renderizado pelo componente.
+ */
+
+function BTNSendData(props) {
   return (
     <Button 
       type={props.type} 
@@ -28,3 +39,5 @@ export default function BTNSendData(props) {
     </Button>
   );
 }
+
+export default BTNSendData;

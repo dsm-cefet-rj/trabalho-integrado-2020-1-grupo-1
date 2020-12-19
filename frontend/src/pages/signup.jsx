@@ -20,11 +20,27 @@ export const SignupArea = styled.section`
   flex-direction: column;
 `
 
-export default function Signup(){
+/**
+* @module pages/signup 
+*/
+
+/**
+ * Componente funcional responsável por renderizar a tela de Signup.
+ * 
+*/
+function Signup(){
   document.title = "Battleside - Cadastre-se agora mesmo!";
 
   const [preferredRole, setPreferredRole] = useState('Fill');
 
+  /**
+   * @module pages/index 
+   */
+
+  /**
+   * Responsável por realizar a requisição que envia ao backend os dados informados.
+   * @param {Object} e - Parâmetro que guarda o event da chamada da função.
+   */
   async function sendData(e) {
     e.preventDefault();
 
@@ -57,13 +73,18 @@ export default function Signup(){
           other: ""
         },
         team: null,
-        favoriteChampions: []
+        favoriteChampions: {
+          champion1: null,
+          champion2: null,
+          champion3: null
+        }
       })
 
       alert('Cadastro realizado com sucesso!');
       window.location.href='/'
     } catch(err) {
       alert('Não foi possível realizar o cadastro!');
+      console.log(err.response)
     }
   }
 
@@ -152,3 +173,5 @@ export default function Signup(){
     </Screen>
   )
 }
+
+export default Signup;

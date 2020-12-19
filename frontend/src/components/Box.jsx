@@ -13,7 +13,15 @@ export const Title = styled.div`
   height: 50px;
 `
 
-export default function Box(){
+/**
+ * @module components/Box 
+ */
+
+/**
+ * Componente responsável por renderizar as box.
+ * 
+ */
+function Box(){
   return (
     <section>
       <Title>
@@ -25,3 +33,5 @@ export default function Box(){
     </section>
   );
 }
+
+export default Box;

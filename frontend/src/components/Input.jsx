@@ -13,8 +13,22 @@ export const Inputs = styled.input`
   }
 `
 
-export default function Input(props) {
+/**
+ * @module components/Input 
+ */
+
+/**
+ * Componente responsável por renderizar os inputs da aplicação.
+ * @param {String} props.type - Tipo do input.
+ * @param {String} props.placeholder - Placeholder do input.
+ * @param {Boolean} props.required - Tipo do input.
+ * 
+ */
+
+function Input(props) {
   return (
     <Inputs type={props.type} placeholder={props.placeholder} required={props.required} />
   )
 }
+
+export default Input;

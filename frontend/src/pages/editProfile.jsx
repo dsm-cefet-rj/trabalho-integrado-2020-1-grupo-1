@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import Menu from '../components/Menu';
@@ -9,11 +9,50 @@ import api from '../services/api';
 
 import * as UserActions from '../store/actions/user';
 
+/**
+ * @module pages/editProfile 
+ */
+
+/**
+ * @typedef User
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} name - Nome 
+ * @property {String} leagueOfLegendsUsername - Username do League of Legends 
+ * @property {String} email - E-mail
+ * @property {String} preferredRole - Role preferida 
+ * @property {array} favoriteChampions - Array de campeões preferidos 
+ * @property {String} birthdate - Data de aniversário 
+ * @property {Object} computerSetting - Configurações do computador 
+ * @property {Object} socialMedia - Mídias sociais
+ */
+
+/**
+ * Componente responsável por renderizar a tela de Editar Perfil
+ * @param {object} user - Objeto que contém os dados de User presentes na store do Redux.
+ * @param {function} editUser - Função do Redux para alterar o estado global de User na store.
+ */
+
 const EditProfile = ({ user, editUser }) => {
   document.title = 'Battleside - Editar perfil';
 
   const [selectedRole, setSelectedRole] = useState(user.preferredRole);
+  const [champions, setChampions] = useState([]);
+  const [favoriteChampions, setFavoriteChampions] = useState({
+    champion1: '5fdd90f5b71bf4fbaf46ed84',
+    champion2: '5fdd90f5b71bf4fbaf46ed84',
+    champion3: '5fdd90f5b71bf4fbaf46ed84'
+  });
 
+  useEffect(() => {
+    api.get(`/api/champions`)
+    .then(response => setChampions(response.data))
+  }, [])
+
+  /**
+   * Função que salva os novos dados do usuário
+   * @param {Object} e - Variável que possui o event salvo.
+   */
   async function saveNewData(e){
     e.preventDefault();
 
@@ -29,31 +68,54 @@ const EditProfile = ({ user, editUser }) => {
     }
 
     const computerSettings = {
-      processador: document.getElementById('edit_cpu').value,
-      placaDeVideo: document.getElementById('edit_gpu').value,
-      teclado: document.getElementById('edit_keyboard').value,
+      processor: document.getElementById('edit_cpu').value,
+      videoCard: document.getElementById('edit_gpu').value,
+      keyboard: document.getElementById('edit_keyboard').value,
       mouse: document.getElementById('edit_mouse').value,
       headset: document.getElementById('edit_headset').value
     }
 
-    try {
-      api.put(`/api/users/${user.id}`, {
-        name,
-        birthdate,
-        profilePictureURL: "",
-        leagueOfLegendsUsername,
-        preferredRole: selectedRole,
-        computerSettings,
-        socialMedia,
-        favoriteChampions: []
-      })
+    let bodyRequest ={
+      name,
+      birthdate,
+      profilePictureURL: "",
+      preferredRole: selectedRole,
+      computerSettings,
+      socialMedia,
+      favoriteChampions
+    };
 
-      editUser(name, user.email, birthdate, user.profilePictureURL, leagueOfLegendsUsername, selectedRole, computerSettings, socialMedia, user.team, user.favoriteChampions, user.id)
-      alert('Os dados foram alterados!')
+    if(user.leagueOfLegendsUsername !== leagueOfLegendsUsername) {
+      bodyRequest = {
+        ...bodyRequest,
+        leagueOfLegendsUsername
+      }
+    }
+
+    try {
+      await api.put(`/api/users/${user.id}`, bodyRequest)
+
+      const splitedDate = birthdate.split('-');
+      const convertedDate = splitedDate[2] + '/' + splitedDate[1] + '/' + splitedDate[0];
+
+      editUser(name, user.email, convertedDate, user.profilePictureURL, leagueOfLegendsUsername, selectedRole, computerSettings, socialMedia, user.team, favoriteChampions, user.id);
+      alert('Os dados foram alterados!');
 
     } catch(err) {
-      alert('Ocorreu um erro inesperado!')
+      alert('Ocorreu um erro inesperado!');
     }
+  }
+
+  /**
+   * Função responsável por converter e retornar a data para o formato americano.
+   * @param {String} date - Parâmetro que guarda a data no formato original.
+   * 
+   */
+  function convertDate(date) {
+    const splitedDate = date.split('/');
+    const convertedDate = splitedDate[2] + '-' + splitedDate[1] + '-' + splitedDate[0];
+
+    return convertedDate
   }
 
   return (
@@ -120,7 +182,7 @@ const EditProfile = ({ user, editUser }) => {
               type="date" 
               required
               id="edit_birthdate"
-              defaultValue={user.birthdate}
+              defaultValue={convertDate(user.birthdate)}
               className="form-control"
             />
           </div>
@@ -129,36 +191,51 @@ const EditProfile = ({ user, editUser }) => {
         <div className="row">
           <div className="col-md-4">
             <label htmlFor="edit_champion_1">Campeão 1 *</label>
-            <input 
-              type="text" 
-              placeholder="Campeão 1 *" 
-              required
-              id="edit_champion_1"
-              // defaultValue={user.champion1}
-              className="form-control"
-            />
+            <select 
+              className="form-control" 
+              id="edit_champion_1" 
+              onChange={e => setFavoriteChampions({
+                ...favoriteChampions,
+                champion1: e.target.value
+              })} 
+              defaultValue={favoriteChampions?.champion1}
+            >
+              {champions?.map(champion => (
+                <option value={champion.id} key={champion.id}>{champion.name}</option>
+              ))}
+            </select>
           </div>
           <div className="col-md-4">
             <label htmlFor="edit_champion_2">Campeão 2 *</label>
-            <input 
-              type="text" 
-              placeholder="Campeão 2 *" 
-              required
-              id="edit_champion_2"
-              // defaultValue={user.champion2}
-              className="form-control"
-            />
+            <select 
+              className="form-control" 
+              id="edit_champion_2" 
+              onChange={e => setFavoriteChampions({
+                ...favoriteChampions,
+                champion2: e.target.value
+              })} 
+              defaultValue={favoriteChampions?.champion2}
+            >
+              {champions?.map(champion => (
+                <option value={champion.id} key={champion.id}>{champion.name}</option>
+              ))}
+            </select>
           </div>
           <div className="col-md-4">
             <label htmlFor="edit_champion_3">Campeão 3 *</label>
-            <input 
-              type="text" 
-              placeholder="Campeão 3 *" 
-              required
-              id="edit_champion_3"
-              // defaultValue={user.champion3}
-              className="form-control"
-            />
+            <select 
+              className="form-control" 
+              id="edit_champion_3" 
+              onChange={e => setFavoriteChampions({
+                ...favoriteChampions,
+                champion3: e.target.value
+              })} 
+              defaultValue={favoriteChampions?.champion3}
+            >
+              {champions?.map(champion => (
+                <option value={champion.id} key={champion.id}>{champion.name}</option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -169,7 +246,7 @@ const EditProfile = ({ user, editUser }) => {
               type="text" 
               placeholder="CPU" 
               id="edit_cpu"
-              defaultValue={user.computerSettings.processador}
+              defaultValue={user.computerSettings.processor}
               className="form-control"
             />
           </div>
@@ -179,7 +256,7 @@ const EditProfile = ({ user, editUser }) => {
               type="text" 
               placeholder="GPU" 
               id="edit_gpu"
-              defaultValue={user.computerSettings.placaDeVideo}
+              defaultValue={user.computerSettings.videoCard}
               className="form-control"
             />
           </div>
@@ -187,12 +264,12 @@ const EditProfile = ({ user, editUser }) => {
 
         <div className="row">
           <div className="col-md-4">
-            <label htmlFor="edit_keyboard">Teclado</label>{console.log(user)}
+            <label htmlFor="edit_keyboard">Teclado</label>
             <input 
               type="text" 
               placeholder="Ex.: Razer Blackwidow Chroma" 
               id="edit_keyboard"
-              defaultValue={user.computerSettings.teclado}
+              defaultValue={user.computerSettings.keyboard}
               className="form-control"
             />
           </div>

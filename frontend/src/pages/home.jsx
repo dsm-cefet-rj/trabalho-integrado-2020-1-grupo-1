@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import api from '../services/api';
+
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 import BoxTitle from '../components/BoxTitle';
@@ -74,11 +76,57 @@ export const BoxSince = styled.h6`
   margin-top: 5px;
 `
 
+/**
+ * @module pages/home 
+ */
+
+/**
+ * @typedef User
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} name - Nome 
+ * @property {String} leagueOfLegendsUsername - Username do League of Legends 
+ * @property {String} email - E-mail
+ * @property {String} preferredRole - Role preferida 
+ * @property {array} favoriteChampions - Array de campeões preferidos 
+ * @property {String} birthdate - Data de aniversário 
+ * @property {Object} computerSetting - Configurações do computador 
+ * @property {Object} socialMedia - Mídias sociais
+ */
+
+ /**
+ * @typedef Team
+ * @type {Object}
+ * @property {String} name - Nome da equipe
+ * @property {String} initials - Iniciais da equipe 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de Home.
+ * @param {Object} user - Objeto da store do Redux que contém os dados de User presentes na store.
+ * @param {Object} team - Objeto da store do Redux que contém os dados de Team presentes na store.
+ */
+
 const Home = ({ user, team }) => {
   document.title = 'Battleside';
 
-  const [titles, setTitles] = useState([]);
+  const [champions, setChampions] = useState([]);
 
+  useEffect(() => {
+    api.get(`/api/champions`)
+    .then(response => setChampions(response.data))
+  }, [])
+
+  function getChampionData(championID) {
+    if(champions.length !== 0) {
+      for(let i = 0; i <= champions.length; i++) {
+        if(championID === champions[i].id) {
+          return champions[i].imageURL
+        }
+      }
+    }
+  }
+  
   return (
     <div className="container">     
       <Menu />
@@ -108,10 +156,18 @@ const Home = ({ user, team }) => {
                 <a href={user.socialMedia?.other} target="_blank"><img src={other} className="icon-social-media" alt="outro" /></a>      
               : undefined}
 
-              {/* <h5>Campeões favoritos</h5>
-              <p><strong>1° -</strong> {user?.champion1}</p>
-              <p><strong>2° -</strong> {user?.champion2}</p>
-              <p><strong>3° -</strong> {user?.champion3}</p>                           */}
+              <h5>Campeões favoritos</h5>
+              <div className="row">
+                <div className="col-md-4 champion-icon">
+                  <img src={(user.favoriteChampions.champion1) ? getChampionData(user.favoriteChampions.champion1) : ''} />
+                </div>
+                <div className="col-md-4 champion-icon">
+                  <img src={(user.favoriteChampions.champion2) ? getChampionData(user.favoriteChampions.champion2) : ''} />
+                </div>
+                <div className="col-md-4 champion-icon">
+                  <img src={(user.favoriteChampions.champion3) ? getChampionData(user.favoriteChampions.champion3) : ''} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

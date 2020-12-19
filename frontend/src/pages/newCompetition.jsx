@@ -7,6 +7,21 @@ import Header from '../components/Header';
 
 import api from '../services/api';
 
+/**
+ * @module pages/newCompetition 
+ */
+
+/**
+ * @typedef User
+ * @type {Object}
+ * @property {String} id - Identificador 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de Nova Competição.
+ * @param {Object} user - Objeto que possui os dados de User presentes na store do redux.
+ */
+
 const NewCompetition = ({ user }) => {
   document.title = 'Battleside - Nova competição';
 

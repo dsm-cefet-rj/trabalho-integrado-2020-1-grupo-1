@@ -94,9 +94,23 @@ export const LoginArea = styled.section`
     margin-top: 20px;
   }
 `
+/**
+ * @module pages/index 
+ */
+
+/**
+ * Representa a tela de login onde o usuário pode informar seu e-mail e senha e dessa forma, realizar o login.
+ * @param {function} signinUser - Função do Redux para alterar o estado global de User na store.
+ * @param {function} signinTeam - Função do Redux para alterar o estado global de Team na store.
+ */
 
 const Index = ({ signinUser, signinTeam }) => {
   document.title = "Battleside";
+
+/**
+ * Função que realiza o login.
+ * @param {Object} e - Variável que salva o event.
+ */
 
   async function Login(e) {
     e.preventDefault();
@@ -105,6 +119,7 @@ const Index = ({ signinUser, signinTeam }) => {
 
     try {
       const userResponse = await api.get(`/api/users?email=${email}`);
+ 
       const teamID = userResponse.data[0].team;
 
       signinUser(
@@ -135,7 +150,7 @@ const Index = ({ signinUser, signinTeam }) => {
       window.location.href='/home'
 
     } catch(err) {
-      alert('Não foi possível realizar o login! Verifique os dados informados e tente novamente!')
+      alert('Não foi possível realizar o login! Verifique os dados informados e tente novamente!');
     }
   }
   

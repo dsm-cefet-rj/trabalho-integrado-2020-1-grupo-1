@@ -1,4 +1,0 @@
-{
-  "/api/*": "/$1",
-  "/api/auth/login?email=:email": "/users?email=:email"
-}

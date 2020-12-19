@@ -7,8 +7,20 @@ export const Title = styled.h2`
   padding: 15px;
 `
 
-export default function BoxTitle(props) {
+/**
+ * @module components/BoxTitle 
+ */
+
+/**
+ * Componente responsável por renderizar o titulo das box.
+ * @param {String} props.content - Conteúdo a ser renderizado pelo componente.
+ * 
+ */
+
+function BoxTitle(props) {
   return (
     <Title>{props.content}</Title>
   );
 }
+
+export default BoxTitle;

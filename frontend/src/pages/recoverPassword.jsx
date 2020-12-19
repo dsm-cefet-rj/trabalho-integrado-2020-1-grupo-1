@@ -83,9 +83,22 @@ export const RecoverArea = styled.div`
   }
 `
 
-export default function RecoverPassword() {
+/**
+ * @module pages/recoverPassword 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de Esqueci minha senha
+ *
+ */
+function RecoverPassword() {
   document.title = 'Battleside - Recuperar senha';
 
+  /**
+   * Função responsável por enviar a nova senha do usuário ao backend para a redefinição de senha
+   * @param {Object} e - Objeto que contém os dados do event que lançou a função.
+   * 
+   */
   async function setPassword(e) {
     e.preventDefault();
 
@@ -129,3 +142,5 @@ export default function RecoverPassword() {
     </Screen>
   );
 }
+
+export default RecoverPassword;

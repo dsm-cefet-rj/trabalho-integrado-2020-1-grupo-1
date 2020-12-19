@@ -123,6 +123,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/**
+ * @module pages/MyCompetition 
+ */
+
+/**
+ * @typedef Competition
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} name - Nome
+ * @property {String} initials - Iniciais
+ */
+
+ /**
+ * @typedef User
+ * @type {Object}
+ * @property {String} id - Identificador 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de minha competição.
+ * @param {Object} user - Objeto que possui os dados de User presentes na store do redux.
+ */
+
 const MyCompetition = ({ user }) => {
   document.title = 'Battleside - Minha competição';
 
@@ -133,6 +156,20 @@ const MyCompetition = ({ user }) => {
 
   const classes = useStyles();
 
+  useEffect(() => {
+    api.get(`/api/competitions?creator=${user.id}&finished=false`)
+    .then(response => setCompetition(response.data))
+  }, [])
+
+  useEffect(() => {
+    api.get(``)
+    .then(response => competitionPrints(response.data))
+  }, [])
+
+  /**
+   * Função responsável por alterar o estado do modal (abrir).
+   * @param {String} type - String que possui o tipo da modal que a aplicação deve abrir.
+  */
   const handleOpen = type => {
     if(type === 'edit') {
       setOpenEdit(true);
@@ -141,6 +178,10 @@ const MyCompetition = ({ user }) => {
     }
   };
 
+  /**
+   * Função responsável por alterar o estado do modal (fechar).
+   * @param {String} type - String que possui o tipo da modal que a aplicação deve abrir.
+  */ 
   const handleClose = type => {
     if(type === 'edit') {
       setOpenEdit(false);
@@ -149,20 +190,13 @@ const MyCompetition = ({ user }) => {
     }
   };
 
-  useEffect(() => {
-    api.get(`/competitions/${user.id}`)
-    .then(response => setCompetition(response.data))
-  }, [])
-
-  useEffect(() => {
-    api.get(`/championships-prints?user_manage=${user.username}`)
-    .then(response => setCompetitionPrints(response.data))
-    .catch(err => console.log(err.response))
-  }, [])
-
+  /**
+   * Função responsável por enviar ao backend a solicitação de deletar a competição.
+   * 
+  */
   async function deleteCompetition() {
     try {
-      api.delete(`/api/competitions/${competition.id}`)
+      api.delete(`/api/competitions/${competition[0].id}`)
       alert('Competição deletada com sucesso!');
       window.location.href = '/home';
 
@@ -171,9 +205,15 @@ const MyCompetition = ({ user }) => {
     }
   }
 
-  async function setDateOfCompetition() {
+  /**
+   * Função responsável por enviar ao backend a solicitação para alterar a data da competição.
+   * 
+  */
+  async function setDateOfCompetition(e) {
+    e.preventDefault();
+
     try {
-      await api.put(`/api/competitions/${competition.id}`, {
+      await api.put(`/api/competitions/${competition[0].id}`, {
         initialDate: document.getElementById('edit_date').value,
         finalDate: document.getElementById('edit_date_final').value
       })
@@ -184,14 +224,39 @@ const MyCompetition = ({ user }) => {
     }
   }
 
-  async function setWinner() {
-    // try { 
-    //   await
-    // } catch(err) {
+  /**
+   * Função responsável por enviar ao backend o vencedor de uma partida.
+   * @param {String} winnerID - ID da equipe vencedora
+   * @param {String} matchID - ID da partida
+   * 
+  */
+  async function setWinner(winnerID, matchID) {
+    try { 
+      await api.put(`/api/matches/${matchID}`, {
+        winnerTeam: winnerID
+      })
+    } catch(err) {
 
-    // }
+    }
   }
 
+  /**
+   * Função responsável por converter e retornar a data para o formato americano.
+   * @param {String} date - Parâmetro que guarda a data no formato original.
+   * 
+   */
+  function convertDate(date){
+    const splitedDate = date.split('/');
+    const convertedDate = splitedDate[2] + '-' + splitedDate[1] + '-' + splitedDate[0];
+
+    return convertedDate
+  }
+
+  /**
+   * Função responsável por renderizar a lista de prints.
+   * @param {Object} print - String que possui o tipo da modal que a aplicação deve abrir.
+   * 
+  */
   function generatePrintList(print) {
     if(!print.isViewed) {
       return <CardMatch key={print.id}>
@@ -220,10 +285,10 @@ const MyCompetition = ({ user }) => {
       </div>
       <div className="row buttons-winner">
         <div className="col-md-6">
-          <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.id, print.team1)}>Vencedor</button>
+          <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.id)}>Vencedor</button>
         </div>
         <div className="col-md-6">
-          <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.id, print.team2)}>Vencedor</button>
+          <button type="button" id="" className="btn-primary" onClick={() => setWinner(print.id)}>Vencedor</button>
         </div>
       </div>
       <div className="row btn-print">
@@ -245,11 +310,11 @@ const MyCompetition = ({ user }) => {
           <h1>{competition[0].name}</h1>
           <div className="box-your-competition">
             <h4 className="box-your-competition-title">Prints recebidos</h4>
-            <div className="list-matchs">
+            {/* <div className="list-matchs">
               {(competitionPrints[0]?.prints) ? (competitionPrints[0]?.prints).map(print => (
                 generatePrintList(print)
               )) : ''}
-            </div>
+            </div> */}
           </div>
 
           <AdminArea>
@@ -257,6 +322,8 @@ const MyCompetition = ({ user }) => {
             <button type="button" id="btn_edit_datehour" className="btn-primary" onClick={() => handleOpen('edit')}>Editar data e horário</button>
             <button type="button" id="btn_delete_comp" className="btn-primary" onClick={() => handleOpen('delete')}>Deletar competição</button>
           </AdminArea>
+
+          <br /><br />
 
           <Modal
             open={openEdit}
@@ -271,11 +338,11 @@ const MyCompetition = ({ user }) => {
                 <form onSubmit={e => setDateOfCompetition(e)}>
                   <div className="form-group">
                     <label className="black" htmlFor="edit_date">Data inicial da competição *</label>
-                    <input type="date" className="form-group" id="edit_date" defaultValue={competition[0].subscriptionInitialDate} required />
+                    <input type="date" className="form-group" id="edit_date" defaultValue={convertDate(competition[0].initialDate)} required />
                   </div>
                   <div className="form-group">
                     <label className="black" htmlFor="edit_date_final">Data final da competição *</label>
-                    <input type="date" className="form-group" id="edit_date_final" defaultValue={competition[0].subscriptionFinalDate} required />
+                    <input type="date" className="form-group" id="edit_date_final" defaultValue={convertDate(competition[0].finalDate)} required />
                   </div>
                   <div className="center-row">
                     <button type="submit" id="btn_save_edit" className="btn-primary">Salvar</button>

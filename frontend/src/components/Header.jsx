@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
+
+import foto from '../images/foto.png';
 
 export const Banner = styled.div`
   height: 150px;
@@ -24,16 +25,20 @@ export const ProfilePicture = styled.img`
   margin-top: 30px;
 `
 
-function Header({ user }) {
+/**
+ * @module components/Header 
+ */
+
+/**
+ * Componente responsável por renderizar o cabeçalho padrão de todas as telas.
+ * 
+ */
+function Header() {
   return (
     <Banner>
-      <ProfilePicture src={user.profile_picture} alt="Foto perfil" />
+      <ProfilePicture src={foto} alt="Foto perfil" />
     </Banner>
   );
 }
 
-const mapStateToProps = state => ({
-  user: state.user
-})
-
-export default connect(mapStateToProps)(Header);
+export default Header;

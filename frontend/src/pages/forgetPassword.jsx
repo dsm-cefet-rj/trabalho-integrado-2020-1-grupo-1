@@ -82,9 +82,22 @@ export const ForgetArea = styled.div`
   }
 `
 
+/**
+ * @module pages/forgetPassword 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de Esqueci minha senha
+ * 
+ */
 export default function ForgetPassword() {
   document.title = 'Battleside - Esqueci minha senha';
 
+  /**
+   * Função responsável por enviar o e-mail ao usuário para a redefinição de senha
+   * @param {Object} e - Objeto que contém os dados do event que lançou a função.
+   * 
+   */
   async function sendEmail(e) {
     e.preventDefault();
 

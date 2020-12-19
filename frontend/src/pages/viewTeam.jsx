@@ -36,10 +36,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/**
+ * @module pages/viewTeam 
+ */
+
+/**
+ * @typedef User
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} team - Identificador da equipe
+ */
+
+ /**
+ * @typedef Team
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} name - Nome da equipe
+ */
+
+/**
+ * Componente responsável por renderizar a tela de detalhes da equipe.
+ * @param {Object} user - Objeto que possui os dados de User presentes na store do redux.
+ * @param {Object} team - Objeto que possui os dados de Team presentes na store do redux.
+ * @param {function} deleteTeamAtStore - Função responsável por deletar os dados de Team presentes na store do redux.
+ */
 const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
   document.title = 'Battleside - Ver equipe';
 
-  const [members, setMembers] = useState({});
+  const [members, setMembers] = useState([]);
   const [titles, setTitles] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
@@ -64,6 +88,11 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
     .then(response => setTitles(response.data))
   }, [])
 
+  /**
+   * Função responsável por abrir o modal do tipo definido.
+   * @param {string} type - String que possui o tipo do modal que deve ser aberto.
+   * 
+   */
   const handleOpen = type => {
     if(type === 'delete') {
       setOpenDelete(true);
@@ -72,6 +101,11 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
     }
   };
 
+  /**
+   * Função responsável por fechar o modal do tipo definido.
+   * @param {string} type - String que possui o tipo do modal que deve ser fechado.
+   * 
+   */
   const handleClose = type => {
     if(type === 'delete') {
       setOpenDelete(false);
@@ -80,6 +114,11 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
     }
   };
 
+  /**
+   * Função responsável por fazer a busca filtrada a partir do username do usuario pesquisado.
+   * @param {string} searchedMember - Username do membro digitado.
+   * 
+   */
   function getListOfMembersToInvite(searchedMember) {
     setListInviteMember(userList.filter(value => {
       const originalValue = (value.leagueOfLegendsUsername).toLowerCase();
@@ -89,6 +128,11 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
     }));
   }
 
+  /**
+   * Função responsável por enviar ao backend o convite do player.
+   * @param {object} e - Objeto que possui os dados referentes ao event que foi gerado.
+   * 
+   */
   async function invitePlayer(e) {
     e.preventDefault();
 
@@ -110,6 +154,10 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
     }
   }
 
+  /**
+   * Função responsável por enviar ao backend a solicitação de exclusão da equipe.
+   * 
+   */
   async function deleteTeam() {
     try {
       await api.delete(`/api/teams/${team.id}`)
@@ -130,7 +178,7 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
 
       <div className="area-logo center">
         <div className="logo-team">
-
+          <h1>{(team.name).split('')[0]}</h1>
         </div>
         <div className="list-buttons">
           <button type="button" id="btn_add_member" className="button-add-delete" title="Adicionar membro" onClick={() => handleOpen('add')}>+</button>
@@ -140,9 +188,11 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
 
       <h4 className="center">Membros</h4>
       <div className="list-members">
-        {members.map(member => (
-          <div className="member-icon" key={member.id} title={member.leagueOfLegendsUsername + ' - ' + member.preferredRole} />
-        ))}
+        {(members.length !== 0) ? members.map(member => (
+          <div className="member-icon" key={member.id} title={member.leagueOfLegendsUsername + ' - ' + member.preferredRole}>
+            {(member.leagueOfLegendsUsername).split('')[0]}
+          </div>
+        )) : ''}
       </div>
 
       <div className="box">
@@ -215,7 +265,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  deleteTeamAtStore: (name, initials, entryYear, image) => dispatch(teamActions.logoutTeam(name, initials, entryYear, image))
+  deleteTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.logoutTeam(name, initials, logoPictureURL, id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewTeam);

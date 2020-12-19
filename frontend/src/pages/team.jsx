@@ -77,6 +77,40 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/**
+ * @module pages/team 
+ */
+
+/**
+ * @typedef User
+ * @type {Object}
+ * @property {String} id - Identificador 
+ */
+
+ /**
+ * @typedef Team
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} image - URL da imagem da equipe 
+ * @property {String} name - Nome da equipe 
+ * @property {String} initials - Iniciais da equipe 
+ */
+
+ /**
+ * @typedef Invite
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} name - Nome da equipe 
+ * @property {String} initials - Iniciais da equipe 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de detalhes da competição.
+ * @param {Object} team - Objeto que possui os dados de Team presentes na store do redux.
+ * @param {Object} user - Objeto que possui os dados de User presentes na store do redux.
+ * @param {function} deleteTeamAtStore - função que realiza a exclusão da equipe na store do redux.
+ * @param {function} setTeamAtStore - função que realiza a edição da equipe na store do redux.
+ */
 const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {  
   document.title = 'Battleside - Equipe';
 
@@ -89,14 +123,26 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
     .then(response => setInvites(response.data))
   }, [])
 
+  /**
+   * Função responsável por setar o modal para aberto.
+   *
+   */
   const handleOpen = () => {
     setOpen(true);
   };
 
+  /**
+   * Função responsável por setar o modal para fechado.
+   *
+   */
   const handleClose = () => {
     setOpen(false);
   };
 
+  /**
+   * Função responsável por enviar ao backend a solicitação de saída da equipe.
+   *
+   */
   async function exitTeam() {
     try {
       await api.put(`/api/users/${user.id}`, {
@@ -112,6 +158,10 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
     }
   }
 
+  /**
+   * Função responsável por enviar ao backend a solicitação de aceitação do convite.
+   *
+   */
   async function acceptInvite(invite) {
     try {
       await api.put(`/api/invites/${invite.id}/accept`, {})
@@ -130,6 +180,10 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
     }
   }
 
+  /**
+   * Função responsável por enviar ao backend a solicitação de rejeição do convite.
+   *
+   */
   async function rejectInvite(id) {
     try {
       await api.delete(`/api/invites/${id}`)
@@ -143,6 +197,20 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
 
   return (
     <div>
+      <Modal
+        open={open}
+        onClose={() => handleClose('delete')}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        className={classes.modal}
+      >
+        <div className={classes.paper}>
+          <h4>Deseja realmente sair?</h4>
+          <button id="btn_confirm_leave" className={classes.btn} onClick={() => exitTeam()}>Sim</button>
+          <button id="btn_cancel_leave" className={classes.btn} onClick={() => handleClose()}>Não</button>
+        </div>
+      </Modal>
+
       <div className="container">
         <Menu />
         <Header />
@@ -150,7 +218,9 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
         
         {(team.id) ? 
           <div className="center">
-            <img className="image2" src={team.image}></img>
+            <div className="image2">
+              <h1>{(team.name).split('')[0]}</h1>
+            </div>
             <TeamName>{team.name}</TeamName>
             <Since>{team.initials}</Since>
             
@@ -182,20 +252,7 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
           </div>  
         }
       </div>
-
-      <ModalDiv
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        className={classes.modal}
-      >
-        <div className={classes.paper}>
-          <h4>Deseja realmente sair?</h4>
-          <button id="btn_confirm_leave" className={classes.btn} onClick={() => exitTeam()}>Sim</button>
-          <button id="btn_cancel_leave" className={classes.btn} onClick={() => handleClose()}>Não</button>
-        </div>
-      </ModalDiv>
+      <br /><br />
     </div>
   );
 }
@@ -206,7 +263,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  deleteTeamAtStore: (name, initials, entryYear, image) => dispatch(teamActions.logoutTeam(name, initials, entryYear, image)),
+  deleteTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.logoutTeam(name, initials, logoPictureURL, id)),
   setTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.signinTeam(name, initials, logoPictureURL, id))
 })
 

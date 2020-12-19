@@ -26,6 +26,10 @@ input {
   outline: none;
 }
 
+.white {
+  color: #FFF;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -35,7 +39,7 @@ input {
 .box {
   background: #CECECE;
   width: 100%;
-  height: 300px;
+  height: 320px;
   border-radius: 10px;
   margin-bottom: 30px;
   z-index: 2;
@@ -83,6 +87,16 @@ input {
   height: 200px;
   border-radius: 100px;
   border: 5px solid #FFF;
+  background: #AA0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image2 h1 {
+  color: #FFF;
+  font-size: 80px;
+  font-weight: bold;
 }
 
 .about-me p {
@@ -98,6 +112,15 @@ input {
 .icon-social-media {
   width: 35px;
   margin: 5px 10px 10px 10px;
+}
+
+.champion-icon {
+  margin-bottom: 10px;
+}
+
+.champion-icon img {
+  border: 5px solid #E5E5E5;
+  width: 80px;
 }
 
 .box-titles {
@@ -190,8 +213,17 @@ input {
   width: 140px;
   height: 140px;
   border-radius: 70px;
-  background: red;
+  background: #AA0000;
   border: 5px solid #E5E5E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-team h1 {
+  font-size: 50px;
+  color: #FFF;
+  font-weight: bold;
 }
 
 .list-buttons {
@@ -231,6 +263,11 @@ input {
   background: red;
   margin: 0 10px;
   border: 2px solid #E5E5E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-weight: bold;
 }
 
 .list-titles, .list-competitions {
@@ -532,6 +569,14 @@ select {
   border-radius: 10px;
   background: #CECECE;
   margin-top: 20px;
+}
+
+.box-competition-details-match {
+  width: 100%;
+  background: #CECECE;
+  padding: 7px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .box-competition-details-phase {

@@ -7,69 +7,46 @@ import Menu from '../components/Menu';
 
 import api from '../services/api';
 
-export default function ViewMatch() {
+/**
+ * @module pages/viewMatch 
+ */
+
+/**
+ * Componente responsável por renderizar a tela de partida.
+ * 
+ */
+function ViewMatch() {
   document.title = 'Battleside - Ver partida';
 
   const [match, setMatch] = useState({});
-  const [prints, setPrints] = useState({});
+  const [matchData, setMatchData] = useState({});
 
-  let { id, phase, team } = useParams();
+  let { id } = useParams();
 
   useEffect(() => {
-    api.get(`/api/championships-phases?competition_id=${id}`)
+    api.get(`/api/teamsMatches?match=${id}`)
     .then(response => setMatch(response.data))
-    .catch(err => console.log(err.response))
   }, [])
 
   useEffect(() => {
-    api.get(`/api/championships-prints/${id}`)
-    .then(response => setPrints(response.data))
-    .catch(err => console.log(err.response))
+    api.get(`/api/matches/${id}`)
+    .then(response => setMatchData(response.data))
   }, [])
 
-  function getAdversary() {
-    switch(phase){
-      case 'eliminatorias':
-        for(let i = 0; i < (match[0]?.phases?.eliminatorias)?.length; i++) {
-          if(team === match[0]?.phases?.eliminatorias[i]) {
-            if(i % 2 === 1) {
-              return match[0]?.phases?.eliminatorias[i-1];
-            } else {
-              return match[0]?.phases?.eliminatorias[i+1];
-            }
-          }
-        }
-      default:
-        return '';
+  /**
+   * Função responsável por enviar o print da partida.
+   * 
+   */
+  async function sendPrint() {
+    try {
+      await api.put(`/api/teamsMatches/${id}`, {
+        printURL: ""
+      })
+      alert('Print enviado com sucesso!')
+
+    } catch(err) {
+      alert('Não foi possível enviar o print!');
     }
-  }
-
-  function generateCode() {
-    return Math.floor(Math.random() * 1000000);
-  }
-
-  function sendPrint() {
-    let aux = prints.prints;
-
-    aux.push({
-      id: Math.random(),
-      team1: team,
-      team2: getAdversary(),
-      image_team1: "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
-      image_team2: "https://i.pinimg.com/originals/e7/c8/32/e7c832e0b3b3d2e2d1e6a1286cd0e54b.png",
-      url_print: "https://sm.ign.com/ign_br/screenshot/default/link_t3cf.png"
-    })
-
-    api.put(`/api/championships-prints/${id}`, {
-      id: id,
-      id_partida: prints.id_partida,
-      competition_name: prints.competition_name,
-      competition_initials: prints.competition_initials,
-      user_manage: prints.user_manage,
-      prints: aux
-    })
-    .then(() => alert('Print enviado com sucesso!'))
-    .catch(err => console.log(err))
   }
   
   return (
@@ -79,24 +56,24 @@ export default function ViewMatch() {
       <Title content="Partida" />
 
       <div className="box-no-height">
-        <h3 className="box-match-name">{match[0]?.competition_name}</h3>
-        <p className="box-match-phase">{(match[0]?.phase)}</p>
+        <h3 className="box-match-name">{matchData?.name}</h3>
+        <p className="box-match-phase"></p>
         <div>
           <div>
-            <h1>{team} X {getAdversary()}</h1>
+            <h1>{match[0]?.name} X {match[1]?.name}</h1>
           </div>  
         </div>
 
         <h5>Código da partida</h5>
-        <h6>{generateCode()}</h6>
+        <h6>ABC123</h6>
 
         <label htmlFor="url-img" className="label-match">Print do término da partida</label>
         <input type="file" name="url-img" id="url-img" className="form-control-file" accept="image/png, image/jpeg" />
 
         <button type="button" id="btn_send_print" className="btn-primary space-top-20" onClick={() => sendPrint()}>Enviar</button>
       </div>
-
-      {/* <button type="button" onClick={() => console.log('report')}>Report</button> */}
     </div>
   );
 }
+
+export default ViewMatch;

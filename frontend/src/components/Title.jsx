@@ -8,8 +8,19 @@ export const Text = styled.h1`
   margin-bottom: 50px;
 `
 
-export default function Title(props) {
+/**
+ * @module components/Title 
+ */
+
+/**
+ * Componente responsável por renderizar os títulos das páginas.
+ * @param {String} props.content - Conteúdo à ser renderizado.
+ * 
+ */
+function Title(props) {
   return (
     <Text>{props.content}</Text>
   );
 }
+
+export default Title;

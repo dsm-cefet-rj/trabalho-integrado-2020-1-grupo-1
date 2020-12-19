@@ -7,18 +7,44 @@ import Menu from '../components/Menu';
 
 import api from '../services/api';
 
+/**
+ * @module pages/competition 
+ */
+
+/**
+ * @typedef Competition
+ * @type {Object}
+ * @property {String} id - Identificador 
+ * @property {String} name - Nome
+ * @property {String} initials - Iniciais
+ * @property {String} level - Nível 
+ * @property {Object} award - Premiação (tipo e valor)
+ */
+
+/**
+ * Componente funcional responsável por renderizar a tela de Competição.
+ * 
+ */
+
 export default function Competition() {
   document.title = "Battleside - Competição";
 
   const [competitions, setCompetitions] = useState([]);
-  const [level, setLevel] = useState('');
-  const [maxTeams, setMaxTeams] = useState('');
+  const [levelFilter, setLevelFilter] = useState('');
   const [awards, setAwards] = useState('');
+
+  const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
     api.get('/api/competitions')
     .then(response => setCompetitions(response.data))
   }, [])
+
+  useEffect(() => {
+    setFiltered(competitions.filter(({ level, award }) => {
+      return level === levelFilter && award.type === awards; 
+    }));
+  }, [levelFilter, awards])
 
   return (
     <div className="container">
@@ -26,51 +52,54 @@ export default function Competition() {
       <Header />
       <Title content="Competições" />
 
+      <h4 className="white">Use os filtros!</h4>
       <div className="competition-filters">
-        <select id="btn_filter_level" onChange={e => setLevel(e.target.value)}>
-          <option value="livre">Livre</option>
-          <option value="ferro">Ferro</option>
-          <option value="bronze">Bronze</option>
-          <option value="prata">Prata</option>
-          <option value="ouro">Ouro</option>
-          <option value="platina">Platina</option>
-          <option value="diamante">Diamante</option>
-          <option value="mestre">Mestre</option>
-          <option value="grao-mestre">Grão-Mestre</option>
-          <option value="desafiante">Desafiante</option>
-        </select>
-
-        <select id="btn_filter_max_teams" onChange={e => setMaxTeams(e.target.value)}>
-          <option value="8">8 equipes</option>
-          <option value="16">16 equipes</option>
-          <option value="32">32 equipes</option>
+        <select id="btn_filter_level" onChange={e => {
+          setLevelFilter(e.target.value)
+        }} defaultValue={levelFilter}>
+          <option value="">Nível</option>
+          <option value="Free">Livre</option>
+          <option value="Silver">Prata</option>
+          <option value="Gold">Ouro</option>
+          <option value="Platinum">Platina</option>
+          <option value="Diamond">Diamante</option>
+          <option value="Master">Mestre</option>
+          <option value="Grandmaster">Grão Mestre</option>
+          <option value="Challenger">Challenger</option>
         </select>
         
-        <select id="btn_filter_awards" onChange={e => setAwards(e.target.value)}>
-          <option value="livre">Livre</option>
-          <option value="rp">RP</option>
-          <option value="dinheiro">Dinheiro</option>
+        <select id="btn_filter_awards" onChange={e => {
+          setAwards(e.target.value)
+        }} defaultValue={awards}>
+          <option value="">Premiação</option>
+          <option value="None">Nenhum</option>
+          <option value="RP">RP</option>
+          <option value="Money">Dinheiro</option>
         </select>
       </div>
 
       <div className="competition-list">
         <div className="items-competitions">
-          {competitions?.map(competition => (
-            <Link to={`/viewcompetition/${competition.id}`} key={competition.id}>
-              <div className="item-competition row" id="btn_id_competição">
-                <div className="col-md-2 box-image">
-                  {/* <img src={competition.competition_picture} className="items-competitions-image" alt={competition.competition_name} /> */}
+          {
+            filtered?.map(competition => (
+              <Link to={`/viewcompetition/${competition.id}`} key={competition.id}>
+                <div className="item-competition row" id="btn_id_competição">
+                  <div className="col-md-2 box-image">
+                    {/* <img src={competition.competition_picture} className="items-competitions-image" alt={competition.competition_name} /> */}
+                  </div>
+                  <div className="col-md-10">
+                    <h3 className="items-competitions-name">{competition.name + ' - ' + competition.initials}</h3>
+                    <p className="items-competitions-level">Nível: {competition.level}</p>
+                    <p className="items-competitions-awards">Premiação: {competition.award.type + ' - ' + competition.award.amount}</p>
+                  </div>
                 </div>
-                <div className="col-md-10">
-                  <h3 className="items-competitions-name">{competition.name + ' - ' + competition.initials}</h3>
-                  <p className="items-competitions-level">Nível: {competition.level}</p>
-                  <p className="items-competitions-awards">Premiação: {competition.award.type + ' - ' + competition.award.amount}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          } 
         </div>
       </div>
+
+      <br /><br />
     </div>
   );
 }
