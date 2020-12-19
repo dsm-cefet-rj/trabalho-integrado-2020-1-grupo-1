@@ -22,7 +22,11 @@ exports.bodySchema = {
         instagram: yup.string().nullable().url().trim(),
         other: yup.string().nullable().url().trim()
     }),
-    favoriteChampions: yup.array().of(yup.string().matches(new RegExp('^[a-f0-9]{24}$', 'i'))),
+    favoriteChampions: yup.object().noUnknown().shape({
+        champion1: yup.string().nullable().matches(new RegExp('^[a-f0-9]{24}$', 'i')),
+        champion2: yup.string().nullable().matches(new RegExp('^[a-f0-9]{24}$', 'i')),
+        champion3: yup.string().nullable().matches(new RegExp('^[a-f0-9]{24}$', 'i'))
+    }),
 };
 
 exports.querySchema = {

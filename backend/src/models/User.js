@@ -66,11 +66,18 @@ const userSchema = mongoose.Schema({
         other: String
     },
     favoriteChampions: {
-        type: [{
+        champion1: {
             type: mongoose.Types.ObjectId,
             ref: 'Champions'
-        }],
-        default: undefined
+        },
+        champion2: {
+            type: mongoose.Types.ObjectId,
+            ref: 'Champions'
+        },
+        champion3: {
+            type: mongoose.Types.ObjectId,
+            ref: 'Champions'
+        }                
     }
 });
 
