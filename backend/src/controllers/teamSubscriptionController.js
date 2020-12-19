@@ -1,9 +1,9 @@
-const { TeamsSubscriptions } = require('../models');
+const { TeamSubscription } = require('../models');
 
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const subscriptions = await TeamsSubscriptions.find(req.filter).populate('team').populate('competition');
+            const subscriptions = await TeamSubscription.find(req.filter).populate('team').populate('competition');
             res.json(subscriptions);
         } catch(err) {
             next(err);
@@ -11,7 +11,7 @@ module.exports = {
     },
     create: async(req, res, next) => {
         try {
-            const subscription = await TeamsSubscriptions.create(req.body);
+            const subscription = await TeamSubscription.create(req.body);
             res.json(subscription);
         } catch(err) {
             next(err);
@@ -20,7 +20,7 @@ module.exports = {
     destroy: async (req, res, next) => {
         try {
             const { id: subscriptionId } = req.params;
-            const subscription = await TeamsSubscriptions.findById(subscriptionId);
+            const subscription = await TeamSubscription.findById(subscriptionId);
             res.json(subscription);
         } catch(err) {
             next(err);

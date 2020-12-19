@@ -26,6 +26,12 @@ matchSchema.pre('save', function(next) {
     next();
 });
 
+matchSchema.post('updateOne', async function(doc) {
+    if(!doc.successor) {
+        await mongoose.model('Competition').findByIdAndUpdate(doc.competition, { winnerTeam: doc.winner, finished: true });
+    }
+});
+
 matchSchema.plugin(normalize);
 
 module.exports = mongoose.model('Match', matchSchema);

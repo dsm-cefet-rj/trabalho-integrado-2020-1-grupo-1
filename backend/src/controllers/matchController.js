@@ -9,6 +9,15 @@ module.exports = {
             next(err);
         }
     },
+    show: async (req, res, next) => {
+        try {
+            const { id: matchId } = req.params;
+            const match = await Match.findById(matchId);
+            res.json(match);
+        } catch(err) {
+            next(err);
+        }
+    },
     update: async (req, res, next) => {
         try {
             const { id: matchId } = req.params;

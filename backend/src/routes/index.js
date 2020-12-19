@@ -4,8 +4,8 @@ module.exports = {
     invites: require('./inviteRoutes'),
     matches: require('./matchRoutes'),
     teams: require('./teamRoutes'),
-    teamsMatches: require('./teamsMatchesRoutes'),
-    teamsSubscriptions: require('./teamsSubscriptionsRoutes'),
+    teamsMatches: require('./teamMatcheRoutes'),
+    teamsSubscriptions: require('./teamSubscriptionRoutes'),
     users: require('./userRoutes'),
-    usersSubscriptions: require('./usersSubscriptionsRoutes')
+    usersSubscriptions: require('./userSubscriptionRoutes')
 };

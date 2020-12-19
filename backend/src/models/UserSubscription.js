@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
 
-const usersSubscriptionsSchema = mongoose.Schema({
+const userSubscriptionSchema = mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
@@ -12,13 +12,18 @@ const usersSubscriptionsSchema = mongoose.Schema({
         enum: ['Top', 'Jungler', 'Mid', 'AD Carry', 'Support'],
         required: true
     },
-    subscription: {
+    team: {
         type: mongoose.Types.ObjectId,
-        ref: 'TeamsSubscriptions',
+        ref: 'Team',
+        required: true
+    },
+    competition: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Competition',
         required: true
     }
 });
 
-usersSubscriptionsSchema.plugin(normalize);
+userSubscriptionSchema.plugin(normalize);
 
-module.exports = mongoose.model('UsersSubscriptions', usersSubscriptionsSchema);
+module.exports = mongoose.model('UsersSubscriptions', userSubscriptionSchema);

@@ -7,6 +7,7 @@ const router = require('express').Router();
 router.route('/')
     .get(requestValidator(validateMatch.querySchema), filterGenerator(matchFilterSchema), matchController.index);
 router.route('/:id')
+    .get(matchController.show)
     .put(requestValidator(validateMatch.updateSchema), matchController.update)
     .delete(matchController.destroy);
 

@@ -12,7 +12,7 @@ module.exports = {
     show: async (req, res, next) => {
         try {
             const { id: competitionId } = req.params;
-            const competition = Competition.findById(competitionId);
+            const competition = await Competition.findById(competitionId);
             res.json(competition);
         } catch(err) {
             next(err);

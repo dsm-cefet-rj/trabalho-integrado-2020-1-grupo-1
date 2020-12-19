@@ -4,8 +4,8 @@ module.exports = {
     Invite: require('./Invite'),
     Match: require('./Match'),
     Team: require('./Team'),
-    TeamsMatches: require('./TeamsMatches'),
-    TeamsSubscriptions: require('./TeamsSubscriptions'),
+    TeamMatch: require('./TeamMatch'),
+    TeamSubscription: require('./TeamSubscription'),
     User: require('./User'),
-    UsersSubscription: require('./UsersSubscriptions')
+    UserSubscription: require('./UserSubscription')
 };

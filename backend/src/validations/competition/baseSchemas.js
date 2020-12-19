@@ -8,9 +8,9 @@ exports.bodySchema = {
         type: yup.string().required().equals(['RP', 'Money', 'None'])
     }),
     subscriptionInitialDate: yup.date().required(),
-    subscriptionFinalDate: yup.date().required(),
-    initialDate: yup.date().required(),
-    finalDate: yup.date().required(),
+    subscriptionFinalDate: yup.date().required().min(yup.ref('subscriptionInitialDate')),
+    initialDate: yup.date().required().min(yup.ref('subscriptionFinalDate')),
+    finalDate: yup.date().required().min(yup.ref('initialDate')),
     slots: yup.number().required().min(4).max(64).powerOfTwo(),
     level: yup.string().required().equals(['Free', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster', 'Challenger']),
     socialMedia: yup.object().shape({
@@ -26,5 +26,7 @@ exports.bodySchema = {
 };
 
 exports.querySchema = {
-    winnerTeam: yup.string().matches(new RegExp('^[a-f0-9]{24}$', 'i'))
+    winnerTeam: yup.string().required().matches(new RegExp('^[a-f0-9]{24}$', 'i')),
+    creator: yup.string().required().matches(new RegExp('^[a-f0-9]{24}$', 'i')),
+    finished: yup.bool()
 };

@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
 
-const teamsSubscriptionsSchema = mongoose.Schema({
-    competition: {
+const teamMatchSchema = mongoose.Schema({
+    match: {
         type: mongoose.Types.ObjectId,
-        ref: 'Competition',
+        ref: 'Match',
         required: true
     },
     team: {
         type: mongoose.Types.ObjectId,
         ref: 'Team',
         required: true
-    }
+    },
+    printURL: String
 });
 
-teamsSubscriptionsSchema.plugin(normalize);
+teamMatchSchema.plugin(normalize);
 
-module.exports = mongoose.model('TeamsSubscriptions', teamsSubscriptionsSchema);
+module.exports = mongoose.model('TeamMatch', teamMatchSchema);

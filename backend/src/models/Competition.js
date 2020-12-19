@@ -80,6 +80,10 @@ const competitionSchema = mongoose.Schema({
     paused: {
         type: Boolean,
         default: false
+    },
+    finished: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -105,10 +109,10 @@ competitionSchema.methods.createMatches = async function() {
         const match = matchesArray[matchesArray.length - (1 + index)];
 
         if(value.length = 2) {
-            await mongoose.model('TeamsMatches').insertMany([{ match: match.id, team: value[0] }, { match: match.id, team: value[1] }]);
+            await mongoose.model('TeamMatch').insertMany([{ match: match.id, team: value[0] }, { match: match.id, team: value[1] }]);
         } else {
             const sucessorMatch = matchesArray.find(element => element.id == match.sucessor);
-            await mongoose.model('TeamsMatches').create({ match: sucessorMatch.id, team: value[0] });
+            await mongoose.model('TeamMatch').create({ match: sucessorMatch.id, team: value[0] });
         }
     }
 
