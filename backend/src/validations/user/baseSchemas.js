@@ -1,7 +1,7 @@
 const yup = require('yup');
 
 exports.bodySchema = {
-    name: yup.string().required().max(200).matches(new RegExp('^[a-z\\s]+$', 'i'), 'name must include only letters').trim(),
+    name: yup.string().required().max(200).matches(new RegExp('^[a-záàâãéèêíïóôõöúçñ\\s]+$', 'i'), 'name must include only letters').trim(),
     email: yup.string().required().databaseUnique('User').email().trim(),
     password: yup.string().required().min(8).max(100).trim(),
     birthdate: yup.date().required(),
