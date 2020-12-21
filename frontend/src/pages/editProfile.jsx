@@ -32,7 +32,6 @@ import * as UserActions from '../store/actions/user';
  * @param {object} user - Objeto que contém os dados de User presentes na store do Redux.
  * @param {function} editUser - Função do Redux para alterar o estado global de User na store.
  */
-
 const EditProfile = ({ user, editUser }) => {
   document.title = 'Battleside - Editar perfil';
 
@@ -49,8 +48,12 @@ const EditProfile = ({ user, editUser }) => {
     .then(response => setChampions(response.data))
   }, [])
 
+  useEffect(() => {
+    setFavoriteChampions(user.favoriteChampions)
+  }, [user])
+
   /**
-   * Função que salva os novos dados do usuário
+   * Função que verifica e salva os novos dados do usuário
    * @param {Object} e - Variável que possui o event salvo.
    */
   async function saveNewData(e){
@@ -84,6 +87,14 @@ const EditProfile = ({ user, editUser }) => {
       socialMedia,
       favoriteChampions
     };
+
+    for (let index in socialMedia) {
+      if(socialMedia[index].length < 8) 
+        return alert('URL de rede social informada inválida!');
+      
+      if(socialMedia[index].substring(0,8) !== 'https://')
+        return alert('URL inválido. Favor inserir o prefixo https://')
+    }
 
     if(user.leagueOfLegendsUsername !== leagueOfLegendsUsername) {
       bodyRequest = {
@@ -198,7 +209,7 @@ const EditProfile = ({ user, editUser }) => {
                 ...favoriteChampions,
                 champion1: e.target.value
               })} 
-              defaultValue={favoriteChampions?.champion1}
+              value={favoriteChampions?.champion1}
             >
               {champions?.map(champion => (
                 <option value={champion.id} key={champion.id}>{champion.name}</option>
@@ -214,7 +225,7 @@ const EditProfile = ({ user, editUser }) => {
                 ...favoriteChampions,
                 champion2: e.target.value
               })} 
-              defaultValue={favoriteChampions?.champion2}
+              value={favoriteChampions?.champion2}
             >
               {champions?.map(champion => (
                 <option value={champion.id} key={champion.id}>{champion.name}</option>
@@ -230,7 +241,7 @@ const EditProfile = ({ user, editUser }) => {
                 ...favoriteChampions,
                 champion3: e.target.value
               })} 
-              defaultValue={favoriteChampions?.champion3}
+              value={favoriteChampions?.champion3}
             >
               {champions?.map(champion => (
                 <option value={champion.id} key={champion.id}>{champion.name}</option>

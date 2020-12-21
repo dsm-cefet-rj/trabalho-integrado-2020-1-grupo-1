@@ -1,38 +1,20 @@
 # COMO EXECUTAR A APLICAÇÃO
 
-- Baixe o MongoDB e siga os passos de instalação definidos no site.
+- Após realizar os passos do README.md presente na pasta do backend, faça os passos abaixo:
 
-- Caso você prefira usar Docker, instale-o e baixe a imagem do MongoDB dando um:
+#### Instalando as dependências
 
-```shell
-docker pull mongo
-```
-
-
-
-### Em caso de instalação do MongoDB
-
-- Abra o Docker
-
-- Rode o comando abaixo:
-
-```javascript
-docker run --rm --name mongo-container -p 27017:27017 -d mongo
-```
-
-
-
-### Após isso, faça:
-
-- Entre na pasta do backend via terminal e rode o comando:
+- Na pasta do frontend, abra um terminal e instale as dependências rodando o comando abaixo:
 
 ```shell
-yarn start ou npm start
+yarn
 ```
 
-- Entre na pasta do frontend via terminal e rode o comando:
+#### Rodando a aplicação
+
+- Após as dependências estarem instaladas, inicie a aplicação rodando o comando abaixo no terminal.
 
 ```shell
-yarn start ou npm start
+yarn start
 ```
 

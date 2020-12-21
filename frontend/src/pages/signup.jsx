@@ -47,6 +47,9 @@ function Signup(){
     const password = document.getElementById('signup_password').value;
     const confirm_password = document.getElementById('signup_confirm_password').value;
 
+    if(password.length < 8) 
+      return alert('A senha deve ter no mínimo 8 caracteres');
+    
     if(password !== confirm_password)
       return alert('As senhas são diferentes! Por favor, verifique-as e tente novamente!')
     
@@ -60,9 +63,9 @@ function Signup(){
         leagueOfLegendsUsername: document.getElementById('signup_username').value,
         preferredRole,
         computerSettings: {
-          processador: "",
-          placaDeVideo: "",
-          teclado: "",
+          processor: "",
+          videoCard: "",
+          keyboard: "",
           mouse: "",
           headset: ""
         },
@@ -81,7 +84,8 @@ function Signup(){
       })
 
       alert('Cadastro realizado com sucesso!');
-      window.location.href='/'
+      window.location.href='/';
+
     } catch(err) {
       alert('Não foi possível realizar o cadastro!');
       console.log(err.response)
