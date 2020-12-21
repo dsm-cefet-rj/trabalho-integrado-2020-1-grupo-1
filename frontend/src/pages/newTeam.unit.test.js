@@ -81,7 +81,7 @@ const fieldTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSigl
     }
 }
 
-const buttonTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSiglaValida, msgEsperada, path = "/newteam", containerParam = null, historyParam = nulla) => {
+const buttonTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSiglaValida, containerParam = null, historyParam = null) => {
     
     const history = historyParam ? historyParam : createMemoryHistory();
     const store = createStore(rootReducers);
@@ -93,13 +93,13 @@ const buttonTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSig
     fireEvent.input(sigla, {target: {value: siglaEquipeParam}});
     
     if(!isNomeValido){
-        expect(submitButton).toHaveAttribute('disabled');
+        expect(criarButton).toHaveAttribute('disabled');
     }
     if(!isSiglaValida){
-        expect(submitButton).toHaveAttribute('disabled');
+        expect(criarButton).toHaveAttribute('disabled');
     }
     if(isNomeValido && isSiglaValida){
-        expect(submitButton.getAttribute("disabled")).toBe(null);
+        expect(criarButton.getAttribute("disabled")).toBe(null);
     }
 }
 
@@ -117,37 +117,30 @@ describe("NewTeam unit", () => {
         useSelector.mockClear();
 //        addProjetoServer.mockClear();
     });
-
+    
     //####### CAMPO NOME ################################
     test('Nome Vazio', async () => {
-        fieldTest('', 'abc', false, true, 'Ocorreu um erro inesperado!')
+        fieldTest('', 'abc', false, true, 'Ocorreu um erro inesperado!');
     });
 
     test('Nome limite inferior válido', async () => {
-        await fieldTest('abc', 'abc', true, true, null);
+        fieldTest('abc', 'abc', true, true, null);
     });
 
     test('Nome válido', async () => {
-        await fieldTest('Nome', 'abc', true, true, null);
+        fieldTest('Nome', 'abc', true, true, null);
     });
 
     test('Nome limite superior válido -1', async () => {
-        await fieldTest('abcdefghijklmnopqrstuvwx', 'abc', true, true, null);
-        expect(global.window.location.pathname).toEqual('/team');
-        expect(screen.getByText(/Equipe/i)).toBeInTheDocument();
-        expect(container.querySelector("#btn_viewTeam")).toBeInTheDocument();
-        expect(container.querySelector("#team_leave")).toBeInTheDocument();
-        expect(container.querySelector("#team_leave")).toBeInTheDocument();
+        fieldTest('abcdefghijklmnopqrstuvwx', 'abc', true, true, null);
     });
 
     test('Nome limite superior válido', async () => {
-        await fieldTest('abcdefghijklmnopqrstuvwxy', 'abc', true, true, null);
-        expect(addProjetoServer).toHaveBeenCalledTimes(1);
+        fieldTest('abcdefghijklmnopqrstuvwxy', 'abc', true, true, null);
     });
 
     test('Nome limite superior inválido', async () => {
-        await fieldTest('abcdefghijklmnopqrstuvwxyz', 'abc', false, true, 'Ocorreu um erro inesperado!');
-        expect(addProjetoServer).toHaveBeenCalledTimes(0);
+        fieldTest('abcdefghijklmnopqrstuvwxyz', 'abc', false, true, 'Ocorreu um erro inesperado!');
     });
 
     //####### CAMPO SIGLA ################################
@@ -156,26 +149,66 @@ describe("NewTeam unit", () => {
     });
 
     test('Sigla limite inferior válido', async () => {
-        await fieldTest('Teste', 'abc', true, true, null);
-        expect(addProjetoServer).toHaveBeenCalledTimes(1);
+        fieldTest('Teste', 'abc', true, true, null);
     });
 
     test('Sigla válido/limite superior válido -1', async () => {
-        await fieldTest('Teste', 'abcd', true, true, null);
-        expect(addProjetoServer).toHaveBeenCalledTimes(1);
+        fieldTest('Teste', 'abcd', true, true, null);
     });
 
     test('Sigla limite superior válido', async () => {
-        await fieldTest('Teste', 'abcde', true, true, null);
-        expect(addProjetoServer).toHaveBeenCalledTimes(1);
+        fieldTest('Teste', 'abcde', true, true, null);
     });
 
     test('Sigla limite superior inválido', async () => {
-        await fieldTest('Projeto', 'abcdef', true, false, 'Ocorreu um erro inesperado!');
-        expect(addProjetoServer).toHaveBeenCalledTimes(0);
+        fieldTest('Projeto', 'abcdef', true, false, 'Ocorreu um erro inesperado!');
     });
 
-    //##########################################################
+    //####### BOTAO CRIAR ################################
 
+    test('Nome Vazio', async () => {
+        buttonTest('', 'abc', false, true);
+    });
+
+    test('Nome limite inferior válido', async () => {
+        buttonTest('abc', 'abc', true, true);
+    });
+
+    test('Nome válido', async () => {
+        buttonTest('Nome', 'abc', true, true);
+    });
+
+    test('Nome limite superior válido -1', async () => {
+        buttonTest('abcdefghijklmnopqrstuvwx', 'abc', true, true);
+    });
+
+    test('Nome limite superior válido', async () => {
+        buttonTest('abcdefghijklmnopqrstuvwxy', 'abc', true, true );
+    });
+
+    test('Nome limite superior inválido', async () => {
+        buttonTest('abcdefghijklmnopqrstuvwxyz', 'abc', false, true );
+    });
+
+    test('Sigla Vazia', async () => {
+        buttonTest('Teste', '', true, false )
+    });
+
+    test('Sigla limite inferior válido', async () => {
+        buttonTest('Teste', 'abc', true, true);
+         
+    });
+
+    test('Sigla válido/limite superior válido -1', async () => {
+        buttonTest('Teste', 'abcd', true, true);
+    });
+
+    test('Sigla limite superior válido', async () => {
+        buttonTest('Teste', 'abcde', true, true);
+    });
+
+    test('Sigla limite superior inválido', async () => {
+        buttonTest('Projeto', 'abcdef', true, false);
+    });
 
 });
