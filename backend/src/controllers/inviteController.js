@@ -11,7 +11,7 @@ module.exports = {
     },
     create: async (req, res, next) => {
         try {
-            const invite = await Invite.create(req.body);
+            const invite = await Invite.create({ ...req.body, sender: req.user.id });
             res.json(invite);
         } catch(err) {
             next(err);

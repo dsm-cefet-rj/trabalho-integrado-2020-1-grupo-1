@@ -1,7 +1,7 @@
 const yup = require('yup');
 
 exports.bodySchema = {
-    name: yup.string().required().databaseUnique('Competition').min(2).max(60).trim(),
+    name: yup.string().required().min(2).max(60).trim().when('$params', (params, schema) => params ? schema.databaseUnique('Competition', params.id) : schema),
     initials: yup.string().required().min(2).max(5).trim().uppercase(),
     award: yup.object().shape({
         amount: yup.number().positive(),

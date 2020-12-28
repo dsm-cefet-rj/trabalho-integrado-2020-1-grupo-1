@@ -1,8 +1,7 @@
 const bcrypt = require('bcrypt');
-const { validate: emailValidator } = require('email-validator');
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
-const { utcDateFormatter } = require('../services');
+const { utcDateFormater } = require('../services');
 
 const userSchema = mongoose.Schema({
     name: {
@@ -28,7 +27,7 @@ const userSchema = mongoose.Schema({
     birthdate: {
         type: Date,
         required: true,
-        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
+        transform: date => utcDateFormater(date, 'DD/MM/YYYY')
     },
     profilePictureURL: {
         type: String

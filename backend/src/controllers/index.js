@@ -1,4 +1,5 @@
 module.exports = {
+    authController: require('./authController'),
     championController: require('./championController'),
     competitionController: require('./competitionController'),
     inviteController: require('./inviteController'),

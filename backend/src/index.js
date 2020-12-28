@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const { forOwn } = require('lodash');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const passport = require('passport');
 
 const { appConfig, databaseConfig } = require('./config');
 const { errorHandler, notFoundHandler } = require('./middlewares');
@@ -14,10 +15,11 @@ mongoose.connect(databaseConfig.url, { useCreateIndex: true, useFindAndModify: f
 });
 const app = express();
 
-app.use(cors({ origin: appConfig.corsOrigin }));
+app.use(cors({ origin: appConfig.client }));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan(appConfig.enviroment == 'development' ? 'dev' : 'short'));
+app.use(passport.initialize());
 
 forOwn(routes, (value, key) => { app.use(`/api/${key}`, value) });
 

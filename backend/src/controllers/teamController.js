@@ -1,4 +1,4 @@
-const { Team, TeamsSubscriptions, TeamsMatches } = require('../models');
+const { Team } = require('../models');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -20,7 +20,7 @@ module.exports = {
     },
     create: async (req, res, next) => {
         try {
-            const team = await Team.create(req.body);
+            const team = await Team.create({ ...req.body, administrator: req.user.id });
             res.json(team);
         } catch(err) {
             next(err);

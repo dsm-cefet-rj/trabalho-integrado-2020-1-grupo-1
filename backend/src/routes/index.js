@@ -1,4 +1,7 @@
+require('../services').setPassportStrategies();
+
 module.exports = {
+    auth: require('./authRoutes'),
     champions: require('./championRoutes'),
     competitions: require('./competitionRoutes'),
     invites: require('./inviteRoutes'),

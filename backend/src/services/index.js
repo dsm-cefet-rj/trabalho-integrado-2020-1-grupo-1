@@ -1,6 +1,8 @@
 module.exports = {
     addRulesYup: require('./addRulesYup'),
     mailTransporter: require('./mailTransporter'),
+    promisifiedAuthenticate: require('./promisifiedAuthenticate'),
     riotAPIClient: require('./riotAPIClient'),
-    utcDateFormatter: require('./utcDateFormatter')
+    setPassportStrategies: require('./setPassportStategies'),
+    utcDateFormater: require('./utcDateFormater')
 };

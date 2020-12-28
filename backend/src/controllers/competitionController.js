@@ -20,7 +20,7 @@ module.exports = {
     },
     create: async (req, res, next) => {
         try {
-            const competition = await Competition.create(req.body);
+            const competition = await Competition.create({...req.body, creator: req.user.id});
             res.json(competition);
         } catch(err) {
             next(err);
