@@ -6,7 +6,7 @@ module.exports = {
     handle: function(collection, path = null) {
         return this.test({
             name: 'databaseExists',
-            message: 'The ${path} doesn\'t exists',
+            message: '${path} não existe',
             test: async (value, { path: originalPath }) => {
                 const exists = await mongoose.model(collection).exists({ [path || originalPath]: value });
                 return exists;

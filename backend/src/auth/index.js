@@ -1,4 +1,4 @@
 module.exports = {
-    jwtStrategy: require('./jwtStategy'),
-    localStrategy: require('./localStategy')
+    jwtStrategy: require('./jwtStrategy'),
+    localStrategy: require('./localStrategy')
 };

@@ -1,4 +1,4 @@
-require('../services').addRulesYup();
+require('../services').setupYup();
 
 module.exports = {
     validateAuth: require('./auth'),

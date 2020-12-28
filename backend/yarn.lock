@@ -1898,6 +1898,11 @@ yallist@^3.0.0, yallist@^3.0.3:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.1.1.tgz#dbb7daf9bfd8bac9ab45ebf602b8cbad0d5d08fd"
   integrity sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
 
+yup-locale-pt@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/yup-locale-pt/-/yup-locale-pt-0.0.5.tgz#704712b72a9ea827b966dcb93526562f6c1c4cb0"
+  integrity sha512-c/cj9cYpjn7ZrOQ/Cmvcx6/Uv85QuVbbCFwWbF9gtNszOptPDt1CQvakOrGDfHR6pzUl6iEwnc9mDKIZ5ceQRA==
+
 yup@^0.32.8:
   version "0.32.8"
   resolved "https://registry.yarnpkg.com/yup/-/yup-0.32.8.tgz#16e4a949a86a69505abf99fd0941305ac9adfc39"

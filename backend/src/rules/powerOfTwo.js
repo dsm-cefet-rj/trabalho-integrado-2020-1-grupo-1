@@ -5,7 +5,7 @@ module.exports = {
     handle: function() {
         return this.test({
             name: 'powerOfTwo', 
-            message: '${path} is not a power of two', 
+            message: '${path} não é uma potência de 2', 
             test: (value) => Number.isInteger(Math.log2(value)),
             exclusive: true
         });
