@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import Title from '../components/Title';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 import * as UserActions from '../store/actions/user';
 
@@ -34,6 +36,7 @@ import * as UserActions from '../store/actions/user';
  */
 const EditProfile = ({ user, editUser }) => {
   document.title = 'Battleside - Editar perfil';
+  const accessToken = getAccessToken();
 
   const [selectedRole, setSelectedRole] = useState(user.preferredRole);
   const [champions, setChampions] = useState([]);
@@ -44,7 +47,7 @@ const EditProfile = ({ user, editUser }) => {
   });
 
   useEffect(() => {
-    api.get(`/api/champions`)
+    api.get(`/api/champions`, { headers: { Authorization: accessToken }})
     .then(response => setChampions(response.data))
   }, [])
 
@@ -89,11 +92,13 @@ const EditProfile = ({ user, editUser }) => {
     };
 
     for (let index in socialMedia) {
-      if(socialMedia[index].length < 8) 
-        return alert('URL de rede social informada inválida!');
+      if(socialMedia[index]) {
+        if(socialMedia[index].length < 8) 
+          return error('URL de rede social informada inválida!', '');
       
-      if(socialMedia[index].substring(0,8) !== 'https://')
-        return alert('URL inválido. Favor inserir o prefixo https://')
+        if(socialMedia[index].substring(0,8) !== 'https://')
+          return error('URL inválido!', 'Favor inserir o prefixo https://')
+      }
     }
 
     if(user.leagueOfLegendsUsername !== leagueOfLegendsUsername) {
@@ -104,16 +109,20 @@ const EditProfile = ({ user, editUser }) => {
     }
 
     try {
-      await api.put(`/api/users/${user.id}`, bodyRequest)
+      await api.put(`/api/users/${user.id}`, bodyRequest, { headers: { Authorization: accessToken }})
 
       const splitedDate = birthdate.split('-');
       const convertedDate = splitedDate[2] + '/' + splitedDate[1] + '/' + splitedDate[0];
 
       editUser(name, user.email, convertedDate, user.profilePictureURL, leagueOfLegendsUsername, selectedRole, computerSettings, socialMedia, user.team, favoriteChampions, user.id);
-      alert('Os dados foram alterados!');
+      success('Os dados foram alterados!', '');
 
     } catch(err) {
-      alert('Ocorreu um erro inesperado!');
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 

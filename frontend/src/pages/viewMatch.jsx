@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import Menu from '../components/Menu';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 /**
  * @module pages/viewMatch 
@@ -17,6 +19,7 @@ import api from '../services/api';
  */
 function ViewMatch() {
   document.title = 'Battleside - Ver partida';
+  const accessToken = getAccessToken();
 
   const [match, setMatch] = useState({});
   const [matchData, setMatchData] = useState({});
@@ -24,12 +27,12 @@ function ViewMatch() {
   let { id } = useParams();
 
   useEffect(() => {
-    api.get(`/api/teamsMatches?match=${id}`)
+    api.get(`/api/teamsMatches?match=${id}`, { headers: { Authorization: accessToken }})
     .then(response => setMatch(response.data))
   }, [])
 
   useEffect(() => {
-    api.get(`/api/matches/${id}`)
+    api.get(`/api/matches/${id}`, { headers: { Authorization: accessToken }})
     .then(response => setMatchData(response.data))
   }, [])
 
@@ -41,11 +44,11 @@ function ViewMatch() {
     try {
       await api.put(`/api/teamsMatches/${id}`, {
         printURL: ""
-      })
-      alert('Print enviado com sucesso!')
+      }, { headers: { Authorization: accessToken }})
+      success('Print enviado com sucesso!', '')
 
     } catch(err) {
-      alert('Não foi possível enviar o print!');
+      error('Não foi possível enviar o print!', 'Tente novamente mais tarde!');
     }
   }
   

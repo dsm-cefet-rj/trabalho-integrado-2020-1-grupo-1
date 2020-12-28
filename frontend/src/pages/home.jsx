@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
 
 import Header from '../components/Header';
 import Menu from '../components/Menu';
@@ -109,11 +110,12 @@ export const BoxSince = styled.h6`
 
 const Home = ({ user, team }) => {
   document.title = 'Battleside';
+  const accessToken = getAccessToken();
 
   const [champions, setChampions] = useState([]);
 
   useEffect(() => {
-    api.get(`/api/champions`)
+    api.get(`/api/champions`, { headers: { Authorization: accessToken }})
     .then(response => setChampions(response.data))
   }, [])
 

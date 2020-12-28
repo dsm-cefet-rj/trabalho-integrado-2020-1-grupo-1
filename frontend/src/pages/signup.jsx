@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 export const Screen = styled.div`
   width: 100%;
@@ -30,12 +32,9 @@ export const SignupArea = styled.section`
 */
 function Signup(){
   document.title = "Battleside - Cadastre-se agora mesmo!";
+  const accessToken = getAccessToken();
 
   const [preferredRole, setPreferredRole] = useState('Fill');
-
-  /**
-   * @module pages/index 
-   */
 
   /**
    * Responsável por realizar a requisição que envia ao backend os dados informados.
@@ -48,10 +47,10 @@ function Signup(){
     const confirm_password = document.getElementById('signup_confirm_password').value;
 
     if(password.length < 8) 
-      return alert('A senha deve ter no mínimo 8 caracteres');
+      return error('Não foi possível realizar o cadastro!', 'A senha deve ter no mínimo 8 caracteres!');
     
     if(password !== confirm_password)
-      return alert('As senhas são diferentes! Por favor, verifique-as e tente novamente!')
+      return error('Não foi possível realizar o cadastro!', 'As senhas são diferentes! Por favor, verifique-as e tente novamente!');
     
     try {
       await api.post('/api/users', {
@@ -81,14 +80,17 @@ function Signup(){
           champion2: null,
           champion3: null
         }
-      })
+      }, { headers: { Authorization: accessToken }})
 
-      alert('Cadastro realizado com sucesso!');
+      success('Cadastro realizado com sucesso!', 'Você será redirecionado a tela de login depois de fechar esse alerta!');
       window.location.href='/';
 
     } catch(err) {
-      alert('Não foi possível realizar o cadastro!');
-      console.log(err.response)
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 export const Screen = styled.div`
   width: 100%;
@@ -92,6 +95,7 @@ export const ForgetArea = styled.div`
  */
 export default function ForgetPassword() {
   document.title = 'Battleside - Esqueci minha senha';
+  const accessToken = getAccessToken();
 
   /**
    * Função responsável por enviar o e-mail ao usuário para a redefinição de senha
@@ -102,11 +106,11 @@ export default function ForgetPassword() {
     e.preventDefault();
 
     try {
-      await api.get('/api/forgetpassword')
-      alert('E-mail com instruções para alteração enviado com sucesso!');
+      await api.get('/api/forgetpassword', { headers: { Authorization: accessToken }})
+      success('E-mail com instruções para alteração enviado com sucesso!', 'Verifique a caixa de entrada do seu e-mail!');
 
     } catch(err) {
-      alert('Ocorreu um erro na aplicação!')
+      error('Ocorreu um erro na aplicação!', 'Verifique o e-mail informado e tente novamente!');
     }
   }
 

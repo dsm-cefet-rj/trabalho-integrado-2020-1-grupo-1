@@ -1,4 +1,5 @@
 import React from 'react';
+import 'antd/dist/antd.css';
 import './styles/global.css';
 
 import Routes from './routes';

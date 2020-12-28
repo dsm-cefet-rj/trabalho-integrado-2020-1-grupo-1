@@ -15,7 +15,7 @@ mongoose.connect(databaseConfig.url, { useCreateIndex: true, useFindAndModify: f
 });
 const app = express();
 
-app.use(cors({ origin: appConfig.client }));
+app.use(cors({ origin: appConfig.client, exposedHeaders: ['Content-Type', 'Authorization'] }));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan(appConfig.enviroment == 'development' ? 'dev' : 'short'));

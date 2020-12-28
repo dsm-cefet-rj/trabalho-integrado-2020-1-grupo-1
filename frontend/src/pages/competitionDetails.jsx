@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { error, success } from '../utils/alerts';
+
 import Title from '../components/Title';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
 
 /**
  * @module pages/competitionDetails 
@@ -30,6 +33,7 @@ import api from '../services/api';
  */
 const CompetitionDetails = ({ team, user }) => {
   document.title = 'Battleside - Detalhes da competição';
+  const accessToken = getAccessToken();
 
   const [competition, setCompetition] = useState({});
   const [isSubscribed, setIsSubscribed] = useState({});
@@ -38,18 +42,18 @@ const CompetitionDetails = ({ team, user }) => {
   let { id } = useParams()
 
   useEffect(() => {
-    api.get(`/api/teamsSubscriptions?competition=${id}&team=${team.id}`)
+    api.get(`/api/teamsSubscriptions?competition=${id}&team=${team.id}`, { headers: { Authorization: accessToken }})
     .then(response => setIsSubscribed(response.data))
     .catch(err => console.log(err))
   }, [])
 
   useEffect(() => {
-    api.get(`/api/competitions/${id}`)
+    api.get(`/api/competitions/${id}`, { headers: { Authorization: accessToken }})
     .then(response => setCompetition(response.data))
   }, [])
 
   useEffect(() => {
-    api.get(`/api/matches?competition=${id}`)
+    api.get(`/api/matches?competition=${id}`, { headers: { Authorization: accessToken }})
     .then(response => setMatches(response.data))
   }, [])
 
@@ -59,7 +63,7 @@ const CompetitionDetails = ({ team, user }) => {
    */
   async function registerCompetition() {
     if(!team.name) {
-      return alert('Seja de uma equipe para participar dessa competição!')
+      return error('Ocorreu um erro inesperado!','Seja de uma equipe para participar dessa competição!');
     }
 
     try {
@@ -75,11 +79,11 @@ const CompetitionDetails = ({ team, user }) => {
         team: team.id
       });
 
-      alert('Inscrição realizada com sucesso!');
+      success('Inscrição realizada com sucesso!', 'Boa sorte!');
       window.location.href = `/viewcompetition/${id}`;
 
     } catch(err) {
-      alert('Não foi possivel se inscrever na competição!');
+      error('Ocorreu um erro inesperado!','Não foi possivel se inscrever na competição!');
     }
   }
 

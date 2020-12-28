@@ -12,6 +12,16 @@ const INITIAL_STATE = {
   id: "",
 }
 
+/**
+ * @module store/reducers/user.js 
+ */
+
+/**
+ * Função responsável pela definição dos reducers de user.
+ * @param {Object} state: Estado do user.
+ * @param {Object} action: Objeto que contém os dados referentes a action.
+ *
+ */
 export default function user(state = INITIAL_STATE, action) {
   switch(action.type) {
     case "USER_LOGIN":

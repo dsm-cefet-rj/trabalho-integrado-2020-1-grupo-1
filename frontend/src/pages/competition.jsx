@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Menu from '../components/Menu';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
 
 /**
  * @module pages/competition 
@@ -25,9 +26,9 @@ import api from '../services/api';
  * Componente funcional responsável por renderizar a tela de Competição.
  * 
  */
-
 export default function Competition() {
   document.title = "Battleside - Competição";
+  const accessToken = getAccessToken();
 
   const [competitions, setCompetitions] = useState([]);
   const [levelFilter, setLevelFilter] = useState('');
@@ -36,7 +37,7 @@ export default function Competition() {
   const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
-    api.get('/api/competitions')
+    api.get('/api/competitions', { headers: { Authorization: accessToken }})
     .then(response => setCompetitions(response.data))
   }, [])
 

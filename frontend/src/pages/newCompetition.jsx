@@ -6,6 +6,8 @@ import Menu from '../components/Menu';
 import Header from '../components/Header';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 /**
  * @module pages/newCompetition 
@@ -24,6 +26,7 @@ import api from '../services/api';
 
 const NewCompetition = ({ user }) => {
   document.title = 'Battleside - Nova competição';
+  const accessToken = getAccessToken();
 
   const [level, setLevel] = useState('Free');
   const [QTYTeams, setQTYTeams] = useState('4')
@@ -56,13 +59,16 @@ const NewCompetition = ({ user }) => {
         winnerTeam: null,
         creator: user.id,
         paused: false
-      })
-      alert('Competição criada com sucesso!');
+      }, { headers: { Authorization: accessToken }})
+      success('Competição criada com sucesso!', 'Você será redirecionado a tela da sua competição após esse alerta ser fechado!');
       window.location.href = '/mycompetition';
 
     } catch(err) {
-      alert('Não foi possivel criar a competição!')
-      console.log(err.response)
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 

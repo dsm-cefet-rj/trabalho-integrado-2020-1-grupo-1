@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import api from '../services/api';
+import { error } from '../utils/alerts';
 
 import * as UserActions from '../store/actions/user';
 import * as TeamActions from '../store/actions/team';
@@ -94,6 +95,7 @@ export const LoginArea = styled.section`
     margin-top: 20px;
   }
 `
+
 /**
  * @module pages/index 
  */
@@ -106,38 +108,40 @@ export const LoginArea = styled.section`
 
 const Index = ({ signinUser, signinTeam }) => {
   document.title = "Battleside";
-
-/**
- * Função que realiza o login.
- * @param {Object} e - Variável que salva o event.
- */
-
+  
+  /**
+   * Função que realiza o login.
+   * @param {Object} e - Variável que salva o event.
+   */
   async function Login(e) {
     e.preventDefault();
     const email = document.getElementById('lgn_email').value;
-    // const password = document.getElementById('lgn_password').value;
+    const password = document.getElementById('lgn_password').value;
 
     try {
-      const userResponse = await api.get(`/api/users?email=${email}`);
+      const userResponse = await api.post(`/api/auth/login`, { email, password });
  
-      const teamID = userResponse.data[0].team;
+      const teamID = userResponse.data.team;
+      const accessToken = userResponse.headers.authorization;
+
+      localStorage.setItem('accessToken', accessToken)
 
       signinUser(
-        userResponse.data[0].name,
-        userResponse.data[0].email,
-        userResponse.data[0].birthdate,
-        userResponse.data[0].profilePictureURL,
-        userResponse.data[0].leagueOfLegendsUsername,
-        userResponse.data[0].preferredRole,
-        userResponse.data[0].computerSettings,
-        userResponse.data[0].socialMedia,
-        userResponse.data[0].team,
-        userResponse.data[0].favoriteChampions,
-        userResponse.data[0].id
+        userResponse.data.name,
+        userResponse.data.email,
+        userResponse.data.birthdate,
+        userResponse.data.profilePictureURL,
+        userResponse.data.leagueOfLegendsUsername,
+        userResponse.data.preferredRole,
+        userResponse.data.computerSettings,
+        userResponse.data.socialMedia,
+        userResponse.data.team,
+        userResponse.data.favoriteChampions,
+        userResponse.data.id
       );
 
       if(teamID) {
-        const teamResponse = await api.get(`/api/teams/${teamID}`);
+        const teamResponse = await api.get(`/api/teams/${teamID}`, { headers: { Authorization: accessToken }});
 
         signinTeam(
           teamResponse.data.name,
@@ -146,11 +150,11 @@ const Index = ({ signinUser, signinTeam }) => {
           teamResponse.data.id
         );
       }
-    
+      
       window.location.href='/home'
 
     } catch(err) {
-      alert('Não foi possível realizar o login! Verifique os dados informados e tente novamente!');
+      error('Não foi possível realizar o login!', 'Verifique os dados informados e tente novamente!');
     }
   }
   

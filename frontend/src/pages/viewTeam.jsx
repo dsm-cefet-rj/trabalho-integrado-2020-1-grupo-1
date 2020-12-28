@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 import Title from '../components/Title';
 import Header from '../components/Header';
@@ -62,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
  */
 const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
   document.title = 'Battleside - Ver equipe';
+  const accessToken = getAccessToken();
 
   const [members, setMembers] = useState([]);
   const [titles, setTitles] = useState([]);
@@ -74,17 +77,17 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    api.get('/api/users')
+    api.get('/api/users', { headers: { Authorization: accessToken }})
     .then(response => setUserList(response.data))
   }, [])
 
   useEffect(() => {
-    api.get(`/api/users?team=${team.id}`)
+    api.get(`/api/users?team=${team.id}`, { headers: { Authorization: accessToken }})
     .then(response => setMembers(response.data))
   }, [])
 
   useEffect(() => {
-    api.get(`/api/competitions?winnerTeam=${team.id}`)
+    api.get(`/api/competitions?winnerTeam=${team.id}`, { headers: { Authorization: accessToken }})
     .then(response => setTitles(response.data))
   }, [])
 
@@ -137,7 +140,7 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
     e.preventDefault();
 
     if(!receiver.id) {
-      alert('Selecione um usuário!');
+      error('Selecione um usuário!', '');
       return undefined
     }
 
@@ -146,11 +149,11 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
         sender: user.id,
         receiver: receiver.id,
         team: user.team
-      })
-      alert('Usuário convidado com sucesso!')
+      }, { headers: { Authorization: accessToken }})
+      success('Usuário convidado com sucesso!', '')
 
     } catch(err) {
-      alert('Não foi possível convidar o usuário!')
+      error('Não foi possível convidar o usuário!', 'Tente novamente mais tarde!')
     }
   }
 
@@ -160,13 +163,13 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
    */
   async function deleteTeam() {
     try {
-      await api.delete(`/api/teams/${team.id}`)
+      await api.delete(`/api/teams/${team.id}`, { headers: { Authorization: accessToken }})
       deleteTeamAtStore(null,null,null,null);
-      alert('Equipe deletada com sucesso!');
+      success('Equipe deletada com sucesso!', '');
       window.location.href = '/home';
 
     } catch(err) {
-      alert('Não foi possível deletar a equipe!');
+      error('Não foi possível deletar a equipe!', 'Tente novamente mais tarde!');
     }
   }
 

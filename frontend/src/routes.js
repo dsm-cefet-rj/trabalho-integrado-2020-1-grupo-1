@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import store from './store';
+import { getAccessToken } from './utils/getAccessToken';
 
 import Home from './pages/home';
 import Signup from './pages/signup';
@@ -24,13 +25,20 @@ import NewCompetition from './pages/newCompetition';
 import ViewCompetition from './pages/competitionDetails';
 import ViewMatch from './pages/viewMatch';
 
+/**
+ * @module src/routes.js 
+ */
+
+/**
+ * Função responsável por verificar se o usuário está autenticado, e dessa forma, informar a aplicação quais rotas ele pode ou não acessar.
+ *
+ */
 function isAuthenticated() {
-  const access_token = sessionStorage.getItem("access_token");
-  if (access_token != null) {
+  const accessToken = getAccessToken();
+  if (accessToken !== null) {
     return true
   } else {
-    // return false
-    return true
+    return false
   }
 }
 
@@ -47,6 +55,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+/**
+ * Função que possui a definição das rotas públicas e privadas da aplicação.
+ *
+ */
 export default function Routes() {
   return (
     <Provider store={store}>

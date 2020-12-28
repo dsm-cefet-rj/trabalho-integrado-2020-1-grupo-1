@@ -6,6 +6,8 @@ import Title from '../components/Title';
 import Menu from '../components/Menu';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 import * as teamActions from '../store/actions/team';
 
@@ -27,7 +29,8 @@ import * as teamActions from '../store/actions/team';
  */
 function NewTeam({ user, updateTeamAtStore }) {
   document.title = 'Battleside - Criar nova equipe';
-  
+  const accessToken = getAccessToken();
+
   /**
    * Função assincrona responsável por enviar ao backend os dados da nova equipe através de uma requisição.
    * @param {Object} e - Objeto que possui os dados do event que foi lançado na chamada da função.
@@ -45,14 +48,17 @@ function NewTeam({ user, updateTeamAtStore }) {
         initials,
         logoPictureURL,
         administrator: user.id
-      })
+      }, { headers: { Authorization: accessToken }})
       updateTeamAtStore(name, initials, logoPictureURL, user.id);
-      alert('Equipe criada com sucesso!');
+      success('Equipe criada com sucesso!');
       window.location.href = '/team';
       
     } catch(err) {
-      alert('Ocorreu um erro inesperado!');
-      console.log(err.response)
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 

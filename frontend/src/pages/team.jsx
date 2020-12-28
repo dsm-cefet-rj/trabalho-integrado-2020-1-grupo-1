@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 import Title from '../components/Title';
 import Header from '../components/Header';
@@ -113,13 +115,14 @@ const useStyles = makeStyles((theme) => ({
  */
 const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {  
   document.title = 'Battleside - Equipe';
+  const accessToken = getAccessToken();
 
   const [invites, setInvites] = useState([]);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
-    api.get(`/api/invites?receiver=${user.id}`)
+    api.get(`/api/invites?receiver=${user.id}`, { headers: { Authorization: accessToken }})
     .then(response => setInvites(response.data))
   }, [])
 
@@ -147,14 +150,14 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
     try {
       await api.put(`/api/users/${user.id}`, {
         team: null
-      })
+      }, { headers: { Authorization: accessToken }})
 
       deleteTeamAtStore(null, null, null, null);
-      alert('Saída de equipe realizada com sucesso!');
+      success('Saída de equipe realizada com sucesso!', 'Você será redirecionado para a Home após este alerta ser fechado!');
       window.location.href='/home';
 
     } catch(err) {
-      alert('Não foi possivel sair da equipe!');
+      error('Não foi possivel sair da equipe!', 'Tente novamente mais tarde!');
     }
   }
 
@@ -172,11 +175,11 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
         invite.id
       );
 
-      alert('Convite aceitado com sucesso!');
+      success('Convite aceitado com sucesso!', '');
       window.location.href = '/team';
 
     } catch(err) {
-      alert('Ocorreu um erro na solicitação!');
+      error('Ocorreu um erro na solicitação!', 'Tente novamente mais tarde!');
     }
   }
 
@@ -187,11 +190,11 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
   async function rejectInvite(id) {
     try {
       await api.delete(`/api/invites/${id}`)
-      alert('Convite deletado com sucesso!');
+      success('Convite deletado com sucesso!', '');
       window.location.href = '/team';
 
     } catch(err) {
-      alert('Ocorreu um erro na solicitação!');
+      error('Ocorreu um erro na solicitação!', 'Tente novamente mais tarde!');
     }
   }
 

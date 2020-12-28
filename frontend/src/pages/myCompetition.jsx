@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import Title from '../components/Title';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 
 import api from '../services/api';
-import { connect } from 'react-redux';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -148,6 +150,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MyCompetition = ({ user }) => {
   document.title = 'Battleside - Minha competição';
+  const accessToken = getAccessToken();
 
   const [competition, setCompetition] = useState({});
   const [competitionPrints, setCompetitionPrints] = useState({});
@@ -157,7 +160,7 @@ const MyCompetition = ({ user }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    api.get(`/api/competitions?creator=${user.id}&finished=false`)
+    api.get(`/api/competitions?creator=${user.id}&finished=false`, { headers: { Authorization: accessToken }})
     .then(response => setCompetition(response.data))
   }, [])
 
@@ -196,12 +199,12 @@ const MyCompetition = ({ user }) => {
   */
   async function deleteCompetition() {
     try {
-      api.delete(`/api/competitions/${competition[0].id}`)
-      alert('Competição deletada com sucesso!');
+      api.delete(`/api/competitions/${competition[0].id}`, { headers: { Authorization: accessToken }})
+      success('Competição deletada com sucesso!', 'Você será redirecionado para a Home após este alerta ser fechado!');
       window.location.href = '/home';
 
     } catch(err) {
-      alert('Ocorreu um erro na solicitação!');
+      error('Ocorreu um erro na solicitação!', 'Tente novamente mais tarde!');
     }
   }
 
@@ -216,11 +219,15 @@ const MyCompetition = ({ user }) => {
       await api.put(`/api/competitions/${competition[0].id}`, {
         initialDate: document.getElementById('edit_date').value,
         finalDate: document.getElementById('edit_date_final').value
-      })
-      alert('Dados alterados com sucesso!');
+      }, { headers: { Authorization: accessToken }})
+      success('Dados alterados com sucesso!', '');
 
     } catch(err) {
-      alert('Ocorreu um erro na solicitação!');
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 
@@ -234,7 +241,7 @@ const MyCompetition = ({ user }) => {
     try { 
       await api.put(`/api/matches/${matchID}`, {
         winnerTeam: winnerID
-      })
+      }, { headers: { Authorization: accessToken }})
     } catch(err) {
 
     }

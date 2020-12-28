@@ -19,9 +19,10 @@ const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
   });
 
   function handleLogout() {
-    logoutUser()
-    logoutTeam()
-    window.location.href='/'
+    logoutUser();
+    logoutTeam();
+    window.localStorage.removeItem('accessToken');
+    window.location.href='/';
   }
 
   return (

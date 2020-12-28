@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import api from '../services/api';
+import { getAccessToken } from '../utils/getAccessToken';
+import { error, success } from '../utils/alerts';
 
 export const Screen = styled.div`
   width: 100%;
@@ -93,6 +95,7 @@ export const RecoverArea = styled.div`
  */
 function RecoverPassword() {
   document.title = 'Battleside - Recuperar senha';
+  const accessToken = getAccessToken();
 
   /**
    * Função responsável por enviar a nova senha do usuário ao backend para a redefinição de senha
@@ -105,11 +108,16 @@ function RecoverPassword() {
     try {
       await api.put('/api/recoverpassword', {
         password: document.getElementById('recover_password').value
-      })
-      alert('Senha alterada com sucesso!');
+      }, { headers: { Authorization: accessToken }})
+      success('Senha alterada com sucesso!', 'Você será redirecionado à tela de login após este alerta ser fechado!');
+      window.location.href = '/';
 
     } catch(err) {
-      alert('Ocorreu um erro na recuperação!');
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 
