@@ -11,6 +11,16 @@ import * as TeamActions from '../../store/actions/team';
 import icon from './images/icon.png';
 import logout from './images/logout.png';
 
+/**
+ * @module components/Menu 
+ */
+
+/**
+ * Componente responsável por renderizar o menu.
+ * @param {Object} user - Objeto com os dados do usuário provindos da Store do Redux
+ * @param {Function} logoutUser - Função que deleta da store os dados do usuário no momento do logout.
+ * @param {Function} logoutTeam - Função que deleta da store os dados de equipe no momento do logout.
+ */
 const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -18,6 +28,10 @@ const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
     setWidth(window.innerWidth)
   });
 
+  /**
+   * Função que realiza o logout do usuário.
+   * 
+   */
   function handleLogout() {
     logoutUser();
     logoutTeam();
@@ -73,10 +87,18 @@ const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
   )
 }
 
+/**
+* Função que pega os dados do usuário na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   user: state.user
 })
 
+/**
+* Função que altera os dados do usuário e equipe na Store.
+* @param {Function} dispatch - Função que realiza o disparo da action para alterar a Store.
+*/
 const mapDispatchToProps = dispatch => ({
   logoutUser: () => dispatch(UserActions.logoutUser()),
   logoutTeam: () => dispatch(TeamActions.logoutTeam())

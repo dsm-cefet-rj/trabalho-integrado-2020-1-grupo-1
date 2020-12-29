@@ -50,7 +50,7 @@ function NewTeam({ user, updateTeamAtStore }) {
         administrator: user.id
       }, { headers: { Authorization: accessToken }})
       updateTeamAtStore(name, initials, logoPictureURL, user.id);
-      success('Equipe criada com sucesso!');
+      success('Equipe criada com sucesso!', '');
       window.location.href = '/team';
       
     } catch(err) {
@@ -103,11 +103,19 @@ function NewTeam({ user, updateTeamAtStore }) {
   );
 }
 
+/**
+* Função que pega os dados do usuário na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   user: state.user,
   team: state.team
 });
 
+/**
+* Função que altera os dados da equipe na Store.
+* @param {Function} dispatch - Função que realiza o disparo da action para alterar a Store.
+*/
 const mapDispatchToProps = dispatch => ({
   updateTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.signinTeam(name, initials, logoPictureURL, id))
 })

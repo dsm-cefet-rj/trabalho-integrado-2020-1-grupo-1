@@ -17,10 +17,8 @@ export const Text = styled.h1`
  * @param {String} props.content - Conteúdo à ser renderizado.
  * 
  */
-function Title(props) {
-  return (
-    <Text>{props.content}</Text>
-  );
-}
+const Title = props => (
+  <Text>{props.content}</Text>
+);
 
 export default Title;

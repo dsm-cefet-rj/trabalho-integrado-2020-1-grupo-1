@@ -192,6 +192,10 @@ const Index = ({ signinUser, signinTeam }) => {
   )
 }
 
+/**
+* Função que altera os dados do usuário e equipe na Store.
+* @param {Function} dispatch - Função que realiza o disparo da action para alterar a Store.
+*/
 const mapDispatchToProps = dispatch => ({
   signinUser: (name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email) => dispatch(UserActions.signinUser(name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email)),
   signinTeam: (name, initials, logoPictureURL, id) => dispatch(TeamActions.signinTeam(name, initials, logoPictureURL, id))

@@ -150,10 +150,16 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
         receiver: receiver.id,
         team: user.team
       }, { headers: { Authorization: accessToken }})
-      success('Usuário convidado com sucesso!', '')
+      handleClose('add');
+      success('Usuário convidado com sucesso!', '');
 
     } catch(err) {
-      error('Não foi possível convidar o usuário!', 'Tente novamente mais tarde!')
+      handleClose('add');
+      if(err.response.status === 422) {
+        error('Ocorreu um erro inesperado!', 'Relogue na aplicação e tente novamente.');
+      } else {
+        error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+      }
     }
   }
 
@@ -262,11 +268,19 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
   );
 }
 
+/**
+* Função que pega os dados do usuário e equipe na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   user: state.user,
   team: state.team
 })
 
+/**
+* Função que altera os dados da equipe na Store.
+* @param {Function} dispatch - Função que realiza o disparo da action para alterar a Store.
+*/
 const mapDispatchToProps = dispatch => ({
   deleteTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.logoutTeam(name, initials, logoPictureURL, id))
 })

@@ -28,16 +28,10 @@ export const Button = styled.button`
  * @param {Boolean} props.disabled - Booleano que representa se o botão está ou não desativado.
  * @param {String} props.content - Conteúdo a ser renderizado pelo componente.
  */
-
-function BTNSendData(props) {
-  return (
-    <Button 
-      type={props.type} 
-      disabled={props.disabled}
-    >
-      {props.content}
-    </Button>
-  );
-}
+const BTNSendData = props => (
+  <Button type={props.type} disabled={props.disabled}>
+    {props.content}
+  </Button>
+);
 
 export default BTNSendData;

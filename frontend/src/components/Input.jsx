@@ -24,11 +24,8 @@ export const Inputs = styled.input`
  * @param {Boolean} props.required - Tipo do input.
  * 
  */
-
-function Input(props) {
-  return (
-    <Inputs type={props.type} placeholder={props.placeholder} required={props.required} />
-  )
-}
+const Input = props => (
+  <Inputs type={props.type} placeholder={props.placeholder} required={props.required} />
+);
 
 export default Input;

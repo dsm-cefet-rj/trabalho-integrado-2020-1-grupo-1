@@ -188,6 +188,10 @@ const Home = ({ user, team }) => {
   );
 }
 
+/**
+* Função que pega os dados do usuário e equipe na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   team: state.team,
   user: state.user

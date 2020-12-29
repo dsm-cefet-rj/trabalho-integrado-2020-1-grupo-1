@@ -39,6 +39,7 @@ export default function Competition() {
   useEffect(() => {
     api.get('/api/competitions', { headers: { Authorization: accessToken }})
     .then(response => setCompetitions(response.data))
+    .catch(err => console.log(err.response))
   }, [])
 
   useEffect(() => {

@@ -260,11 +260,19 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
   );
 }
 
+/**
+* Função que pega os dados do usuário e equipe na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   user: state.user,
   team: state.team
 })
 
+/**
+* Função que altera os dados da equipe na Store.
+* @param {Function} dispatch - Função que realiza o disparo da action para alterar a Store.
+*/
 const mapDispatchToProps = dispatch => ({
   deleteTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.logoutTeam(name, initials, logoPictureURL, id)),
   setTeamAtStore: (name, initials, logoPictureURL, id) => dispatch(teamActions.signinTeam(name, initials, logoPictureURL, id))

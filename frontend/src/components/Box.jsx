@@ -21,17 +21,11 @@ export const Title = styled.div`
  * Componente responsável por renderizar as box.
  * 
  */
-function Box(){
-  return (
-    <section>
-      <Title>
-
-      </Title>
-      <AreaBox>
-
-      </AreaBox>
-    </section>
-  );
-}
+const Box =() => (
+  <section>
+    <Title />
+    <AreaBox />
+  </section>
+);
 
 export default Box;

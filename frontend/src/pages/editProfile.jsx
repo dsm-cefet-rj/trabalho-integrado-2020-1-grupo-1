@@ -371,10 +371,18 @@ const EditProfile = ({ user, editUser }) => {
   );
 }
 
+/**
+* Função que pega os dados do usuário na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   user: state.user
 });
 
+/**
+* Função que altera os dados do usuário na Store.
+* @param {Function} dispatch - Função que realiza o disparo da action para alterar a Store.
+*/
 const mapDispatchToProps = dispatch => ({
   editUser: (name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email) => dispatch(UserActions.editUser(name, username, profile_picture, role, champion1, champion2, champion3, facebook, instagram, twitter, other, email))
 });

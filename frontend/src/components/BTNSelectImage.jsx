@@ -9,10 +9,8 @@ import React from 'react';
  * @param {String} props.content - Conteúdo a ser renderizado pelo componente.
  * 
  */
-function BTNSelectImage(props) {
-  return (
-    <button type="button">{props.content}</button>
-  );
-}
+const BTNSelectImage = props => (
+  <button type="button">{props.content}</button>
+);
 
 export default BTNSelectImage;

@@ -379,6 +379,10 @@ const MyCompetition = ({ user }) => {
   );
 }
 
+/**
+* Função que pega os dados do usuário na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   user: state.user
 })

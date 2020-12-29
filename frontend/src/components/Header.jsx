@@ -33,12 +33,10 @@ export const ProfilePicture = styled.img`
  * Componente responsável por renderizar o cabeçalho padrão de todas as telas.
  * 
  */
-function Header() {
-  return (
-    <Banner>
-      <ProfilePicture src={foto} alt="Foto perfil" />
-    </Banner>
-  );
-}
+const Header =() => (
+  <Banner>
+    <ProfilePicture src={foto} alt="Foto perfil" />
+  </Banner>
+);
 
 export default Header;

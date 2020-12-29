@@ -16,11 +16,8 @@ export const Title = styled.h2`
  * @param {String} props.content - Conteúdo a ser renderizado pelo componente.
  * 
  */
-
-function BoxTitle(props) {
-  return (
-    <Title>{props.content}</Title>
-  );
-}
+const BoxTitle = props => (
+  <Title>{props.content}</Title>
+);
 
 export default BoxTitle;

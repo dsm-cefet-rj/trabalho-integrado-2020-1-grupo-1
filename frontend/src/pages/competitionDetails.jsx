@@ -68,22 +68,23 @@ const CompetitionDetails = ({ team, user }) => {
 
     try {
       await api.post('/api/usersSubscriptions', {
-        id: user.id,
+        user: user.id,
         team: team.id,
         competition: id,
         role: user.preferredRole,
-      });
+      }, { headers: { Authorization: accessToken }});
       
       await api.post('/api/teamsSubscriptions', {
         competition: id,
         team: team.id
-      });
+      }, { headers: { Authorization: accessToken }});
 
       success('Inscrição realizada com sucesso!', 'Boa sorte!');
       window.location.href = `/viewcompetition/${id}`;
 
     } catch(err) {
       error('Ocorreu um erro inesperado!','Não foi possivel se inscrever na competição!');
+      console.log(err.response)
     }
   }
 
@@ -116,6 +117,12 @@ const CompetitionDetails = ({ team, user }) => {
   
           {(isSubscribed.length !== 0) ? 
             <div className="box-competition-details">
+              <h2>{competition.name} - {competition.slots} equipes</h2>
+              <h5>De {competition.initialDate} até {competition.finalDate}</h5>
+              <br />
+              <h5>Equipe vencedora: {competition.winnerTeam}</h5>
+              <br />
+              <h2>Partidas</h2>
               {matches?.map(match => (
                 <Link to={`/match/${match.id}`}>
                   id
@@ -159,6 +166,10 @@ const CompetitionDetails = ({ team, user }) => {
   );
 }
 
+/**
+* Função que pega os dados do usuário e equipe na Store.
+* @param {Object} state - Objeto que contém o estado global da aplicação
+*/
 const mapStateToProps = state => ({
   team: state.team,
   user: state.user
