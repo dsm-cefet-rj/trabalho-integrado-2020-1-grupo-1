@@ -1,12 +1,13 @@
 const yup = require('yup');
 
 exports.bodySchema = {
-    name: yup.string().required().min(2).max(60).trim().when('$params', (params, schema) => params ? schema.databaseUnique('Competition', params.id) : schema).label('Nome'),
+    name: yup.string().required().min(2).max(60).trim().when('$params', (params, schema) => params ? schema.databaseUnique('Competition', params.id) : schema.databaseUnique('Competition')).label('Nome'),
     initials: yup.string().required().min(2).max(5).trim().uppercase().label('Sigla'),
     award: yup.object().shape({
         amount: yup.number().positive().label('Valor da premiação'),
         type: yup.string().required().equals(['RP', 'Money', 'None']).label('Tipo da premiação')
     }),
+    winnerTeam: yup.string().nullable().matches(new RegExp('^[a-f0-9]{24}$', 'i')),
     subscriptionInitialDate: yup.date().required().label('Data de início da inscrição'),
     subscriptionFinalDate: yup.date().required().when('subscriptionInitialDate', (subscriptionInitialDate, schema) => subscriptionInitialDate ? schema.min(subscriptionInitialDate) : schema).label('Data do fim da inscrição'),
     initialDate: yup.date().required().when('subscriptionFinalDate', (subscriptionFinalDate, schema) => subscriptionFinalDate ? schema.min(subscriptionFinalDate): schema).label('Data de início da competição'),

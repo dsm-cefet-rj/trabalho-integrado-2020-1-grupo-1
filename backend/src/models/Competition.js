@@ -1,7 +1,7 @@
 const { chunk, shuffle } = require('lodash');
 const mongoose = require('mongoose');
 const normalize = require('normalize-mongoose');
-const { utcDateFormatter } = require('../services');
+const { utcDateFormater } = require('../services');
 
 const competitionSchema = mongoose.Schema({
     name: {
@@ -31,17 +31,17 @@ const competitionSchema = mongoose.Schema({
     subscriptionInitialDate: {
         type: Date,
         required: true,
-        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
+        transform: date => utcDateFormater(date, 'DD/MM/YYYY')
     },
     subscriptionFinalDate: {
         type: Date,
         required: true,
-        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
+        transform: date => utcDateFormater(date, 'DD/MM/YYYY')
     },
     initialDate: {
         type: Date,
         required: true,
-        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
+        transform: date => utcDateFormater(date, 'DD/MM/YYYY')
     },
     finalDate: {
         type: Date,

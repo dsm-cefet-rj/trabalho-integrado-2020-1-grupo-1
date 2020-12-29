@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const options = {
     usernameField: "email",
-    session: false
 };
 
 module.exports = new LocalStrategy(options, async (email, password, done) => {

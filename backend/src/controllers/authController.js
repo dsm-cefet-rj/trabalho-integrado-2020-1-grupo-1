@@ -1,20 +1,17 @@
 const { sign } = require('jsonwebtoken');
 const { appConfig } = require('../config');
 const { PasswordReset, User } = require('../models');
-const { promisifiedAuthenticate } = require('../services');
 
 module.exports = {
     login: async (req, res, next) => {
         try {
-            const user = await promisifiedAuthenticate(req, res);
-
             const payload = {
-                id: user.id
+                id: req.user.id
             };
 
             const token = sign(payload, appConfig.key, { algorithm: "HS256", expiresIn: "1d", issuer: appConfig.url, audience: appConfig.client });
 
-            res.set('Authorization', `Bearer ${token}`).json(user);
+            res.set('Authorization', `Bearer ${token}`).json(req.user);
         } catch (err) {
             next(err);
         }
