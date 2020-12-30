@@ -12,7 +12,7 @@ const passwordResetSchema = mongoose.Schema({
 
 passwordResetSchema.pre('save', async function(next) {
     const token = uuidv4();
-    const url = `${appConfig.client}?token=${token}&email=${this.email}`;
+    const url = `${appConfig.client}/recover-password?token=${token}&email=${this.email}`;
     const user = await mongoose.model('User').findOne({ email: this.email });
 
     await mailTransporter.sendMail({
