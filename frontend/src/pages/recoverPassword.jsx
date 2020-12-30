@@ -96,6 +96,12 @@ export const RecoverArea = styled.div`
 function RecoverPassword() {
   document.title = 'Battleside - Recuperar senha';
   const accessToken = getAccessToken();
+  const url = window.location.search.slice(1);
+  const data = url.split("&");
+
+  if(data.length !== 2) {
+    window.location.href = '/';
+  }
 
   /**
    * Função responsável por enviar a nova senha do usuário ao backend para a redefinição de senha
@@ -105,9 +111,21 @@ function RecoverPassword() {
   async function setPassword(e) {
     e.preventDefault();
 
+    const token = data[0].substr(6);
+    const email = data[1].substr(6);
+
+    const password = document.getElementById('recover_password').value;
+    const confirmedPassword = document.getElementById('recover_confirm_password').value;
+
+    if(password !== confirmedPassword) {
+      return error('Senha inválida!', 'Os campos senha e confirmar senha são diferentes!');
+    }
+
     try {
-      await api.put('/api/recoverpassword', {
-        password: document.getElementById('recover_password').value
+      await api.put('/api/auth/reset-password', {
+        password,
+        token,
+        email
       }, { headers: { Authorization: accessToken }})
       success('Senha alterada com sucesso!', 'Você será redirecionado à tela de login após este alerta ser fechado!');
       window.location.href = '/';
@@ -143,7 +161,7 @@ function RecoverPassword() {
 
           <br /><br />
           <div className="center">
-            <button type="button" id="btn_recover_save">Alterar</button>
+            <button type="submit" id="btn_recover_save">Alterar</button>
           </div>
         </form>
       </RecoverArea>
