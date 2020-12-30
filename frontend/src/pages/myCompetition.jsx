@@ -220,6 +220,7 @@ const MyCompetition = ({ user }) => {
         initialDate: document.getElementById('edit_date').value,
         finalDate: document.getElementById('edit_date_final').value
       }, { headers: { Authorization: accessToken }})
+      handleClose('edit');
       success('Dados alterados com sucesso!', '');
 
     } catch(err) {

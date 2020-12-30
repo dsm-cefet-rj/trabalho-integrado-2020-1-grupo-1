@@ -104,9 +104,10 @@ export default function ForgetPassword() {
    */
   async function sendEmail(e) {
     e.preventDefault();
-
+    const email = document.getElementById('recover_email').value;
+    
     try {
-      await api.get('/api/forgetpassword', { headers: { Authorization: accessToken }})
+      await api.post('/api/auth/request-reset-password', { email }, { headers: { Authorization: accessToken }})
       success('E-mail com instruções para alteração enviado com sucesso!', 'Verifique a caixa de entrada do seu e-mail!');
 
     } catch(err) {

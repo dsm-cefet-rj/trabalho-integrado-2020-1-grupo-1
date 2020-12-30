@@ -46,7 +46,7 @@ const competitionSchema = mongoose.Schema({
     finalDate: {
         type: Date,
         required: true,
-        transform: date => utcDateFormatter(date, 'DD/MM/YYYY')
+        transform: date => utcDateFormater(date, 'DD/MM/YYYY')
     },
     slots: {
         type: Number,
