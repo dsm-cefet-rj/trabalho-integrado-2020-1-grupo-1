@@ -35,6 +35,15 @@ module.exports = {
             next(err);
         }
     },
+    updateElo: async (req, res, next) => {
+        try {
+            const { id: userId } = req.params;
+            const user = (await User.findById(userId)).updateElo();
+            res.json(user);
+        } catch (err) {
+            next(err);
+        }
+    },
     destroy: async (req, res, next) => {
         try {
             const { id: userId } = req.params;
