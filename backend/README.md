@@ -84,8 +84,6 @@ Tendo gerado tal arquivo, é necessário agora colocar os valores nas variáveis
 12. RIOT_API_API_TOKEN - Token da API da Riot
 13. RIOT_API_BASE_URL - URL base para requisições a API da Riot
 
-**OBS:** No momento só há necessidade de inserir as seguintes variáveis: APP_KEY, APP_CLIENT, NODE_NEV, PORT, DATABASE_URL, MAIL_AUTH_USER, MAIL_AUTH_PASSWORD, MAIL_HOST, MAIL_PORT, MAIL_FROM_NAME, MAIL_FROM_ADDRESS
-
 3 - Importar os dados dos campeões para o seu banco MongoDB
 
 Para que seja feita tal importação basta executar um dos seguintes comandos:
