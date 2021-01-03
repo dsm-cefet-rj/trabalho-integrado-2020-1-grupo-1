@@ -8,7 +8,7 @@ module.exports = {
             name: 'databaseUnique',
             message: '${path} já está sendo utilizado',
             test: async (value, { path: originalPath }) => {
-                const exists = await mongoose.model(collection).exists(ignoreId ? { [path || originalPath]: value, id: { $ne: ignoreId  }} : { [path || originalPath]: value });
+                const exists = await mongoose.model(collection).findOne((ignoreId ? { [path || originalPath]: value, _id: { $ne: ignoreId  }} : { [path || originalPath]: value }));
                 return !exists;
             },
             exclusive: true
