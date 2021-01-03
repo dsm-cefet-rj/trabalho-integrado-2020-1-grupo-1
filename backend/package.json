@@ -25,6 +25,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "roman-numbers": "^1.0.1",
     "uuid": "^8.3.2",
     "yup": "^0.32.8",
     "yup-locale-pt": "^0.0.5"

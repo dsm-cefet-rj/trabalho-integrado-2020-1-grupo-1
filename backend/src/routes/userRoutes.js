@@ -12,5 +12,7 @@ router.route('/:id')
     .get(passport.authenticate('jwt', { session: false }), userController.show)
     .put(passport.authenticate('jwt', { session: false }), requestValidator(validateUser.updateSchema, false, "user"), userController.update)
     .delete(passport.authenticate('jwt', { session: false }), userController.destroy);
+router.route('/:id/updateElo')    
+    .put(passport.authenticate('jwt', { session: false }), userController.updateElo)
 
 module.exports = router;

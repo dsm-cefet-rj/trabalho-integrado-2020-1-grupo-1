@@ -108,7 +108,7 @@ competitionSchema.methods.createMatches = async function() {
         const value = confrontationsArray[index];
         const match = matchesArray[matchesArray.length - (1 + index)];
 
-        if(value.length = 2) {
+        if(value.length == 2) {
             await mongoose.model('TeamMatch').insertMany([{ match: match.id, team: value[0] }, { match: match.id, team: value[1] }]);
         } else {
             const sucessorMatch = matchesArray.find(element => element.id == match.sucessor);
