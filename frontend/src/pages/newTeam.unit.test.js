@@ -2,13 +2,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react'
 import {useSelector} from 'react-redux'
-import { Router } from 'react-router-dom'
-import { Provider } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
 import { createStore } from 'redux';
-import rootReducers  from '../store/reducers';
+import team  from '../store/reducers/team';
 import { act } from 'react-dom/test-utils';
-import NewTeam from './NewTeam'
+import NewTeam from './newTeam'
 import { configureStore } from '@reduxjs/toolkit'
 
 
@@ -24,84 +24,42 @@ jest.mock("react-redux", () => ({
 
 // Mocking the state
 const mockAppState = {
-    users: [
-        {email: "mateus@gmail.com", 
-        password: "$2b$10$AG0YZHaMDs1FQclXvbHbq.8njmL0u9NgDpxyAQFqsGjiN1ayIQoqC", 
-        id: "5fdf857ebaec7e21d058052f"
-    }]
+    user: {
+        name:"Mateus Rodrigues",
+        email:"mateus@gmail.com",
+        password:"12345678",
+        birthdate:"2020-02-01",
+        profilePictureURL: "",
+        leagueOfLegendsUsername:"UnoDeFirmaTunado",
+        preferredRole: "Top",
+        computerSettings: null,
+    }
 }
 
 // Mocking /api/teams
-jest.mock("../api/teams", () => ({
+/*
+jest.mock("../../api/teams", () => ({
     httpGet: jest.fn(),
     httpPost: jest.fn(),
     httpPut: jest.fn(),
     httpDelete: jest.fn()
 }));
-
+*/
 // Mocking the slice
-/*
-jest.mock("./ProjetosSlice", () => ({
-    selectProjetosById: jest.fn((state, id) => mockAppState.projetos.projetos.find(e => e.id == id)),
-    addProjetoServer: jest.fn(),
-    updateProjetoServer: jest.fn()
-}));*/
 
-const fieldTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSiglaValida, msgEsperada, path = "/newteam", containerParam = null, historyParam = null) => {
-    const history = historyParam ? historyParam : createMemoryHistory();
-    const store = createStore(rootReducers);
-    const { container } = containerParam ? containerParam : render(<Router history={history}><NewTeam/></Router>);
-
-    const nome = container.querySelector("#team_name");
-    const sigla = container.querySelector("#team_initials");
-    const submitButton = container.querySelector("#btn_create_team");
-    const vizualisarButton = container.querySelector("#btn_viewTeam");
-    const sairEquipeButton = container.querySelector("#team_leave");
-
-    fireEvent.input(nome, {target: {value: nomeEquipeParam}});
-    fireEvent.input(sigla, {target: {value: siglaEquipeParam}});
-
-    await act(async () => {
-        fireEvent.submit(submitButton);
-    });
-    
-    if(!isNomeValido){
-        jest.spyOn(Alert, 'alert');
-        expect(Alert.alert).toHaveBeenCalledWith(msgEsperada)
+jest.mock("./newTeam", () => ({
+    user: {
+        name:"Mateus Rodrigues",
+        email:"mateus@gmail.com",
+        password:"12345678",
+        birthdate:"2020-02-01",
+        profilePictureURL: "",
+        leagueOfLegendsUsername:"UnoDeFirmaTunado",
+        preferredRole: "Top",
+        computerSettings: null,
     }
-    if(!isSiglaValida){
-        jest.spyOn(Alert, 'alert');
-        expect(Alert.alert).toHaveBeenCalledWith(msgEsperada)
-    }
-    if(isNomeValido && isSiglaValida){
-        expect(global.window.location.pathname).toEqual('/team');
-        expect(screen.getByText(/Equipe/i)).toBeInTheDocument();
-        expect(vizualisarButton).toBeInTheDocument();
-        expect(sairEquipeButton).toBeInTheDocument();    
-    }
-}
+}));
 
-const buttonTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSiglaValida, containerParam = null, historyParam = null) => {
-    
-    const history = historyParam ? historyParam : createMemoryHistory();
-    const store = createStore(rootReducers);
-    const { container } = containerParam ? containerParam : render(<Router history={history}><NewTeam/></Router>);
-
-    const criarButton = container.querySelector("#btn_create_team");
-
-    fireEvent.input(nome, {target: {value: nomeEquipeParam}});
-    fireEvent.input(sigla, {target: {value: siglaEquipeParam}});
-    
-    if(!isNomeValido){
-        expect(criarButton).toHaveAttribute('disabled');
-    }
-    if(!isSiglaValida){
-        expect(criarButton).toHaveAttribute('disabled');
-    }
-    if(isNomeValido && isSiglaValida){
-        expect(criarButton.getAttribute("disabled")).toBe(null);
-    }
-}
 
 let store;
 describe("NewTeam unit", () => {
@@ -110,7 +68,7 @@ describe("NewTeam unit", () => {
         useSelector.mockImplementation(callback => {
           return callback(mockAppState);
         });
-        store = configureStore({reducer: { projetos:  }});
+        store = configureStore({reducer: {teams: team}});
     });
     
     afterEach(() => {
@@ -212,3 +170,60 @@ describe("NewTeam unit", () => {
     });
 
 });
+
+
+const fieldTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSiglaValida, msgEsperada, path = "/newteam", containerParam = null, historyParam = null) => {
+    const { container } = render(<Provider store={store}><NewTeam/></Provider>, { wrapper: MemoryRouter });
+
+
+    const nome = container.querySelector("#team_name");
+    const sigla = container.querySelector("#team_initials");
+    const submitButton = container.querySelector("#btn_create_team");
+    const vizualisarButton = container.querySelector("#btn_viewTeam");
+    const sairEquipeButton = container.querySelector("#team_leave");
+
+    fireEvent.input(container.querySelector("#team_name"), {target: {value: nomeEquipeParam}});
+    fireEvent.input(container.querySelector("#team_initials"), {target: {value: siglaEquipeParam}});
+
+    await act(async () => {
+        fireEvent.submit(submitButton);
+    });
+    
+    if(!isNomeValido){
+        jest.spyOn(Alert, 'alert');
+        expect(Alert.alert).toHaveBeenCalledWith(msgEsperada)
+    }
+    if(!isSiglaValida){
+        jest.spyOn(Alert, 'alert');
+        expect(Alert.alert).toHaveBeenCalledWith(msgEsperada)
+    }
+    if(isNomeValido && isSiglaValida){
+        //expect(global.window.location.pathname).toEqual('/team');
+        expect(screen.getByText(/Equipe/i)).toBeInTheDocument();
+        expect(vizualisarButton).toBeInTheDocument();
+        expect(sairEquipeButton).toBeInTheDocument();    
+    }
+}
+
+const buttonTest = async (nomeEquipeParam, siglaEquipeParam, isNomeValido, isSiglaValida, containerParam = null, historyParam = null) => {
+    
+    const { container } = render(<Provider store={store}><NewTeam/></Provider>, { wrapper: MemoryRouter });
+
+    const criarButton = container.querySelector("#btn_create_team");
+
+    const nome = container.querySelector("#team_name");
+    const sigla = container.querySelector("#team_initials");
+
+    fireEvent.input(container.querySelector("#team_name"), {target: {value: nomeEquipeParam}});
+    fireEvent.input(container.querySelector("#team_initials"), {target: {value: siglaEquipeParam}});
+    
+    if(!isNomeValido){
+        expect(criarButton).toHaveAttribute('disabled');
+    }
+    if(!isSiglaValida){
+        expect(criarButton).toHaveAttribute('disabled');
+    }
+    if(isNomeValido && isSiglaValida){
+        expect(criarButton.getAttribute("disabled")).toBe(null);
+    }
+}
