@@ -195,7 +195,7 @@ const ViewTeam = ({ user, team, deleteTeamAtStore }) => {
         </div>
       </div>
 
-      <h4 className="center">Membros</h4>
+      <h4 className="center white">Membros</h4>
       <div className="list-members">
         {(members.length !== 0) ? members.map(member => (
           <div className="member-icon" key={member.id} title={member.leagueOfLegendsUsername + ' - ' + member.preferredRole}>

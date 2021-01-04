@@ -1,6 +1,10 @@
 import { Modal } from 'antd';
 
 /**
+ * @module utils/alerts.js
+ */
+
+/**
 * Função que gera o modal de erro em tela.
 * @param {String} title - Título do Modal.
 * @param {String} content - Conteúdo do Modal.

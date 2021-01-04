@@ -315,7 +315,7 @@ const MyCompetition = ({ user }) => {
 
       {(competition[0]) ? 
         <div>
-          <h1>{competition[0].name}</h1>
+          <h2 className="white">{competition[0].name}</h2>
           <div className="box-your-competition">
             <h4 className="box-your-competition-title">Prints recebidos</h4>
             {/* <div className="list-matchs">

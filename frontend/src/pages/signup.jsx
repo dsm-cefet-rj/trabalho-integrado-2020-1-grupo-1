@@ -7,13 +7,13 @@ import { error, success } from '../utils/alerts';
 
 export const Screen = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: #393939;
   padding: 40px;
 `
 
 export const SignupArea = styled.section`
-  height: 700px;
+  height: 100%;
 
   display: flex;
   align-items: center;
@@ -90,6 +90,7 @@ function Signup(){
         error('Ocorreu um erro inesperado!', err.response.data?.errors[0]);
       } else {
         error('Ocorreu um erro inesperado!', 'Por favor, tente novamente mais tarde!');
+        console.log(err.response)
       }
     }
   }

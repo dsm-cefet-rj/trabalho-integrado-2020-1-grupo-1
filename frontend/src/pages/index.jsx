@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -108,7 +108,7 @@ export const LoginArea = styled.section`
 
 const Index = ({ signinUser, signinTeam }) => {
   document.title = "Battleside";
-  
+
   /**
    * Função que realiza o login.
    * @param {Object} e - Variável que salva o event.
@@ -142,7 +142,7 @@ const Index = ({ signinUser, signinTeam }) => {
 
       if(teamID) {
         const teamResponse = await api.get(`/api/teams/${teamID}`, { headers: { Authorization: accessToken }});
-
+    
         signinTeam(
           teamResponse.data.name,
           teamResponse.data.initials,
@@ -155,6 +155,7 @@ const Index = ({ signinUser, signinTeam }) => {
 
     } catch(err) {
       error('Não foi possível realizar o login!', 'Verifique os dados informados e tente novamente!');
+      console.log(err)
     }
   }
   

@@ -167,16 +167,16 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
    */
   async function acceptInvite(invite) {
     try {
-      await api.put(`/api/invites/${invite.id}/accept`, {})
+      await api.put(`/api/invites/${invite.id}/accept`, {}, { headers: { Authorization: accessToken }})
       setTeamAtStore(
-        invite.name,
-        invite.initials,
+        invite.team.name,
+        invite.team.initials,
         "urlLogoEquipe",
-        invite.id
+        invite.team.id
       );
 
       success('Convite aceitado com sucesso!', '');
-      window.location.href = '/team';
+      window.location.href='/team';
 
     } catch(err) {
       error('Ocorreu um erro na solicitação!', 'Tente novamente mais tarde!');
@@ -189,12 +189,13 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
    */
   async function rejectInvite(id) {
     try {
-      await api.delete(`/api/invites/${id}`)
+      await api.delete(`/api/invites/${id}`, { headers: { Authorization: accessToken }})
       success('Convite deletado com sucesso!', '');
       window.location.href = '/team';
 
     } catch(err) {
       error('Ocorreu um erro na solicitação!', 'Tente novamente mais tarde!');
+      console.log(err.response)
     }
   }
 
