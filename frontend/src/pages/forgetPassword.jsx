@@ -112,6 +112,7 @@ export default function ForgetPassword() {
 
     } catch(err) {
       error('Ocorreu um erro na aplicação!', 'Verifique o e-mail informado e tente novamente!');
+      console.log(err.response)
     }
   }
 

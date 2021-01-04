@@ -241,8 +241,7 @@ const Team = ({ team, user, deleteTeamAtStore, setTeamAtStore }) => {
                 invites.map(invite => (
                   <div className="center">
                     <div className="invite">
-                      <h2>{invite.name}</h2>
-                      <span>{invite.initial}</span>
+                      <h3>{invite.team.name}</h3>
                       <div className="invite-buttons">
                         <button type="button" id="btn_accept" className="button-yes-no btn-primary" onClick={() => acceptInvite(invite)}>Aceitar</button>
                         <button type="button" id="btn_reject" className="button-yes-no btn-primary" onClick={() => rejectInvite(invite.id)}>Rejeitar</button>

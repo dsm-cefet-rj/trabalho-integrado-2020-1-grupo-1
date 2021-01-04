@@ -52,6 +52,7 @@ const Top_Left_Side_Menu = ({ user, logoutUser, logoutTeam }) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu variant="dropdown-menu" className="dropdown-menu" id="dropdown-menu" >
+                  <Dropdown.Item variant="menu-dropdown-option" className="menu-dropdown-option" href="/home" id="">Home</Dropdown.Item>
                   <Dropdown.Item variant="menu-dropdown-option" className="menu-dropdown-option" href="/edit" id="">Editar perfil</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
